@@ -1,7 +1,7 @@
 package com.mygdx.kotc.gamemodel.entities;
 
 public class Map {
-    private Tile [][] map;
+    private Tile[][] map;
 
     public Tile[][] getMap() {
         return map;

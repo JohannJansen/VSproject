@@ -17,6 +17,22 @@ public class Player {
     private List<Modifier> defenseModifiers;
     private boolean playerInCombat;
 
+    public Player(Vec2d position, boolean isBlocking, int speed, int totalHp, int defense, int currentHealth, int strength, Equipment weapon, Equipment shield, Equipment armor, List<Modifier> attackModifiers, List<Modifier> defenseModifiers, boolean playerInCombat) {
+        this.position = position;
+        this.isBlocking = isBlocking;
+        this.speed = speed;
+        this.totalHp = totalHp;
+        this.defense = defense;
+        this.currentHealth = currentHealth;
+        this.strength = strength;
+        this.weapon = weapon;
+        this.shield = shield;
+        this.armor = armor;
+        this.attackModifiers = attackModifiers;
+        this.defenseModifiers = defenseModifiers;
+        this.playerInCombat = playerInCombat;
+    }
+
     // -------------------------------- Getter Setter -------------------------------//
     public boolean getPlayerInCombat(){
         return playerInCombat;

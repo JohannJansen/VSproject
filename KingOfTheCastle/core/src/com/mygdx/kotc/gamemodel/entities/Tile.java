@@ -1,7 +1,5 @@
 package com.mygdx.kotc.gamemodel.entities;
 
-import com.badlogic.gdx.graphics.Texture;
-
 public class Tile {
     private Vec2d position;
     private boolean traversable;

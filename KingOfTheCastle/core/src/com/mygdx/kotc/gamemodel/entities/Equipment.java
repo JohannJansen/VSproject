@@ -4,14 +4,19 @@ public class Equipment {
     /**
      *
      */
-    private Equipment equipmentType;
+    private EquipmentType equipmentType;
     private int equipmentValue;
 
-    public Equipment getEquipmentType() {
+    public Equipment(EquipmentType equipmentType, int equipmentValue) {
+        this.equipmentType = equipmentType;
+        this.equipmentValue = equipmentValue;
+    }
+
+    public EquipmentType getEquipmentType() {
         return equipmentType;
     }
 
-    public void setEquipmentType(Equipment equipmentType) {
+    public void setEquipmentType(EquipmentType equipmentType) {
         this.equipmentType = equipmentType;
     }
 
