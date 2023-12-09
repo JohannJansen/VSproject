@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface PlayerI {
     public void extendModifiers(Modifier modifier, List<Modifier> modifiers);
-    public void updatePosition(Player player, Vec2d newPost);
+    public void updatePosition(Long Id, Vec2d newPos);
 }

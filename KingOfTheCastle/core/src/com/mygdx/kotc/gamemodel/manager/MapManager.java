@@ -6,6 +6,7 @@ import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.interfaces.MapI;
 
 public class MapManager implements MapI{
+
     @Override
     public void movePlayer(Player player, Vec2d initialPos, Vec2d direction) {
 

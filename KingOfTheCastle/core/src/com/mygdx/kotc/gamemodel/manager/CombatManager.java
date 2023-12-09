@@ -1,6 +1,7 @@
 package com.mygdx.kotc.gamemodel.manager;
 
 import com.mygdx.kotc.gamemodel.entities.Action;
+import com.mygdx.kotc.gamemodel.entities.Combat;
 import com.mygdx.kotc.gamemodel.entities.Modifier;
 import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.interfaces.CombatI;
@@ -16,7 +17,7 @@ public class CombatManager implements CombatI{
     }
 
     @Override
-    public void actionInCombat(Action action, PriorityQueue actionQueue) {
+    public void actionInCombat(Action action, PriorityQueue<Action> actionQueue) {
 
     }
 
@@ -32,6 +33,10 @@ public class CombatManager implements CombatI{
 
     @Override
     public void block(Player player1, Player player2) {
+
+    }
+    @Override
+    public void fleeFromCombat(Player player1, Combat combat){
 
     }
 }

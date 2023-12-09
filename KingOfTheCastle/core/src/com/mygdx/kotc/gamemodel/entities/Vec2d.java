@@ -4,6 +4,11 @@ public class Vec2d {
     private int posX;
     private int posY;
 
+    public Vec2d(int posX, int posY){
+        this.posX = posX;
+        this.posY = posY;
+    }
+
     public int getPosX() {
         return posX;
     }
@@ -19,4 +24,5 @@ public class Vec2d {
     public void setPosY(int posY) {
         this.posY = posY;
     }
+
 }
