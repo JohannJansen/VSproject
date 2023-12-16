@@ -14,7 +14,7 @@ public class ApplicationStub implements MultiplayerI{
     }
 
     @Override
-    public void executeCalledMethod(String method, Object[] parameters) {
+    public void waitForMethodCall() {
 
     }
 

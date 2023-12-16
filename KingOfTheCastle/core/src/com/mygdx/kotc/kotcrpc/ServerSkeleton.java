@@ -11,7 +11,6 @@ import java.util.List;
 
 public class ServerSkeleton implements RPCIServer{
     ServerSocket serversocket;
-    List<Socket> registeredClients = new ArrayList<>();
 
     public ServerSkeleton() {
         try {
@@ -22,8 +21,15 @@ public class ServerSkeleton implements RPCIServer{
     }
 
     @Override
-    public void call(String method, Object[] parameters) {
+    public Message listenForIncommingCalls(long timeout) {
+        try {
+            Socket clientSocket = serversocket.accept();
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //TODO
+        return null;
     }
 
     private Message marshallFromJson(String jsonString){

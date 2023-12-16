@@ -27,14 +27,14 @@ public class MapManagerTest {
     @Test
     public void movePlayerToNotTraversableShouldNotWork(){
         //Spieler sollte sich auf der Map nicht bewegt haben
-        mapManager.movePlayer(player, new Vec2d(8, 9), new Vec2d(8, 8));
+        mapManager.movePlayer(player, new Vec2d(8, 9));
         Assertions.assertEquals(player.getPosition(), new Vec2d(8, 9));
     }
 
     @Test
     public void movePlayerTest(){
         //Spieler sollte nach dem Test gewisse Position habe
-        mapManager.movePlayer(player, new Vec2d(8, 9), new Vec2d(8, 8));
+        mapManager.movePlayer(player, new Vec2d(8, 9));
         Assertions.assertEquals(player.getPosition(), new Vec2d(8, 8));
     }
 
@@ -53,11 +53,11 @@ public class MapManagerTest {
     }
 
     @Test
-    public void initiateCombatTest(){
+    public void initiateCombatTest() throws Exception {
         //Zwei Spieler sollten sich danach in einem Kampf befinden und...
         player.setPosition(new Vec2d(1, 1));
         player2.setPosition(new Vec2d(1, 2));
-        mapManager.initiateCombat(new Vec2d(1, 1), new Vec2d(1,2), 1);
+        mapManager.initiateCombat(player, player2, 1);
         Assertions.assertTrue(player2.getPlayerInCombat());
     }
 }
