@@ -5,8 +5,8 @@ import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 
 public interface MapI {
-    void movePlayer(Player player, Vec2d initialPos, Vec2d direction);
+    void movePlayer(Player player, Vec2d direction);
     void spawnPlayer(Player player, Map map, Vec2d spawnZoneStart, Vec2d spawnZoneEnd);
     void setPlayerPos(Vec2d pos, Player player, Map map);
-    void initiateCombat(Vec2d positionP1, Vec2d positionP2, int interactionDistance);
+    void initiateCombat(Player player1, Player player2, int interactionDistance) throws Exception;
 }

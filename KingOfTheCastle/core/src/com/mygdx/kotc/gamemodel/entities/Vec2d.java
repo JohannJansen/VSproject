@@ -25,4 +25,16 @@ public class Vec2d {
         this.posY = posY;
     }
 
+    public static double calculateDistance(Vec2d pos1, Vec2d pos2) {
+        int x1 = pos1.getPosX();
+        int y1 = pos1.getPosY();
+        int x2 = pos2.getPosX();
+        int y2 = pos2.getPosY();
+
+        int deltaX = x2 - x1;
+        int deltaY = y2 - y1;
+
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }
+
 }

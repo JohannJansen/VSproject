@@ -28,4 +28,6 @@ public class Tile {
     public void setOccupiedBy(Player occupiedBy) {
         this.occupiedBy = occupiedBy;
     }
+
+
 }
