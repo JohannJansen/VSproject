@@ -7,6 +7,7 @@ import com.mygdx.kotc.gamemodel.manager.MapManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 public class CombatManagerTest {
     private Map map;
     private Player player;

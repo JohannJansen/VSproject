@@ -1,8 +1,13 @@
-sourceCompatibility = 1.7
+sourceCompatibility = 17
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     implementation("com.google.guava:guava:24.0-jre")
+    implementation('org.junit.jupiter:junit-jupiter:5.6.2')
 }
+
+test {
+    useJUnitPlatform()
+}
+
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 sourceSets.main.java.srcDirs = [ "src/" ]

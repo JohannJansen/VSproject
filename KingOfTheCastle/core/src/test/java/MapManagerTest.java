@@ -1,4 +1,3 @@
-import com.mygdx.kotc.gamemodel.entities.Equipment;
 import com.mygdx.kotc.gamemodel.entities.Map;
 import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
@@ -6,7 +5,6 @@ import com.mygdx.kotc.gamemodel.factories.MapFactory;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 import com.mygdx.kotc.gamemodel.manager.CombatManager;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
-import com.mygdx.kotc.gamemodel.manager.PlayerManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
