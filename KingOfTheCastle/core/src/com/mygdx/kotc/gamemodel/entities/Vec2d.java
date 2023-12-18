@@ -1,5 +1,7 @@
 package com.mygdx.kotc.gamemodel.entities;
 
+import java.util.Objects;
+
 public class Vec2d {
     private int posX;
     private int posY;
@@ -37,4 +39,16 @@ public class Vec2d {
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vec2d vec2d = (Vec2d) o;
+        return posX == vec2d.posX && posY == vec2d.posY;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(posX, posY);
+    }
 }

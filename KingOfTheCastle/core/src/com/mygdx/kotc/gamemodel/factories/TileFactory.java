@@ -16,7 +16,7 @@ public class TileFactory {
         return tile;
     }
 
-    public static Tile createUnterversableTile(Vec2d pos){
+    public static Tile createUntraversableTile(Vec2d pos){
         Tile tile = new Tile();
         tile.setTraversable(false);
         tile.setPosition(pos);

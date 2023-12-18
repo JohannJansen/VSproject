@@ -4,8 +4,6 @@ import com.mygdx.kotc.gamemodel.entities.Map;
 import com.mygdx.kotc.gamemodel.entities.Tile;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 
-import java.util.Random;
-
 public class MapFactory {
 
     public static Map createMap(int width, int height){
@@ -13,9 +11,9 @@ public class MapFactory {
         Tile[][] tiles = new Tile[width][height];
         for(int i = 0; i < width; i++){
             for (int j = 0; j < height; j++){
-                Vec2d v2d = new Vec2d(width, height);
+                Vec2d v2d = new Vec2d(i, j);
                 if (v2d.getPosX() == 8 && v2d.getPosY() == 8){
-                    Tile tile = TileFactory.createUnterversableTile(v2d);
+                    Tile tile = TileFactory.createUntraversableTile(v2d);
                     tiles[i][j] = tile;
                 }
                 else {
