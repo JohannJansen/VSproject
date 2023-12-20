@@ -3,8 +3,10 @@ package com.mygdx.kotc.kotcrpc;
 import com.badlogic.gdx.utils.Json;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
@@ -26,16 +28,12 @@ public class ServerSkeleton implements RPCIServer{
     public Message listenForIncommingCalls() {
         try {
             Socket clientSocket = serversocket.accept();
-            InputStream inputStream = clientSocket.getInputStream();
-            byte[] buffer = new byte[1024];
-            int read;
-            String output = "";
-            while((read = inputStream.read(buffer)) != -1) {
-                output = new String(buffer, 0, read);
-                System.out.print(output);
-                System.out.flush();
+            String receivedJson;
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
+                receivedJson = reader.readLine();
+                System.out.println("Received JSON from server: " + receivedJson);
             }
-            Message message = marshallFromJson(output);
+            Message message = marshallFromJson(receivedJson);
             System.out.println(message.getMethodname());
             System.out.println(Arrays.toString(message.getParameters()));
             clientSocket.close();

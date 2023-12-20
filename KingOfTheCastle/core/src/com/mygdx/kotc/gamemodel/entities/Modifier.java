@@ -6,6 +6,17 @@ public class Modifier {
     private int duration;
     private boolean requiresConcentration;
 
+    public Modifier(){
+
+    }
+
+    public Modifier(int operand, Operator operator, int duration, boolean requiresConcentration) {
+        this.operand = operand;
+        this.operator = operator;
+        this.duration = duration;
+        this.requiresConcentration = requiresConcentration;
+    }
+
     public int getOperand() {
         return operand;
     }

@@ -17,6 +17,17 @@ public class MapManager implements MapI{
     int DEFAULTMAPHEIGHT = 32;
 
     Map map = MapFactory.createMap(DEFAULTMAPWIDTH, DEFAULTMAPHEIGHT);
+
+    /**
+     * creates a new Map with the given height and widht
+     * @param width
+     * @param height
+     */
+    public void createMap(int width, int height){
+        Map map = MapFactory.createMap(width,height);
+        this.map = map;
+    }
+
     /**
      * pre: destination is reachable, player !inCombat
      * post: the position of the Player is changed to the new direction
@@ -59,7 +70,7 @@ public class MapManager implements MapI{
                 }
             }
         }
-        //spawnPlayer(player,spawnZoneStart,spawnZoneEnd);
+        spawnPlayer(player,spawnZoneStart,spawnZoneEnd);
     }
 
     @Override

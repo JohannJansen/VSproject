@@ -1,6 +1,7 @@
 package com.mygdx.kotc.applicationstub;
 
 import com.mygdx.kotc.gamemodel.entities.State;
+import com.mygdx.kotc.kotcrpc.Message;
 
 public class ApplicationStub implements MultiplayerI{
     @Override
@@ -14,8 +15,8 @@ public class ApplicationStub implements MultiplayerI{
     }
 
     @Override
-    public void waitForMethodCall() {
-
+    public Message getCallForPlayer(int playerID) {
+        return null;
     }
 
     @Override

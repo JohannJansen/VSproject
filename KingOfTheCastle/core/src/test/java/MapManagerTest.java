@@ -1,8 +1,6 @@
-import com.mygdx.kotc.gamemodel.entities.Map;
 import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
-import com.mygdx.kotc.gamemodel.factories.MapFactory;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 import com.mygdx.kotc.gamemodel.manager.CombatManager;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
@@ -11,16 +9,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class MapManagerTest {
-    private Map map;
     private Player player;
     private Player player2;
     private final MapManager mapManager = new MapManager();
     private final CombatManager combatManager = new CombatManager();
     @BeforeEach
     public void setUp(){
-        map = MapFactory.createMap(16, 16);
-        player = PlayerFactory.createFighter();
-        player2 = PlayerFactory.createFighter();
+        player = PlayerFactory.createTestPlayer();
+        player2 = PlayerFactory.createTestPlayer();
         mapManager.setPlayerPos(new Vec2d(8,9),player);
     }
 

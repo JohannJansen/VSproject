@@ -1,8 +1,12 @@
 package com.mygdx.kotc.kotcrpc;
 
 public class Message {
-    private String methodname;
-    private Object[] parameters;
+    private String methodname = "defaultname";
+    private Object[] parameters = null;
+
+    public Message(){
+
+    }
 
     public Message(String methodname, Object[] parameters) {
         this.methodname = methodname;
