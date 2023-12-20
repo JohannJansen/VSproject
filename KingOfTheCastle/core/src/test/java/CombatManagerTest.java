@@ -33,7 +33,7 @@ public class CombatManagerTest {
     @Test
     public void calculateDamageTest(){
         //Damage Output müsste richtig berechnet werden
-        player.getAttackModifiers().add(new Modifier(23, Modifier))
+        //player.getAttackModifiers().add(new Modifier(23, ))
         combatManager.calculateDamage(player.getStrength(), player.getAttackModifiers(), player2.getDefenseModifiers());
     }
 
