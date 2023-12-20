@@ -34,8 +34,8 @@ public class MapManagerTest {
     public void movePlayerTest() throws TileNotReachableException{
         //Spieler sollte nach dem Test gewisse Position haben
         mapManager.movePlayer(player, new Vec2d(0, 1));
-        Assertions.assertEquals(player.getPosition().getPosX(), 8);
-        Assertions.assertEquals(player.getPosition().getPosY(), 10);
+        Assertions.assertEquals(8,player.getPosition().getPosX());
+        Assertions.assertEquals(10,player.getPosition().getPosY());
 
     }
 
@@ -44,8 +44,8 @@ public class MapManagerTest {
         //Spieler sollte sich in der Liste der Map befinden oder so
         mapManager.spawnPlayer(player,new Vec2d(1,1), new Vec2d(1,1));
         //Assertions.assertEquals(new Vec2d(1,1),player.getPosition());
-        Assertions.assertEquals(player.getPosition().getPosX(), 1);
-        Assertions.assertEquals(player.getPosition().getPosY(), 1);
+        Assertions.assertEquals(1,player.getPosition().getPosX());
+        Assertions.assertEquals(1,player.getPosition().getPosY());
 
     }
 

@@ -52,14 +52,14 @@ public class MapManager implements MapI{
                     continue;
                 }
                 Random random = new Random();
-                int randomNum = random.nextInt(5)+1;
-                if (randomNum == 3){
+                int randomNum = random.nextInt(2)+1;
+                if (randomNum == 2){
                     Vec2d playerSpawnPos = new Vec2d(j,i);
                     setPlayerPos(playerSpawnPos,player);
                 }
             }
         }
-        spawnPlayer(player,spawnZoneStart,spawnZoneEnd);
+        //spawnPlayer(player,spawnZoneStart,spawnZoneEnd);
     }
 
     @Override
