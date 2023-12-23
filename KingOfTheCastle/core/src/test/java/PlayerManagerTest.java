@@ -3,6 +3,7 @@ import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 import com.mygdx.kotc.gamemodel.manager.PlayerManager;
+import com.mygdx.kotc.gamemodel.repositories.RepositoryI;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,7 @@ public class PlayerManagerTest {
     @Test
     public void updatePositionTest(){
         Vec2d vec2d = new Vec2d(9, 4);
-        //TODO:
+        playerManager.updatePosition(player, vec2d);
+        Assertions.assertTrue(player.getPosition() == vec2d);
     }
 }

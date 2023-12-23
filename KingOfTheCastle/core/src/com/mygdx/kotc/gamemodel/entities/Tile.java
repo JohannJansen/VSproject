@@ -2,8 +2,9 @@ package com.mygdx.kotc.gamemodel.entities;
 
 public class Tile {
     private Vec2d position;
-    private boolean traversable;
+    private boolean traversible;
     private Player occupiedBy;
+    private TextureType textureType;
 
     public Vec2d getPosition() {
         return position;
@@ -13,12 +14,12 @@ public class Tile {
         this.position = position;
     }
 
-    public boolean isTraversable() {
-        return traversable;
+    public boolean isTraversible() {
+        return traversible;
     }
 
-    public void setTraversable(boolean traversable) {
-        this.traversable = traversable;
+    public void setTraversable(boolean traversible) {
+        this.traversible = traversible;
     }
 
     public Player getOccupiedBy() {
@@ -29,5 +30,8 @@ public class Tile {
         this.occupiedBy = occupiedBy;
     }
 
+    public void setTextureType(TextureType textureType){ this.textureType = textureType; }
+
+    public TextureType getTextureType(){return textureType;}
 
 }

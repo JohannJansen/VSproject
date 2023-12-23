@@ -9,24 +9,31 @@ import com.mygdx.kotc.gamemodel.interfaces.GameStateOutputI;
 import java.util.List;
 
 public class GameStateOutput implements GameStateOutputI {
+    PlayerManager playerManager = new PlayerManager();
+    CombatManager combatManager = new CombatManager();
+    MapManager mapManager = new MapManager();
 
     @Override
     public List<Player> getPlayerList() {
-        return null;
+        return playerManager.getPlayerList();
     }
 
     @Override
     public Map getMap() {
-        return null;
+        return mapManager.getMap();
     }
 
     @Override
     public List<Combat> getCombatList() {
-        return null;
+        return combatManager.getActiveCombats();
     }
 
     @Override
     public State getState() {
-        return null;
+        State state = new State();
+        state.setCombatList(combatManager.getActiveCombats());
+        state.setMap(mapManager.getMap());
+        state.setPlayerList(playerManager.getPlayerList());
+        return state;
     }
 }

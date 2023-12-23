@@ -7,7 +7,7 @@ import com.mygdx.kotc.gamemodel.entities.Vec2d;
 public class MapFactory {
 
     public static Map createMap(int width, int height){
-        Map map = new Map();
+        Map map = new Map(height, width);
         Tile[][] tiles = new Tile[width][height];
         for(int i = 0; i < width; i++){
             for (int j = 0; j < height; j++){

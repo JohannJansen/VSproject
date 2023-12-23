@@ -1,4 +1,7 @@
 import com.mygdx.kotc.gamemodel.entities.*;
+import com.mygdx.kotc.gamemodel.exceptions.CombatNotInitiatableException;
+import com.mygdx.kotc.gamemodel.exceptions.PlayerHasNoHealthExeception;
+import com.mygdx.kotc.gamemodel.factories.ActionFactory;
 import com.mygdx.kotc.gamemodel.factories.MapFactory;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 import com.mygdx.kotc.gamemodel.manager.CombatManager;
@@ -60,11 +63,10 @@ public class CombatManagerTest {
 
     @Test
     public void actionInCombatTest(){
-        //Eine Aktion müsste ausgeführt werden???
-        PriorityQueue<Action> priorityQueue = new PriorityQueue<>();
-        Action action = new Action();
-        combatManager.actionInCombat(action, priorityQueue);
-        Assertions.assertEquals(1, priorityQueue.size());
+        Combat combat = new Combat(player,player2);
+        Action action = ActionFactory.createAttackAction(player);
+        combatManager.actionInCombat(action, combat.getActionQueue());
+        Assertions.assertEquals(1, combat.getActionQueue().size());
     }
 
 
@@ -90,7 +92,16 @@ public class CombatManagerTest {
     }
 
     @Test
-    public void fleeFromCombat(){
+    public void fleeFromCombat() throws PlayerHasNoHealthExeception {
+        player.setPosition(new Vec2d(1, 1));
+        player2.setPosition(new Vec2d(1, 2));
+
+        try {
+            mapManager.initiateCombat(player, player2, 1);
+        } catch (CombatNotInitiatableException e) {
+            throw new RuntimeException(e);
+        }
+
         Combat combat = new Combat(player,player2);
         Assertions.assertTrue(player.getPlayerInCombat());
         Assertions.assertTrue(player2.getPlayerInCombat());

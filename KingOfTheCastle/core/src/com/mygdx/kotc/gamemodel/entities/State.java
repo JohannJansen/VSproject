@@ -18,4 +18,16 @@ public class State {
     public Map getMap() {
         return map;
     }
+
+    public void setPlayerList(List<Player> newPlayerList){
+        playerList = newPlayerList;
+    }
+
+    public void setCombatList(List<Combat> newCombatList){
+        combatList = newCombatList;
+    }
+
+    public void setMap(Map newmap){
+        map = newmap;
+    }
 }

@@ -3,6 +3,7 @@ package com.mygdx.kotc.gamemodel.entities;
 import java.util.List;
 
 public class Player {
+    private long playerId;
     private Vec2d position;
     private boolean isBlocking;
     private int speed;
@@ -17,7 +18,8 @@ public class Player {
     private List<Modifier> defenseModifiers;
     private boolean playerInCombat;
 
-    public Player(Vec2d position, boolean isBlocking, int speed, int totalHp, int defense, int currentHealth, int strength, Equipment weapon, Equipment shield, Equipment armor, List<Modifier> attackModifiers, List<Modifier> defenseModifiers, boolean playerInCombat) {
+    public Player(long playerId, Vec2d position, boolean isBlocking, int speed, int totalHp, int defense, int currentHealth, int strength, Equipment weapon, Equipment shield, Equipment armor, List<Modifier> attackModifiers, List<Modifier> defenseModifiers, boolean playerInCombat) {
+        this.playerId = playerId;
         this.position = position;
         this.isBlocking = isBlocking;
         this.speed = speed;

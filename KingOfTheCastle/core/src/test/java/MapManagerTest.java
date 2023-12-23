@@ -59,6 +59,7 @@ public class MapManagerTest {
         player.setPosition(new Vec2d(1, 1));
         player2.setPosition(new Vec2d(1, 2));
         mapManager.initiateCombat(player, player2, 1);
+        Assertions.assertTrue(player.getPlayerInCombat());
         Assertions.assertTrue(player2.getPlayerInCombat());
     }
 

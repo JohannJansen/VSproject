@@ -13,7 +13,7 @@ public class PlayerFactory {
         List<Modifier> attackList = new ArrayList<>();
         List<Modifier> defenseList = new ArrayList<>();
         Vec2d v2d = new Vec2d(8,9);
-        return new Player(null,false,19,300,50,300,
+        return new Player(6,null, false,19,300,50,300,
                 0, EquipmentFactory.createSword(), null,null,attackList,defenseList,false);
     }
 

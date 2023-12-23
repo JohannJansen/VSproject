@@ -7,10 +7,11 @@ import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.interfaces.PlayerI;
 import com.mygdx.kotc.gamemodel.repositories.PlayerRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerManager implements PlayerI {
-    private PlayerRepository playerRepository = new PlayerRepository();
+    private List<Player> playerList = new ArrayList<>();
 
     @Override
     public void extendModifiers(Modifier modifier, List<Modifier> modifiers) {
@@ -19,10 +20,18 @@ public class PlayerManager implements PlayerI {
     }
 
     @Override
-    public void updatePosition(Long Id, Vec2d newPos) {
-        Preconditions.checkArgument(Id != null, "Player Id cannot be null!");
+    public void updatePosition(Player player, Vec2d newPos) {
+        Preconditions.checkArgument(player != null, "Player Id cannot be null!");
         Preconditions.checkArgument(newPos != null, "New Position cannot be null!");
-        Player player = (Player) playerRepository.findById(Id);
+        //Player player = (Player) playerRepository.findById(Id);
         player.setPosition(newPos);
+    }
+
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public void setPlayerList(List<Player> playerList) {
+        this.playerList = playerList;
     }
 }

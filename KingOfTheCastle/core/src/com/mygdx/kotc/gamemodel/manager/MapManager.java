@@ -40,7 +40,7 @@ public class MapManager implements MapI{
         Vec2d newPos = new Vec2d(player.getPosition().getPosX() + direction.getPosX(), player.getPosition().getPosY() + direction.getPosY());
         Tile tile = map.getMap()[newPos.getPosX()][newPos.getPosY()];
 
-        if(!player.getPlayerInCombat() && tile.isTraversable()){
+        if(!player.getPlayerInCombat() && tile.isTraversible()){
             removePlayerFromCurrentTile(player);
             player.setPosition(newPos);
             setPlayerPos(direction,player);
@@ -59,7 +59,7 @@ public class MapManager implements MapI{
         for(int i = spawnZoneStart.getPosY(); i <= spawnZoneEnd.getPosY(); i++){
             for(int j = spawnZoneStart.getPosX(); j <= spawnZoneEnd.getPosX(); j++){
                 Tile tile = map.getMap()[j][i];
-                if(!tile.isTraversable()){
+                if(!tile.isTraversible()){
                     continue;
                 }
                 Random random = new Random();
@@ -93,5 +93,13 @@ public class MapManager implements MapI{
 
     private void removePlayerFromCurrentTile(Player player){
         map.getMap()[player.getPosition().getPosX()][player.getPosition().getPosY()].setOccupiedBy(null);
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 }

@@ -1,13 +1,18 @@
 package com.mygdx.kotc.gamemodel.manager;
 
 import com.mygdx.kotc.gamemodel.entities.*;
+import com.mygdx.kotc.gamemodel.exceptions.PlayerHasNoHealthExeception;
 import com.mygdx.kotc.gamemodel.interfaces.CombatI;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
 public class CombatManager implements CombatI{
+
+    private List<Combat> activeCombats = new ArrayList<>();
+
     /**
      * a method to calculate the damage with the given modifiers
      * @param baseDamage
@@ -73,12 +78,21 @@ public class CombatManager implements CombatI{
     }
 
     @Override
-    public void fleeFromCombat(Player player1, Combat combat){
-        player1.setPlayerInCombat(false);
-        combat.setPlayer1(null);
-        combat.getPlayer2().setPlayerInCombat(false);
-        combat.setPlayer2(null);
-        System.out.println(player1 + " fleed from combat. The combat is over...");
+    public void fleeFromCombat(Player player1, Combat combat) throws PlayerHasNoHealthExeception{
+        if(player1.getCurrentHealth() > 0) {
+            endCombat(combat);
+            System.out.println(player1 + " fleed from combat. The combat is over...");
+        }
+        else {
+            throw new PlayerHasNoHealthExeception();
+        }
+    }
+
+    @Override
+    public Combat createCombat(Player player1, Player player2){
+        Combat combat = new Combat(player1,player2);
+        activeCombats.add(combat);
+        return combat;
     }
 
     @Override
@@ -89,5 +103,16 @@ public class CombatManager implements CombatI{
         combat.getPlayer2().getDefenseModifiers().clear();
         combat.getPlayer2().setPlayerInCombat(false);
         combat.getPlayer1().setPlayerInCombat(false);
+        combat.setPlayer1(null);
+        combat.setPlayer2(null);
+        activeCombats.remove(combat);
+    }
+
+    public List<Combat> getActiveCombats() {
+        return activeCombats;
+    }
+
+    public void setActiveCombats(List<Combat> activeCombats) {
+        this.activeCombats = activeCombats;
     }
 }
