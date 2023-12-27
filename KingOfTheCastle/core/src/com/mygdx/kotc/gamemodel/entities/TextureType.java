@@ -1,5 +1,5 @@
 package com.mygdx.kotc.gamemodel.entities;
 
 public enum TextureType {
-    WALL, BARREL, FLOOR, TREE, GRASS
+    WALL, BARREL, FLOOR, TREE, GRASS, DOOR, WALLSIDEWAYS, DOOROPEN,
 }

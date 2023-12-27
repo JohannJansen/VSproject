@@ -37,12 +37,19 @@ public class MapManagerTest {
 
     @Test
     public void spawnPlayerTest(){
+        boolean playerSpawned = false;
         //Spieler sollte sich in der Liste der Map befinden oder so
-        mapManager.spawnPlayer(player,new Vec2d(1,1), new Vec2d(1,1));
-        //Assertions.assertEquals(new Vec2d(1,1),player.getPosition());
-        Assertions.assertEquals(1,player.getPosition().getPosX());
-        Assertions.assertEquals(1,player.getPosition().getPosY());
-
+        mapManager.spawnPlayer(player,new Vec2d(1,1), new Vec2d(5,5));
+       for (int i = 0; i < mapManager.getMap().getHeight();i++){
+           for (int j = 0; j < mapManager.getMap().getWidth();j++) {
+               if (mapManager.getMap().getTiles()[i][j].getOccupiedBy() != null
+                       && mapManager.getMap().getTiles()[i][j].getOccupiedBy() == player) {
+                   playerSpawned = true;
+                   break;
+               }
+           }
+       }
+       Assertions.assertTrue(playerSpawned);
     }
 
     @Test

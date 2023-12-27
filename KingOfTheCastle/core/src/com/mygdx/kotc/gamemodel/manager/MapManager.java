@@ -38,12 +38,12 @@ public class MapManager implements MapI{
     @Override
     public void movePlayer(Player player, Vec2d direction) throws TileNotReachableException{
         Vec2d newPos = new Vec2d(player.getPosition().getPosX() + direction.getPosX(), player.getPosition().getPosY() + direction.getPosY());
-        Tile tile = map.getMap()[newPos.getPosX()][newPos.getPosY()];
+        Tile tile = map.getTiles()[newPos.getPosX()][newPos.getPosY()];
 
         if(!player.getPlayerInCombat() && tile.isTraversible()){
             removePlayerFromCurrentTile(player);
             player.setPosition(newPos);
-            setPlayerPos(direction,player);
+            setPlayerPos(newPos, player);
         }else {
             throw new TileNotReachableException();
         }
@@ -58,7 +58,7 @@ public class MapManager implements MapI{
     public void spawnPlayer(Player player, Vec2d spawnZoneStart, Vec2d spawnZoneEnd) {
         for(int i = spawnZoneStart.getPosY(); i <= spawnZoneEnd.getPosY(); i++){
             for(int j = spawnZoneStart.getPosX(); j <= spawnZoneEnd.getPosX(); j++){
-                Tile tile = map.getMap()[j][i];
+                Tile tile = map.getTiles()[j][i];
                 if(!tile.isTraversible()){
                     continue;
                 }
@@ -70,13 +70,12 @@ public class MapManager implements MapI{
                 }
             }
         }
-        spawnPlayer(player,spawnZoneStart,spawnZoneEnd);
     }
 
     @Override
     public void setPlayerPos(Vec2d pos, Player player) {
         player.setPosition(pos);
-        Tile tile = map.getMap()[pos.getPosX()][pos.getPosY()];
+        Tile tile = map.getTiles()[pos.getPosX()][pos.getPosY()];
         tile.setOccupiedBy(player);
     }
 
@@ -92,7 +91,7 @@ public class MapManager implements MapI{
     }
 
     private void removePlayerFromCurrentTile(Player player){
-        map.getMap()[player.getPosition().getPosX()][player.getPosition().getPosY()].setOccupiedBy(null);
+        map.getTiles()[player.getPosition().getPosX()][player.getPosition().getPosY()].setOccupiedBy(null);
     }
 
     public Map getMap() {

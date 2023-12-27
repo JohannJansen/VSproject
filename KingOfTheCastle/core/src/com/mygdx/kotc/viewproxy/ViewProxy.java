@@ -17,7 +17,7 @@ public class ViewProxy implements OutputI{
 
         for (int x = 0; x < state.getMap().getWidth(); x++){
             for (int y = 0; y < state.getMap().getHeight(); y++){
-                Tile tile = state.getMap().getMap()[y][x];
+                Tile tile = state.getMap().getTiles()[y][x];
 
                 //TODO Map design using texture types to split Tiles into lists for different textures
                 if (tile.isTraversible()){

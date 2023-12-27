@@ -2,7 +2,7 @@ package com.mygdx.kotc.gamemodel.entities;
 
 public class Map {
 
-    private Tile[][] map;
+    private Tile[][] tiles;
     
     private int height;
     private int width;
@@ -20,10 +20,11 @@ public class Map {
         return width;
     }
 
-    public Tile[][] getMap() {
-        return map;
+    public Tile[][] getTiles() {
+        return tiles;
     }
+
     public void setMap(Tile[][] map) {
-        this.map = map;
+        this.tiles = map;
     }
 }
