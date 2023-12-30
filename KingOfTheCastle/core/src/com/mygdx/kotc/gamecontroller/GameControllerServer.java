@@ -1,19 +1,21 @@
 package com.mygdx.kotc.gamecontroller;
 
-import com.mygdx.kotc.gamemodel.entities.Map;
 import com.mygdx.kotc.gamemodel.entities.Player;
+import com.mygdx.kotc.gamemodel.exceptions.MaxPlayersReachedException;
 import com.mygdx.kotc.gamemodel.repositories.IdGenerator;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameControllerServer implements ControllerOutputI, InputI{
     public int MAXPLAYERS = 8;
     private boolean isRunning = true;
     private final long TICKDURATIONMILLIS = 1000;
     private IdGenerator idGenerator = new IdGenerator();
-    private ArrayList<Player> players = new ArrayList<>(8);
+    private Map<Long, Player> playerMapping = new HashMap<>();
 
     public void start(){
         while (isRunning){
@@ -33,6 +35,14 @@ public class GameControllerServer implements ControllerOutputI, InputI{
 
     private void mapInput(){
 
+    }
+
+    private void registerPlayer() throws MaxPlayersReachedException {
+        if(playerMapping.size() >= MAXPLAYERS){
+            throw new MaxPlayersReachedException();
+        }
+        long playerId = idGenerator.newId();
+        playerMapping.put(playerId, null);
     }
 
     @Override
