@@ -5,15 +5,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.kotc.gamemodel.manager.MapManager;
 
 import java.util.Random;
 
 public class KingOfTheCastle extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Texture[][] spielfeldTextures;
-	private final int spielfeldBreite = 40;
-	private final int spielfeldHoehe = 40;
+	private final int spielfeldBreite = 32;
+	private final int spielfeldHoehe = 32;
 	private Random random;
+	MapManager mapManager;
 
 	private Texture getRandomCobblestoneTexture() {
 		// Zufällige Auswahl einer Cobblestone-Texture
@@ -30,6 +32,8 @@ public class KingOfTheCastle extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+		Gdx.graphics.setWindowedMode(512, 512);
+		mapManager = new MapManager();
 		batch = new SpriteBatch();
 		random = new Random();
 		// Initialisiere das Spielfeld mit zufälligen Cobblestone-Texturen
@@ -39,26 +43,32 @@ public class KingOfTheCastle extends ApplicationAdapter {
 				spielfeldTextures[x][y] = getRandomCobblestoneTexture();
 			}
 		}
-		for (int i = 0; i < 40; i++) {
+		// Setze die Ränder des Spielfelds auf Mauer unten
+		for (int i = 0; i < 32; i++) {
 			spielfeldTextures[i][0] = getRandomWallTexture();
 		}
-		for (int i = 1; i < 38; i++) {
+		// Setze die Ränder des Spielfelds auf Mauer links
+		for (int i = 0; i < 32; i++) {
 			spielfeldTextures[0][i] = getRandomWallTexture();
 		}
 
-		for (int i = 1; i < 38; i++) {
-			spielfeldTextures[39][i] = getRandomWallTexture();
+		// Setze die Ränder des Spielfelds auf Mauer rechts
+		for (int i = 0; i < 32; i++) {
+			spielfeldTextures[31][i] = getRandomWallTexture();
 		}
 
-		for (int i = 0; i < 40; i++) {
-			spielfeldTextures[i][29] = getRandomWallTexture();
+		// Setze die Ränder des Spielfelds auf Mauer oben
+		for (int i = 0; i < 32; i++) {
+			spielfeldTextures[i][31] = getRandomWallTexture();
 		}
 
+		// Platzieren von untraversableThings
 		for (int i = 0; i < 60; i++) {
-			spielfeldTextures[1 + random.nextInt(38)][1 + random.nextInt(28)] = new Texture(Gdx.files.internal("png/untraversableThings/untraversable_" + random.nextInt(2) + ".png"));
+			int x = 1 + random.nextInt(30);
+			int y = 1 + random.nextInt(30);
+			spielfeldTextures[x][y] = new Texture(Gdx.files.internal("png/untraversableThings/untraversable_" + random.nextInt(2) + ".png"));
+			mapManager.getMap().getTiles()[y][x].setTraversable(false);
 		}
-
-
 	}
 
 	@Override
@@ -79,6 +89,7 @@ public class KingOfTheCastle extends ApplicationAdapter {
 				batch.draw(spielfeldTextures[x][y], positionX, positionY);
 			}
 		}
+		batch.draw(new Texture("png/cats/warriorCat_cobble_left.png"), 16, 16);
 		batch.end();
 	}
 
