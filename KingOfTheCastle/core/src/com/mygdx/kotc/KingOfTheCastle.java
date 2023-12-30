@@ -1,16 +1,18 @@
 package com.mygdx.kotc;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.kotc.Screens.StartScreen;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
 
 import java.util.Random;
 
-public class KingOfTheCastle extends ApplicationAdapter {
-	private SpriteBatch batch;
+public class KingOfTheCastle extends Game {
+	public SpriteBatch batch;
 	private Texture[][] spielfeldTextures;
 	private final int spielfeldBreite = 32;
 	private final int spielfeldHoehe = 32;
@@ -32,11 +34,13 @@ public class KingOfTheCastle extends ApplicationAdapter {
 
 	@Override
 	public void create() {
+		batch = new SpriteBatch();
 		Gdx.graphics.setWindowedMode(512, 512);
 		mapManager = new MapManager();
 		batch = new SpriteBatch();
 		random = new Random();
-		// Initialisiere das Spielfeld mit zufälligen Cobblestone-Texturen
+		this.setScreen(new StartScreen(this));
+		/*// Initialisiere das Spielfeld mit zufälligen Cobblestone-Texturen
 		spielfeldTextures = new Texture[spielfeldBreite][spielfeldHoehe];
 		for (int x = 0; x < spielfeldBreite; x++) {
 			for (int y = 0; y < spielfeldHoehe; y++) {
@@ -68,14 +72,14 @@ public class KingOfTheCastle extends ApplicationAdapter {
 			int y = 1 + random.nextInt(30);
 			spielfeldTextures[x][y] = new Texture(Gdx.files.internal("png/untraversableThings/untraversable_" + random.nextInt(2) + ".png"));
 			mapManager.getMap().getTiles()[y][x].setTraversable(false);
-		}
+		}*/
 	}
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0.36f, 0.36f, 0.36f, 1);
+		super.render();
+		/*Gdx.gl.glClearColor(0.36f, 0.36f, 0.36f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		batch.begin();
 
 		// Schleife für die Breite
@@ -90,7 +94,7 @@ public class KingOfTheCastle extends ApplicationAdapter {
 			}
 		}
 		batch.draw(new Texture("png/cats/warriorCat_cobble_left.png"), 16, 16);
-		batch.end();
+		batch.end();*/
 	}
 
 	@Override
@@ -103,5 +107,9 @@ public class KingOfTheCastle extends ApplicationAdapter {
 				spielfeldTextures[x][y].dispose();
 			}
 		}
+	}
+
+	public SpriteBatch getBatch() {
+		return batch;
 	}
 }
