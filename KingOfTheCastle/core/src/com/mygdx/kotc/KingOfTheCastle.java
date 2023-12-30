@@ -18,6 +18,8 @@ public class KingOfTheCastle extends Game {
 	private final int spielfeldHoehe = 32;
 	private Random random;
 	MapManager mapManager;
+	private int screenWidth = 512;
+	private int screenHeight = 512;
 
 	private Texture getRandomCobblestoneTexture() {
 		// Zufällige Auswahl einer Cobblestone-Texture
@@ -34,8 +36,7 @@ public class KingOfTheCastle extends Game {
 
 	@Override
 	public void create() {
-		batch = new SpriteBatch();
-		Gdx.graphics.setWindowedMode(512, 512);
+		//Gdx.graphics.setWindowedMode(512, 512);
 		mapManager = new MapManager();
 		batch = new SpriteBatch();
 		random = new Random();
@@ -111,5 +112,13 @@ public class KingOfTheCastle extends Game {
 
 	public SpriteBatch getBatch() {
 		return batch;
+	}
+
+	public int getScreenWidth() {
+		return screenWidth;
+	}
+
+	public int getScreenHeight() {
+		return screenHeight;
 	}
 }

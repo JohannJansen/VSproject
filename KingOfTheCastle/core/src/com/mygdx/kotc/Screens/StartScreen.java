@@ -4,10 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.kotc.KingOfTheCastle;
 
 public class StartScreen implements Screen {
+
+
+    private int exitButtonWidth = 250;
+    private int exitButtonHeight = 120;
+    private int playButtonWidth = 300;
+    private int playButtonheight = 120;
+    private static final int EXIT_BUTTON_Y = 100;
+    private static final int PLAY_BUTTON_Y = 230;
+    private static final int LOGO_WIDTH = 400;
+    private static final int LOGO_HEIGHT = 250;
+    private static final int LOGO_Y = 450;
 
     private  KingOfTheCastle kingOfTheCastle;
 
@@ -36,7 +46,25 @@ public class StartScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         kingOfTheCastle.batch.begin();
 
-        kingOfTheCastle.batch.draw(playButtonActive,100,100);
+        int x = kingOfTheCastle.getScreenWidth() /2-exitButtonWidth/2;
+
+        if(Gdx.input.getX() < x + exitButtonWidth && Gdx.input.getX() > x
+                && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() < EXIT_BUTTON_Y + exitButtonHeight && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > EXIT_BUTTON_Y){
+            kingOfTheCastle.batch.draw(exitButtonInactive,x ,EXIT_BUTTON_Y,exitButtonWidth, exitButtonHeight);
+        }else {
+            kingOfTheCastle.batch.draw(exitButtonActive,kingOfTheCastle.getScreenWidth() /2-exitButtonWidth/2 ,EXIT_BUTTON_Y,exitButtonWidth, exitButtonHeight);
+        }
+        x = kingOfTheCastle.getScreenWidth()/2 - playButtonWidth /2;
+        if(Gdx.input.getX() < x + playButtonWidth && Gdx.input.getX() > x && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() < PLAY_BUTTON_Y + playButtonheight && kingOfTheCastle.getScreenHeight() - Gdx.input.getY()>PLAY_BUTTON_Y){
+            kingOfTheCastle.batch.draw(playButtonInactive,x,PLAY_BUTTON_Y,playButtonWidth,playButtonheight);
+        }else {
+            kingOfTheCastle.batch.draw(playButtonActive,x,PLAY_BUTTON_Y,playButtonWidth,playButtonheight);
+        }
+
+
+
+
+
         kingOfTheCastle.batch.end();
 
     }
