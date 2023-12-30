@@ -10,6 +10,7 @@ public class Map {
     public Map(int height, int width) {
         this.height = height;
         this.width = width;
+        this.tiles = new Tile[height][width];
     }
 
     public int getHeight() {

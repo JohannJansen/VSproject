@@ -1,8 +1,11 @@
 package com.mygdx.kotc.viewproxy;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.kotc.KingOfTheCastle;
+import com.mygdx.kotc.gamemodel.entities.Map;
 import com.mygdx.kotc.gamemodel.entities.State;
 import com.mygdx.kotc.gamemodel.entities.Tile;
+import com.mygdx.kotc.gamemodel.factories.MapFactory;
 import com.mygdx.kotc.gamemodel.manager.GameStateOutput;
 
 import java.util.ArrayList;

@@ -16,7 +16,7 @@ public class MapManager implements MapI{
     int DEFAULTMAPWIDTH = 32;
     int DEFAULTMAPHEIGHT = 32;
 
-    Map map = MapFactory.createMap(DEFAULTMAPWIDTH, DEFAULTMAPHEIGHT);
+    Map map = MapFactory.createTestMap(DEFAULTMAPWIDTH, DEFAULTMAPHEIGHT);
 
     /**
      * creates a new Map with the given height and widht
@@ -24,7 +24,7 @@ public class MapManager implements MapI{
      * @param height
      */
     public void createMap(int width, int height){
-        Map map = MapFactory.createMap(width,height);
+        Map map = MapFactory.createTestMap(width,height);
         this.map = map;
     }
 

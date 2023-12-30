@@ -1,6 +1,6 @@
 package com.mygdx.kotc;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,26 +9,12 @@ import com.mygdx.kotc.gamemodel.manager.MapManager;
 
 import java.util.Random;
 
-public class KingOfTheCastle extends ApplicationAdapter {
-	private SpriteBatch batch;
-	private Texture[][] spielfeldTextures;
-	private final int spielfeldBreite = 32;
-	private final int spielfeldHoehe = 32;
+public class KingOfTheCastle extends Game {
+	public SpriteBatch batch;
+	public static final int TEXTUREHEIGHT = 16;
+	public static final int TEXTUREWIDTH = 16;
 	private Random random;
-	MapManager mapManager;
-
-	private Texture getRandomCobblestoneTexture() {
-		// Zufällige Auswahl einer Cobblestone-Texture
-		int randomIndex = random.nextInt(3); // Anzahl der verschiedenen Texturen
-		return new Texture(Gdx.files.internal("png/cobble/cobble_" + randomIndex + ".png"));
-	}
-
-	private Texture getRandomWallTexture() {
-		// Zufällige Auswahl einer Cobblestone-Texture
-		int randomIndex = random.nextInt(2); // Anzahl der verschiedenen Texturen
-		return new Texture(Gdx.files.internal("png/walls/wall_" + randomIndex + ".png"));
-	}
-
+	public ViewProxy viewProxy;
 
 	@Override
 	public void create() {
@@ -73,24 +59,9 @@ public class KingOfTheCastle extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+		super.render();
 		Gdx.gl.glClearColor(0.36f, 0.36f, 0.36f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		batch.begin();
-
-		// Schleife für die Breite
-		for (int x = 0; x < spielfeldBreite; x++) {
-			// Schleife für die Höhe
-			for (int y = 0; y < spielfeldHoehe; y++) {
-				// Position des aktuellen Cobblestone-Bildes basierend auf Zellenposition und Bildgröße
-				float positionX = x * spielfeldTextures[x][y].getWidth();
-				float positionY = y * spielfeldTextures[x][y].getHeight();
-
-				batch.draw(spielfeldTextures[x][y], positionX, positionY);
-			}
-		}
-		batch.draw(new Texture("png/cats/warriorCat_cobble_left.png"), 16, 16);
-		batch.end();
 	}
 
 	@Override
