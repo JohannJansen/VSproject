@@ -68,7 +68,7 @@ public class StartScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY()>PLAY_BUTTON_Y){
             kingOfTheCastle.batch.draw(playButtonInactive,x,PLAY_BUTTON_Y,playButtonWidth,playButtonheight);
             if(Gdx.input.isTouched()){
-               //kingOfTheCastle.setScreen();
+               kingOfTheCastle.setScreen(new MapScreen(kingOfTheCastle));
             }
         }else {
             kingOfTheCastle.batch.draw(playButtonActive,x,PLAY_BUTTON_Y,playButtonWidth,playButtonheight);

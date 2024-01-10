@@ -40,12 +40,12 @@ public class KingOfTheCastle extends Game {
 
 	@Override
 	public void create() {
-		//this.setScreen(new MapScreen(this));
+		this.setScreen(new MapScreen(this));
 		Gdx.graphics.setWindowedMode(512, 512);
 		viewProxy = new ViewProxy();
 		batch = new SpriteBatch();
 		random = new Random();
-		this.setScreen(new StartScreen(this));
+		//this.setScreen(new StartScreen(this));
 	}
 
 	@Override
