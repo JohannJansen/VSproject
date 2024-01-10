@@ -2,6 +2,7 @@ package com.mygdx.kotc;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,6 +16,8 @@ import java.util.Random;
 
 public class KingOfTheCastle extends Game {
 	public SpriteBatch batch;
+	public BitmapFont font;
+	public BitmapFont thiccFont;
 	public static final int TEXTUREHEIGHT = 16;
 	public static final int TEXTUREWIDTH = 16;
 	private Texture[][] spielfeldTextures;
@@ -48,8 +51,13 @@ public class KingOfTheCastle extends Game {
 		viewProxy = new ViewProxy();
 		batch = new SpriteBatch();
 		random = new Random();
-		this.setScreen(new StartScreen(this));
-		//this.setScreen(new CharacterSelectScreen(this));
+		font = new BitmapFont();
+		thiccFont = new BitmapFont();
+		font.setColor(Color.BLACK);
+		thiccFont.setColor(Color.BLACK);
+		thiccFont.getData().scale(1.0f);
+		//this.setScreen(new StartScreen(this));
+		this.setScreen(new CharacterSelectScreen(this));
 	}
 
 	@Override
@@ -62,6 +70,8 @@ public class KingOfTheCastle extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		font.dispose();
+		thiccFont.dispose();
 
 		// Ressourcen freigeben
 		for (int x = 0; x < spielfeldBreite; x++) {

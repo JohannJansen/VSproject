@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.mygdx.kotc.KingOfTheCastle;
 
 
@@ -39,6 +40,7 @@ public class CharacterSelectScreen implements Screen {
 
 
 
+
     public CharacterSelectScreen(KingOfTheCastle kingOfTheCastle) {
         this.kingOfTheCastle = kingOfTheCastle;
         this.wizardCat = new Texture("OrangeWizardCat.png");
@@ -65,6 +67,13 @@ public class CharacterSelectScreen implements Screen {
         kingOfTheCastle.batch.begin();
 
         float x = kingOfTheCastle.getScreenWidth() / 6  - CatWidth / 2;
+        kingOfTheCastle.font.draw(kingOfTheCastle.batch, "Whiskwizard",CatWidth-60,CatHeight+115);
+        kingOfTheCastle.font.draw(kingOfTheCastle.batch, "Pawspective Monk",CatWidth+60,CatHeight+115);
+        kingOfTheCastle.font.draw(kingOfTheCastle.batch, "PurrrowMaster",CatWidth+210,CatHeight+115);
+        kingOfTheCastle.font.draw(kingOfTheCastle.batch, "Sir Whiskerlot",CatWidth+340,CatHeight+115);
+        GlyphLayout layout = new GlyphLayout(kingOfTheCastle.thiccFont,"Select a Character");
+        float textWidth = layout.width;
+        kingOfTheCastle.thiccFont.draw(kingOfTheCastle.batch, "Select a Character",kingOfTheCastle.getScreenWidth() / 2 - textWidth/2 ,CatHeight+215);
 
 
         if(Gdx.input.getX() < x + CatWidth && Gdx.input.getX() > x
