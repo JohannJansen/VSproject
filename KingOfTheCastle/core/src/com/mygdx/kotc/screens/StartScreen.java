@@ -16,9 +16,6 @@ public class StartScreen implements Screen {
     private static final int EXIT_BUTTON_Y = 100;
     private static final int PLAY_BUTTON_Y = 230;
 
-    private static final int LOGO_WIDTH = 400;
-    private static final int LOGO_HEIGHT = 250;
-    private static final int LOGO_Y = 450;
 
     private  KingOfTheCastle kingOfTheCastle;
 
@@ -68,7 +65,7 @@ public class StartScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY()>PLAY_BUTTON_Y){
             kingOfTheCastle.batch.draw(playButtonInactive,x,PLAY_BUTTON_Y,playButtonWidth,playButtonheight);
             if(Gdx.input.isTouched()){
-               kingOfTheCastle.setScreen(new MapScreen(kingOfTheCastle));
+               kingOfTheCastle.setScreen(new CharacterSelectScreen(kingOfTheCastle));
             }
         }else {
             kingOfTheCastle.batch.draw(playButtonActive,x,PLAY_BUTTON_Y,playButtonWidth,playButtonheight);

@@ -3,7 +3,9 @@ package com.mygdx.kotc;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.kotc.screens.CharacterSelectScreen;
 import com.mygdx.kotc.screens.StartScreen;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
 import com.mygdx.kotc.screens.MapScreen;
@@ -22,7 +24,7 @@ public class KingOfTheCastle extends Game {
 	public ViewProxy viewProxy;
 
 	MapManager mapManager;
-	private int screenWidth = 512;
+	private int screenWidth = 612;
 	private int screenHeight = 512;
 
 	private Texture getRandomCobblestoneTexture() {
@@ -42,11 +44,12 @@ public class KingOfTheCastle extends Game {
 	public void create() {
 		//this.setScreen(new MapScreen(this));
 		Gdx.graphics.setWindowedMode(
-				512, 512);
+				612, 512);
 		viewProxy = new ViewProxy();
 		batch = new SpriteBatch();
 		random = new Random();
 		this.setScreen(new StartScreen(this));
+		//this.setScreen(new CharacterSelectScreen(this));
 	}
 
 	@Override
