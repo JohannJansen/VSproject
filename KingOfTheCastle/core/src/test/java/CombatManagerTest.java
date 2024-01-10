@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.PriorityQueue;
-
 
 public class CombatManagerTest {
     private Map map;
@@ -22,7 +20,7 @@ public class CombatManagerTest {
 
     @BeforeEach
     public void setUp(){
-        map = MapFactory.createMap(16, 16);
+        map = MapFactory.createTestMap(16, 16);
         player = PlayerFactory.createTestPlayer();
         player2 = PlayerFactory.createTestPlayer();
         CombatManager combatManager = new CombatManager();
