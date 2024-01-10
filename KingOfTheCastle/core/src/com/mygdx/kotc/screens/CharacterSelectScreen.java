@@ -26,8 +26,6 @@ public class CharacterSelectScreen implements Screen {
     private int CatWidth = 120;
     private int CatHeight = 250;
 
-    private int monkCatWidth = 120;
-    private int monkCatHeight = 250;
 
     private int startButton_Y = -80;
     private int startButtonHeight = 200;
@@ -74,62 +72,62 @@ public class CharacterSelectScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > wizCat_Y){
             kingOfTheCastle.batch.draw(wizardCat,x ,wizCat_Y, CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-               //todo : go to game with selected character
+               //Todo: Make characer apear "selected" and if picked create charater with correct atributes and sprites
             }
         }else {
             kingOfTheCastle.batch.draw(wizardCatUnactive,x,wizCat_Y, CatWidth, CatHeight);
         }
 
-         x = kingOfTheCastle.getScreenWidth() / 2.56f   - monkCatWidth / 2;
+         x = kingOfTheCastle.getScreenWidth() / 2.56f   - CatWidth / 2;
 
         if(Gdx.input.getX() < x + CatWidth && Gdx.input.getX() > x
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() < wizCat_Y + CatHeight
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > wizCat_Y){
-            kingOfTheCastle.batch.draw(monkCat,x ,wizCat_Y,monkCatWidth, monkCatHeight);
+            kingOfTheCastle.batch.draw(monkCat,x ,wizCat_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-                //todo : go to game with selected character
+
             }
         }else {
-            kingOfTheCastle.batch.draw(monkCatUnactive,x,wizCat_Y,monkCatWidth, monkCatHeight);
+            kingOfTheCastle.batch.draw(monkCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
         }
 
-        x = kingOfTheCastle.getScreenWidth() / 1.63f  - monkCatWidth / 2f;
+        x = kingOfTheCastle.getScreenWidth() / 1.63f  - CatWidth / 2f;
 
         if(Gdx.input.getX() < x + CatWidth && Gdx.input.getX() > x
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() < wizCat_Y + CatHeight
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > wizCat_Y){
-            kingOfTheCastle.batch.draw(archerCat,x ,wizCat_Y,monkCatWidth, monkCatHeight);
+            kingOfTheCastle.batch.draw(archerCat,x ,wizCat_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-                //todo : go to game with selected character
+                kingOfTheCastle.batch.draw(archerCat,x,wizCat_Y,CatWidth, CatHeight);
             }
         }else {
-            kingOfTheCastle.batch.draw(archerCatUnactive,x,wizCat_Y,monkCatWidth, monkCatHeight);
+            kingOfTheCastle.batch.draw(archerCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
         }
 
-        x = kingOfTheCastle.getScreenWidth() / 1.2f  - monkCatWidth / 2f;
+        x = kingOfTheCastle.getScreenWidth() / 1.2f  - CatWidth / 2f;
 
         if(Gdx.input.getX() < x + CatWidth && Gdx.input.getX() > x
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() < wizCat_Y + CatHeight
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > wizCat_Y){
-            kingOfTheCastle.batch.draw(knightCat,x ,wizCat_Y,monkCatWidth, monkCatHeight);
+            kingOfTheCastle.batch.draw(knightCat,x ,wizCat_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-                //todo : go to game with selected character
+
             }
         }else {
-            kingOfTheCastle.batch.draw(knightCatUnactive,x,wizCat_Y,monkCatWidth, monkCatHeight);
+            kingOfTheCastle.batch.draw(knightCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
         }
 
-        x = kingOfTheCastle.getScreenWidth() / 2f  - monkCatWidth / 2f;
+        x = kingOfTheCastle.getScreenWidth() / 2f  - CatWidth / 2f;
 
         if(Gdx.input.getX() < x + CatWidth && Gdx.input.getX() > x
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() < startButton_Y + startButtonHeight
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > startButton_Y){
-            kingOfTheCastle.batch.draw(startButton,x ,startButton_Y,monkCatWidth, monkCatHeight);
+            kingOfTheCastle.batch.draw(startButton,x ,startButton_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
                 //todo : go to game with selected character
             }
         }else {
-            kingOfTheCastle.batch.draw(startButtonUnactive,x,startButton_Y,monkCatWidth, monkCatHeight);
+            kingOfTheCastle.batch.draw(startButtonUnactive,x,startButton_Y,CatWidth, CatHeight);
         }
 
 
