@@ -1,4 +1,4 @@
-package com.mygdx.kotc.Screens;
+package com.mygdx.kotc.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,6 +15,7 @@ public class StartScreen implements Screen {
     private int playButtonheight = 120;
     private static final int EXIT_BUTTON_Y = 100;
     private static final int PLAY_BUTTON_Y = 230;
+
     private static final int LOGO_WIDTH = 400;
     private static final int LOGO_HEIGHT = 250;
     private static final int LOGO_Y = 450;
@@ -46,17 +47,29 @@ public class StartScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         kingOfTheCastle.batch.begin();
 
-        int x = kingOfTheCastle.getScreenWidth() /2-exitButtonWidth/2;
+        int x = kingOfTheCastle.getScreenWidth() / 2 - exitButtonWidth / 2;
 
         if(Gdx.input.getX() < x + exitButtonWidth && Gdx.input.getX() > x
-                && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() < EXIT_BUTTON_Y + exitButtonHeight && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > EXIT_BUTTON_Y){
-            kingOfTheCastle.batch.draw(exitButtonInactive,x ,EXIT_BUTTON_Y,exitButtonWidth, exitButtonHeight);
+                && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() < EXIT_BUTTON_Y + exitButtonHeight
+                && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > EXIT_BUTTON_Y){
+            kingOfTheCastle.batch.draw(exitButtonActive,x ,EXIT_BUTTON_Y,exitButtonWidth, exitButtonHeight);
+            if(Gdx.input.isTouched()){
+                Gdx.app.exit();
+            }
         }else {
-            kingOfTheCastle.batch.draw(exitButtonActive,kingOfTheCastle.getScreenWidth() /2-exitButtonWidth/2 ,EXIT_BUTTON_Y,exitButtonWidth, exitButtonHeight);
+            kingOfTheCastle.batch.draw(exitButtonInactive,x,EXIT_BUTTON_Y,exitButtonWidth, exitButtonHeight);
         }
+
+
         x = kingOfTheCastle.getScreenWidth()/2 - playButtonWidth /2;
-        if(Gdx.input.getX() < x + playButtonWidth && Gdx.input.getX() > x && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() < PLAY_BUTTON_Y + playButtonheight && kingOfTheCastle.getScreenHeight() - Gdx.input.getY()>PLAY_BUTTON_Y){
+
+        if(Gdx.input.getX() < x + playButtonWidth && Gdx.input.getX() > x
+                && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() < PLAY_BUTTON_Y + playButtonheight
+                && kingOfTheCastle.getScreenHeight() - Gdx.input.getY()>PLAY_BUTTON_Y){
             kingOfTheCastle.batch.draw(playButtonInactive,x,PLAY_BUTTON_Y,playButtonWidth,playButtonheight);
+            if(Gdx.input.isTouched()){
+               //kingOfTheCastle.setScreen();
+            }
         }else {
             kingOfTheCastle.batch.draw(playButtonActive,x,PLAY_BUTTON_Y,playButtonWidth,playButtonheight);
         }
