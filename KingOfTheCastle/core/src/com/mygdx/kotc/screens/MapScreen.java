@@ -3,6 +3,8 @@ package com.mygdx.kotc.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.kotc.KingOfTheCastle;
 import com.mygdx.kotc.gamecontroller.InputI;
@@ -11,33 +13,37 @@ import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
-import com.mygdx.kotc.gamemodel.manager.PlayerManager;
+import com.mygdx.kotc.viewproxy.PlayerRenderData;
 import com.mygdx.kotc.viewproxy.TileRenderData;
 
 import java.util.List;
 
 public class MapScreen implements Screen, InputI{
     private KingOfTheCastle kingOfTheCastle;
-    private MapManager mapManager = new MapManager();
+    private MapManager mapManager;
     private Player player;
     private List<Player> playerList;
+    private List<TileRenderData> tileRenderDataList;
+
 
     public MapScreen(KingOfTheCastle kingOfTheCastle) {
         this.kingOfTheCastle = kingOfTheCastle;
         player = PlayerFactory.createTestPlayer();
+        mapManager = new MapManager();
     }
 
     @Override
     public void show() {
-
+        tileRenderDataList = kingOfTheCastle.viewProxy.mapToTileRenderData();
     }
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(1,1,1,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         handleInput(delta);
         update(delta);
         kingOfTheCastle.batch.begin();
-        List<TileRenderData> tileRenderDataList = kingOfTheCastle.viewProxy.mapToTileRenderData();
         tileRenderDataList.forEach(this::displayTile);
         kingOfTheCastle.batch.end();
     }
@@ -83,9 +89,14 @@ public class MapScreen implements Screen, InputI{
                 , tileRenderData.getY()*KingOfTheCastle.TEXTUREHEIGHT);
     }
 
-    public void displayPlayer(PlayerRenderData playerRenderData){
-
-    }
+    //public void displayPlayer(PlayerRenderData playerRenderData){
+    //    Texture texture = switch (playerRenderData.getTextureType()){
+    //
+    //    };
+    //    kingOfTheCastle.batch.draw(texture
+    //            , playerRenderData.getX()*KingOfTheCastle.TEXTUREWIDTH
+    //            , playerRenderData.getY()*KingOfTheCastle.TEXTUREHEIGHT);
+    //}
 
     @Override
     public void resize(int width, int height) {

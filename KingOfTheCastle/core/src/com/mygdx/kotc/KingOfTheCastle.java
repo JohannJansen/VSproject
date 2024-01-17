@@ -34,10 +34,10 @@ public class KingOfTheCastle extends Game {
 
 	@Override
 	public void create() {
-		//this.setScreen(new MapScreen(this));
-		Gdx.graphics.setWindowedMode(
-				612, 512);
+
 		viewProxy = new ViewProxy();
+		tileRenderDataList  = viewProxy.mapToTileRenderData();
+		Gdx.graphics.setWindowedMode(612, 512);
 		batch = new SpriteBatch();
 		random = new Random();
 		font = new BitmapFont();
@@ -47,14 +47,13 @@ public class KingOfTheCastle extends Game {
 		thiccFont.getData().scale(1.0f);
 		this.setScreen(new StartScreen(this));
 		//this.setScreen(new CharacterSelectScreen(this));
-		//this.setScreen(mapScreen);
-		//tileRenderDataList  = viewProxy.mapToTileRenderData();
+		//this.setScreen(new MapScreen(this));
 	}
 
 	@Override
 	public void render() {
 		super.render();
-		Gdx.gl.glClearColor(0.36f, 0.36f, 0.36f, 1);
+		//Gdx.gl.glClearColor(0.36f, 0.36f, 0.36f, 1);
 //		this.batch.begin();
 //		//tileRenderDataList.forEach(mapScreen::displayTile);
 //		this.batch.end();

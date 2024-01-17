@@ -1,4 +1,4 @@
-package com.mygdx.kotc.screens;
+package com.mygdx.kotc.viewproxy;
 
 import com.mygdx.kotc.gamemodel.entities.TextureType;
 
