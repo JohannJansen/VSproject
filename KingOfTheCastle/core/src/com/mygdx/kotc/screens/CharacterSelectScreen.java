@@ -87,7 +87,6 @@ public class CharacterSelectScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > wizCat_Y){
             kingOfTheCastle.batch.draw(wizardCat,x ,wizCat_Y, CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-                selectedPlayer = null;
                 selectedPlayer = PlayerFactory.createWizzard();
                 isWizardCatActive = true;
                 isMonkCatActive= false;
@@ -111,13 +110,11 @@ public class CharacterSelectScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > wizCat_Y){
             kingOfTheCastle.batch.draw(monkCat,x ,wizCat_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-                selectedPlayer = null;
                 selectedPlayer = PlayerFactory.createMonk();
                 isWizardCatActive = false;
                 isMonkCatActive= true;
                 isArcherCatActive=false;
                 isKnightCatActive=false;
-                //kingOfTheCastle.batch.draw(monkCat,x ,wizCat_Y,CatWidth, CatHeight);
             }
         }else {
             if(!isMonkCatActive){
@@ -137,8 +134,6 @@ public class CharacterSelectScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > wizCat_Y){
             kingOfTheCastle.batch.draw(archerCat,x ,wizCat_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-                kingOfTheCastle.batch.draw(archerCat,x,wizCat_Y,CatWidth, CatHeight);
-                selectedPlayer = null;
                 selectedPlayer = PlayerFactory.createArcher();
                 isWizardCatActive = false;
                 isMonkCatActive= false;
@@ -161,7 +156,6 @@ public class CharacterSelectScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > wizCat_Y){
             kingOfTheCastle.batch.draw(knightCat,x ,wizCat_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-                selectedPlayer = null;
                 selectedPlayer = PlayerFactory.createknight();
                 isWizardCatActive = false;
                 isMonkCatActive= false;
