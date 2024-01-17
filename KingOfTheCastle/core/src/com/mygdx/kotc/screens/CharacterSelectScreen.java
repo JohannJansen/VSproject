@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.mygdx.kotc.KingOfTheCastle;
+import com.mygdx.kotc.gamemodel.entities.Player;
+import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 
 
 public class CharacterSelectScreen implements Screen {
@@ -23,6 +25,9 @@ public class CharacterSelectScreen implements Screen {
     Texture archerCatUnactive;
     Texture startButton;
     Texture startButtonUnactive;
+
+    private Player selectedPlayer;
+
 
     private int CatWidth = 120;
     private int CatHeight = 250;
@@ -77,7 +82,8 @@ public class CharacterSelectScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > wizCat_Y){
             kingOfTheCastle.batch.draw(wizardCat,x ,wizCat_Y, CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-               //Todo: Make characer apear "selected" and if picked create charater with correct atributes and sprites
+                selectedPlayer = null;
+               selectedPlayer = PlayerFactory.createWizzard();
             }
         }else {
             kingOfTheCastle.batch.draw(wizardCatUnactive,x,wizCat_Y, CatWidth, CatHeight);
@@ -90,7 +96,8 @@ public class CharacterSelectScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > wizCat_Y){
             kingOfTheCastle.batch.draw(monkCat,x ,wizCat_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-
+                selectedPlayer = null;
+                selectedPlayer = PlayerFactory.createMonk();
             }
         }else {
             kingOfTheCastle.batch.draw(monkCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
@@ -104,6 +111,8 @@ public class CharacterSelectScreen implements Screen {
             kingOfTheCastle.batch.draw(archerCat,x ,wizCat_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
                 kingOfTheCastle.batch.draw(archerCat,x,wizCat_Y,CatWidth, CatHeight);
+                selectedPlayer = null;
+                selectedPlayer = PlayerFactory.createArcher();
             }
         }else {
             kingOfTheCastle.batch.draw(archerCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
@@ -116,7 +125,8 @@ public class CharacterSelectScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > wizCat_Y){
             kingOfTheCastle.batch.draw(knightCat,x ,wizCat_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-
+                selectedPlayer = null;
+                selectedPlayer = PlayerFactory.createknight();
             }
         }else {
             kingOfTheCastle.batch.draw(knightCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
@@ -128,7 +138,7 @@ public class CharacterSelectScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > startButton_Y){
             kingOfTheCastle.batch.draw(startButton,x ,startButton_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-                //todo : go to game with selected character
+                kingOfTheCastle.setScreen(new MapScreen(kingOfTheCastle));
             }
         }else {
             kingOfTheCastle.batch.draw(startButtonUnactive,x,startButton_Y,CatWidth, CatHeight);
