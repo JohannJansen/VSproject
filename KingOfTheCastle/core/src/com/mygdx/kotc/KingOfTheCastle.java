@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.kotc.gamecontroller.GameControllerClient;
+import com.mygdx.kotc.screens.BattleScreen;
 import com.mygdx.kotc.screens.CharacterSelectScreen;
 import com.mygdx.kotc.screens.StartScreen;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
