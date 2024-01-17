@@ -73,10 +73,10 @@ public class CharacterSelectScreen implements Screen {
         kingOfTheCastle.batch.begin();
 
         float x = kingOfTheCastle.getScreenWidth() / 6  - CatWidth / 2;
-        kingOfTheCastle.font.draw(kingOfTheCastle.batch, "Whiskwizard",CatWidth-60,CatHeight+115);
-        kingOfTheCastle.font.draw(kingOfTheCastle.batch, "Pawspective Monk",CatWidth+60,CatHeight+115);
-        kingOfTheCastle.font.draw(kingOfTheCastle.batch, "PurrrowMaster",CatWidth+210,CatHeight+115);
-        kingOfTheCastle.font.draw(kingOfTheCastle.batch, "Sir Whiskerlot",CatWidth+340,CatHeight+115);
+        kingOfTheCastle.font.draw(kingOfTheCastle.batch, "Whiskwizard",CatWidth,CatHeight+115);
+        kingOfTheCastle.font.draw(kingOfTheCastle.batch, "Pawspective Monk",CatWidth+220,CatHeight+115);
+        kingOfTheCastle.font.draw(kingOfTheCastle.batch, "PurrrowMaster",CatWidth+462,CatHeight+115);
+        kingOfTheCastle.font.draw(kingOfTheCastle.batch, "Sir Whiskerlot",CatWidth+680,CatHeight+115);
         GlyphLayout layout = new GlyphLayout(kingOfTheCastle.thiccFont,"Select a Character");
         float textWidth = layout.width;
         kingOfTheCastle.thiccFont.draw(kingOfTheCastle.batch, "Select a Character",kingOfTheCastle.getScreenWidth() / 2 - textWidth/2 ,CatHeight+215);
