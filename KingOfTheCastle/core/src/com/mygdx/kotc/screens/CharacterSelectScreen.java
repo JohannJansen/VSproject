@@ -37,6 +37,11 @@ public class CharacterSelectScreen implements Screen {
     private int startButtonHeight = 200;
     private int startButtonWidth = 120;
 
+    private boolean isWizardCatActive = false;
+    private boolean isMonkCatActive = false;
+    private boolean isArcherCatActive = false;
+    private boolean isKnightCatActive = false;
+
 
     private static final int wizCat_Y = 100;
     private BitmapFont font;
@@ -83,10 +88,17 @@ public class CharacterSelectScreen implements Screen {
             kingOfTheCastle.batch.draw(wizardCat,x ,wizCat_Y, CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
                 selectedPlayer = null;
-               selectedPlayer = PlayerFactory.createWizzard();
+                selectedPlayer = PlayerFactory.createWizzard();
+                isWizardCatActive = true;
+                isMonkCatActive= false;
+                isArcherCatActive=false;
+                isKnightCatActive=false;
             }
         }else {
-            kingOfTheCastle.batch.draw(wizardCatUnactive,x,wizCat_Y, CatWidth, CatHeight);
+            if(!isWizardCatActive){
+                kingOfTheCastle.batch.draw(wizardCatUnactive,x,wizCat_Y, CatWidth, CatHeight);
+            }
+
         }
 
          x = kingOfTheCastle.getScreenWidth() / 2.56f   - CatWidth / 2;
@@ -98,10 +110,18 @@ public class CharacterSelectScreen implements Screen {
             if(Gdx.input.isTouched()){
                 selectedPlayer = null;
                 selectedPlayer = PlayerFactory.createMonk();
+                isWizardCatActive = false;
+                isMonkCatActive= true;
+                isArcherCatActive=false;
+                isKnightCatActive=false;
+                kingOfTheCastle.batch.draw(monkCat,x ,wizCat_Y,CatWidth, CatHeight);
             }
         }else {
-            kingOfTheCastle.batch.draw(monkCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
+            if(!isMonkCatActive){
+                kingOfTheCastle.batch.draw(monkCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
+            }
         }
+
 
         x = kingOfTheCastle.getScreenWidth() / 1.63f  - CatWidth / 2f;
 
@@ -113,9 +133,16 @@ public class CharacterSelectScreen implements Screen {
                 kingOfTheCastle.batch.draw(archerCat,x,wizCat_Y,CatWidth, CatHeight);
                 selectedPlayer = null;
                 selectedPlayer = PlayerFactory.createArcher();
+                isWizardCatActive = false;
+                isMonkCatActive= false;
+                isArcherCatActive=true;
+                isKnightCatActive=false;
             }
         }else {
-            kingOfTheCastle.batch.draw(archerCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
+            if(!isArcherCatActive){
+                kingOfTheCastle.batch.draw(archerCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
+            }
+
         }
 
         x = kingOfTheCastle.getScreenWidth() / 1.2f  - CatWidth / 2f;
@@ -127,9 +154,16 @@ public class CharacterSelectScreen implements Screen {
             if(Gdx.input.isTouched()){
                 selectedPlayer = null;
                 selectedPlayer = PlayerFactory.createknight();
+                isWizardCatActive = false;
+                isMonkCatActive= false;
+                isArcherCatActive=false;
+                isKnightCatActive=true;
             }
         }else {
-            kingOfTheCastle.batch.draw(knightCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
+            if(!isKnightCatActive){
+                kingOfTheCastle.batch.draw(knightCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
+            }
+
         }
         x = kingOfTheCastle.getScreenWidth() / 2f  - CatWidth / 2f;
 
@@ -170,4 +204,6 @@ public class CharacterSelectScreen implements Screen {
     public void dispose() {
 
     }
+
+
 }
