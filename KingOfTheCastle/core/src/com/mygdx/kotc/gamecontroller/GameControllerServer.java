@@ -11,12 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public  class GameControllerServer implements ControllerOutputI, InputI{
+public  class GameControllerServer implements ControllerOutputI{
     public int MAXPLAYERS = 8;
     private boolean isRunning = true;
     private final long TICKDURATIONMILLIS = 1000;
     private IdGenerator idGenerator = new IdGenerator();
-    private Map<Long, Player> playerMapping = new HashMap<Long, Player>();
+    private Map<Long, Player> playerMapping = new HashMap<>();
 
     public void start(){
         while (isRunning){
@@ -59,25 +59,5 @@ public  class GameControllerServer implements ControllerOutputI, InputI{
     @Override
     public List<Player> getLobbyPlayerList() {
         return null;
-    }
-
-    @Override
-    public void left() throws TileNotReachableException {
-
-    }
-
-    @Override
-    public void right() {
-
-    }
-
-    @Override
-    public void up() {
-
-    }
-
-    @Override
-    public void down() {
-
     }
 }

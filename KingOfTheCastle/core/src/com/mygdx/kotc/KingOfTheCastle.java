@@ -29,15 +29,15 @@ public class KingOfTheCastle extends Game {
 	public ViewProxy viewProxy;
 	public List<TileRenderData> tileRenderDataList;
 	MapScreen mapScreen;
-	private int screenWidth = 612;
-	private int screenHeight = 512;
+	private int screenWidth = 1024;
+	private int screenHeight = 1024;
 
 	@Override
 	public void create() {
 
 		viewProxy = new ViewProxy();
 		tileRenderDataList  = viewProxy.mapToTileRenderData();
-		Gdx.graphics.setWindowedMode(612, 512);
+		Gdx.graphics.setWindowedMode(getScreenWidth(), getScreenHeight());
 		batch = new SpriteBatch();
 		random = new Random();
 		font = new BitmapFont();
