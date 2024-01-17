@@ -56,8 +56,8 @@ public class KingOfTheCastle extends Game {
 		font.setColor(Color.BLACK);
 		thiccFont.setColor(Color.BLACK);
 		thiccFont.getData().scale(1.0f);
-		//this.setScreen(new StartScreen(this));
-		this.setScreen(new CharacterSelectScreen(this));
+		this.setScreen(new StartScreen(this));
+		//this.setScreen(new CharacterSelectScreen(this));
 	}
 
 	@Override

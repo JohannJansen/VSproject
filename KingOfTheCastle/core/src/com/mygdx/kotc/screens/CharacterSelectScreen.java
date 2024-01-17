@@ -37,10 +37,6 @@ public class CharacterSelectScreen implements Screen {
     private BitmapFont font;
     private String wizstring = "WizardCat";
 
-
-
-
-
     public CharacterSelectScreen(KingOfTheCastle kingOfTheCastle) {
         this.kingOfTheCastle = kingOfTheCastle;
         this.wizardCat = new Texture("OrangeWizardCat.png");
@@ -125,7 +121,6 @@ public class CharacterSelectScreen implements Screen {
         }else {
             kingOfTheCastle.batch.draw(knightCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
         }
-
         x = kingOfTheCastle.getScreenWidth() / 2f  - CatWidth / 2f;
 
         if(Gdx.input.getX() < x + CatWidth && Gdx.input.getX() > x
@@ -138,14 +133,6 @@ public class CharacterSelectScreen implements Screen {
         }else {
             kingOfTheCastle.batch.draw(startButtonUnactive,x,startButton_Y,CatWidth, CatHeight);
         }
-
-
-
-
-
-
-
-
         kingOfTheCastle.batch.end();
     }
 
