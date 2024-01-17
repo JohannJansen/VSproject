@@ -98,6 +98,9 @@ public class CharacterSelectScreen implements Screen {
             if(!isWizardCatActive){
                 kingOfTheCastle.batch.draw(wizardCatUnactive,x,wizCat_Y, CatWidth, CatHeight);
             }
+            if(isWizardCatActive){
+                kingOfTheCastle.batch.draw(wizardCat,x,wizCat_Y, CatWidth, CatHeight);
+            }
 
         }
 
@@ -114,12 +117,16 @@ public class CharacterSelectScreen implements Screen {
                 isMonkCatActive= true;
                 isArcherCatActive=false;
                 isKnightCatActive=false;
-                kingOfTheCastle.batch.draw(monkCat,x ,wizCat_Y,CatWidth, CatHeight);
+                //kingOfTheCastle.batch.draw(monkCat,x ,wizCat_Y,CatWidth, CatHeight);
             }
         }else {
             if(!isMonkCatActive){
                 kingOfTheCastle.batch.draw(monkCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
             }
+            if(isMonkCatActive){
+                kingOfTheCastle.batch.draw(monkCat,x,wizCat_Y,CatWidth, CatHeight);
+            }
+
         }
 
 
@@ -141,6 +148,8 @@ public class CharacterSelectScreen implements Screen {
         }else {
             if(!isArcherCatActive){
                 kingOfTheCastle.batch.draw(archerCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
+            }if(isArcherCatActive){
+                kingOfTheCastle.batch.draw(archerCat,x,wizCat_Y,CatWidth, CatHeight);
             }
 
         }
@@ -162,6 +171,9 @@ public class CharacterSelectScreen implements Screen {
         }else {
             if(!isKnightCatActive){
                 kingOfTheCastle.batch.draw(knightCatUnactive,x,wizCat_Y,CatWidth, CatHeight);
+            }
+            if(isKnightCatActive){
+                kingOfTheCastle.batch.draw(knightCat,x,wizCat_Y,CatWidth, CatHeight);
             }
 
         }
