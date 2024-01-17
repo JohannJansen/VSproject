@@ -30,6 +30,9 @@ public class Tile {
         this.occupiedBy = occupiedBy;
     }
 
+    public boolean isOccupied(){
+        return occupiedBy != null;
+    }
     public void setTextureType(TextureType textureType){ this.textureType = textureType; }
 
     public TextureType getTextureType(){return textureType;}

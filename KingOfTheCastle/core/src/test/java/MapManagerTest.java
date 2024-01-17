@@ -17,7 +17,7 @@ public class MapManagerTest {
     public void setUp(){
         player = PlayerFactory.createTestPlayer();
         player2 = PlayerFactory.createTestPlayer();
-        mapManager.setPlayerPos(new Vec2d(8,9),player);
+        mapManager.setPlayerPosOnTile(new Vec2d(8,9),player);
     }
 
     @Test

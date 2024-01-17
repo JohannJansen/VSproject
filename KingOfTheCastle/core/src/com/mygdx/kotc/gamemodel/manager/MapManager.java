@@ -16,7 +16,7 @@ public class MapManager implements MapI{
     int DEFAULTMAPWIDTH = 32;
     int DEFAULTMAPHEIGHT = 32;
 
-    Map map = MapFactory.createTestMap(DEFAULTMAPWIDTH, DEFAULTMAPHEIGHT);
+    public Map map = MapFactory.createTestMap(DEFAULTMAPWIDTH, DEFAULTMAPHEIGHT);
 
     /**
      * creates a new Map with the given height and widht
@@ -42,10 +42,11 @@ public class MapManager implements MapI{
 
         if(!player.getPlayerInCombat() && tile.isTraversible()){
             removePlayerFromCurrentTile(player);
-            player.setPosition(newPos);
-            setPlayerPos(newPos, player);
+            //player.setPosition(newPos);
+            setPlayerPosOnTile(newPos, player);
         }else {
-            throw new TileNotReachableException();
+            System.out.println("This Tile is an obstacle and isn't reachable!");
+            //throw new TileNotReachableException();
         }
     }
     /**
@@ -65,15 +66,15 @@ public class MapManager implements MapI{
                 Random random = new Random();
                 int randomNum = random.nextInt(2)+1;
                 if (randomNum == 2){
-                    Vec2d playerSpawnPos = new Vec2d(j,i);
-                    setPlayerPos(playerSpawnPos,player);
+                    Vec2d playerSpawnPos = new Vec2d(j, i);
+                    setPlayerPosOnTile(playerSpawnPos, player);
                 }
             }
         }
     }
 
     @Override
-    public void setPlayerPos(Vec2d pos, Player player) {
+    public void setPlayerPosOnTile(Vec2d pos, Player player) {
         player.setPosition(pos);
         Tile tile = map.getTiles()[pos.getPosX()][pos.getPosY()];
         tile.setOccupiedBy(player);

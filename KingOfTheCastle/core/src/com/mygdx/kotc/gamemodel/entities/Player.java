@@ -17,6 +17,7 @@ public class Player {
     private List<Modifier> attackModifiers;
     private List<Modifier> defenseModifiers;
     private boolean playerInCombat;
+    private PlayerTextureType playerTextureType;
 
     public Player(long playerId, Vec2d position, boolean isBlocking, int speed, int totalHp, int defense, int currentHealth, int strength, Equipment weapon, Equipment shield, Equipment armor, List<Modifier> attackModifiers, List<Modifier> defenseModifiers, boolean playerInCombat) {
         this.playerId = playerId;
@@ -142,5 +143,13 @@ public class Player {
 
     public long getPlayerId() {
         return playerId;
+    }
+
+    public PlayerTextureType getPlayerTextureType() {
+        return playerTextureType;
+    }
+
+    public void setPlayerTextureType(PlayerTextureType playerTextureType) {
+        this.playerTextureType = playerTextureType;
     }
 }

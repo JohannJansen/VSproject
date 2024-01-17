@@ -43,7 +43,7 @@ public class KingOfTheCastle extends Game {
 		gameControllerClient.start();
 
 		viewProxy = new ViewProxy();
-		tileRenderDataList  = viewProxy.mapToTileRenderData();
+		//tileRenderDataList  = viewProxy.mapToTileRenderData();
 		Gdx.graphics.setWindowedMode(getScreenWidth(), getScreenHeight());
 		batch = new SpriteBatch();
 		random = new Random();
@@ -52,7 +52,7 @@ public class KingOfTheCastle extends Game {
 		font.setColor(Color.BLACK);
 		thiccFont.setColor(Color.BLACK);
 		thiccFont.getData().scale(1.0f);
-		this.setScreen(new BattleScreen(this));
+		this.setScreen(new StartScreen(this));
 		//this.setScreen(new CharacterSelectScreen(this));
 		//this.setScreen(new MapScreen(this));
 	}

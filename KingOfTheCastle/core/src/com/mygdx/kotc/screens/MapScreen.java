@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.kotc.KingOfTheCastle;
-import com.mygdx.kotc.gamecontroller.InputI;
 import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
@@ -15,8 +13,12 @@ import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
 import com.mygdx.kotc.viewproxy.PlayerRenderData;
 import com.mygdx.kotc.viewproxy.TileRenderData;
+import com.mygdx.kotc.gamemodel.entities.PlayerTextureType;
 
+
+import java.util.Arrays;
 import java.util.List;
+
 
 public class MapScreen implements Screen{
     private KingOfTheCastle kingOfTheCastle;
@@ -24,28 +26,39 @@ public class MapScreen implements Screen{
     private Player player;
     private List<Player> playerList;
     private List<TileRenderData> tileRenderDataList;
+    private List<PlayerRenderData> playerRenderDataList;
 
 
 
     public MapScreen(KingOfTheCastle kingOfTheCastle) {
         this.kingOfTheCastle = kingOfTheCastle;
         player = PlayerFactory.createTestPlayer();
+        player = kingOfTheCastle.viewProxy.map.getTiles()[7][6].getOccupiedBy();
         mapManager = new MapManager();
+        mapManager.setMap(kingOfTheCastle.viewProxy.map);
     }
 
     @Override
     public void show() {
-        tileRenderDataList = kingOfTheCastle.viewProxy.mapToTileRenderData();
+//        tileRenderDataList = kingOfTheCastle.viewProxy.mapToTileRenderData();
+//        playerRenderDataList = kingOfTheCastle.viewProxy.mapToPlayerRenderData();
+        Gdx.graphics.setWindowedMode(1024, 1024);
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1,1,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        tileRenderDataList = kingOfTheCastle.viewProxy.mapToTileRenderData();
+        playerRenderDataList = kingOfTheCastle.viewProxy.mapToPlayerRenderData();
+
         handleInput(delta);
         update(delta);
+
         kingOfTheCastle.batch.begin();
         tileRenderDataList.forEach(this::displayTile);
+        playerRenderDataList.forEach(this::displayPlayer);
         kingOfTheCastle.batch.end();
     }
 
@@ -90,14 +103,22 @@ public class MapScreen implements Screen{
                 , tileRenderData.getY()*KingOfTheCastle.TEXTUREHEIGHT);
     }
 
-    //public void displayPlayer(PlayerRenderData playerRenderData){
-    //    Texture texture = switch (playerRenderData.getTextureType()){
-    //
-    //    };
-    //    kingOfTheCastle.batch.draw(texture
-    //            , playerRenderData.getX()*KingOfTheCastle.TEXTUREWIDTH
-    //            , playerRenderData.getY()*KingOfTheCastle.TEXTUREHEIGHT);
-    //}
+    public void displayPlayer(PlayerRenderData playerRenderData){
+        Texture texture = switch (playerRenderData.getPlayerTextureType()){
+            case WIZARD_LEFT -> new Texture(Gdx.files.internal("png/cats/mageCat_cobble_left.png"));
+            case WIZARD_RIGHT -> new Texture(Gdx.files.internal("png/cats/mageCat_cobble_right.png"));
+            case KNIGHT_LEFT -> new Texture(Gdx.files.internal("png/cats/warriorCat_cobble_left.png"));
+            case KNIGHT_RIGHT -> new Texture(Gdx.files.internal("png/cats/warriorCat_cobble_right.png"));
+            case WIZARD -> null;
+            case KNIGHT -> null;
+            case MONK -> null;
+            case ARCHER -> null;
+            default -> null;
+        };
+        kingOfTheCastle.batch.draw(texture
+                , playerRenderData.getX()*KingOfTheCastle.TEXTUREWIDTH
+                , playerRenderData.getY()*KingOfTheCastle.TEXTUREHEIGHT);
+    }
 
     @Override
     public void resize(int width, int height) {
@@ -122,6 +143,7 @@ public class MapScreen implements Screen{
     @Override
     public void dispose() {
 
+
     }
 
 
@@ -129,10 +151,7 @@ public class MapScreen implements Screen{
 
     public void left(){
         try {
-            int posX = player.getPosition().getPosX();
-            int posY = player.getPosition().getPosY();
-            mapManager.movePlayer(player, new Vec2d(posX-1, posY));
-
+            mapManager.movePlayer(player, new Vec2d(-1, 0));
         } catch (TileNotReachableException e) {
             throw new RuntimeException(e);
         }
@@ -141,9 +160,7 @@ public class MapScreen implements Screen{
 
     public void right() {
         try {
-            int posX = player.getPosition().getPosX();
-            int posY = player.getPosition().getPosY();
-            mapManager.movePlayer(player, new Vec2d(posX+1, posY));
+            mapManager.movePlayer(player, new Vec2d(1, 0));
         } catch (TileNotReachableException e) {
             throw new RuntimeException(e);
         }
@@ -152,9 +169,7 @@ public class MapScreen implements Screen{
 
     public void up() {
         try {
-            int posX = player.getPosition().getPosX();
-            int posY = player.getPosition().getPosY();
-            mapManager.movePlayer(player, new Vec2d(posX, posY+1));
+            mapManager.movePlayer(player, new Vec2d(0, 1));
         } catch (TileNotReachableException e) {
             throw new RuntimeException(e);
         }
@@ -163,9 +178,7 @@ public class MapScreen implements Screen{
 
     public void down() {
         try {
-            int posX = player.getPosition().getPosX();
-            int posY = player.getPosition().getPosY();
-            mapManager.movePlayer(player, new Vec2d(posX, posY-1));
+            mapManager.movePlayer(player, new Vec2d(0, -1));
         } catch (TileNotReachableException e) {
             throw new RuntimeException(e);
         }

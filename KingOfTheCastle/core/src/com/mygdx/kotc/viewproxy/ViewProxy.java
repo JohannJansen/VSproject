@@ -37,11 +37,12 @@ public class ViewProxy implements OutputI{
         }
         return list;
     }
+    public Map map = MapFactory.createDefaultMap();
 
     public List<TileRenderData> mapToTileRenderData() {
         List<TileRenderData> tileRenderDataList = new ArrayList<>();
         //Map map = gameStateOutput.getMap();
-        Map map = MapFactory.createDefaultMap();
+//        Map map = MapFactory.createDefaultMap();
         for (int y = 0; y < map.getHeight(); y++){
             for (int x = 0; x < map.getWidth(); x++){
                 Tile tile = map.getTiles()[y][x];
@@ -51,5 +52,21 @@ public class ViewProxy implements OutputI{
             }
         }
         return tileRenderDataList;
+    }
+
+    public List<PlayerRenderData> mapToPlayerRenderData() {
+        List<PlayerRenderData> playerRenderDataList = new ArrayList<>();
+        //Map map = gameStateOutput.getMap();
+        for (int y = 0; y < map.getHeight(); y++){
+            for (int x = 0; x < map.getWidth(); x++){
+                Tile tile = map.getTiles()[y][x];
+                if(tile.isOccupied()) {
+                    PlayerRenderData playerRenderData = new PlayerRenderData(tile.getPosition().getPosX()
+                            ,tile.getPosition().getPosY(),tile.getOccupiedBy().getPlayerTextureType());
+                    playerRenderDataList.add(playerRenderData);
+                }
+            }
+        }
+        return playerRenderDataList;
     }
 }
