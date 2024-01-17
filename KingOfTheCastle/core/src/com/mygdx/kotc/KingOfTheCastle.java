@@ -28,9 +28,10 @@ public class KingOfTheCastle extends Game {
 	//private Random random;
 	public ViewProxy viewProxy;
 	public List<TileRenderData> tileRenderDataList;
-	MapScreen mapScreen = new MapScreen(this);
+	MapScreen mapScreen;
 	private int screenWidth = 612;
 	private int screenHeight = 512;
+
 	@Override
 	public void create() {
 		//this.setScreen(new MapScreen(this));
@@ -46,18 +47,17 @@ public class KingOfTheCastle extends Game {
 		thiccFont.getData().scale(1.0f);
 		this.setScreen(new StartScreen(this));
 		//this.setScreen(new CharacterSelectScreen(this));
-		this.setScreen(mapScreen);
-		tileRenderDataList  = viewProxy.mapToTileRenderData();
+		//this.setScreen(mapScreen);
+		//tileRenderDataList  = viewProxy.mapToTileRenderData();
 	}
 
 	@Override
 	public void render() {
 		super.render();
 		Gdx.gl.glClearColor(0.36f, 0.36f, 0.36f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		this.batch.begin();
-		//tileRenderDataList.forEach(mapScreen::displayTile);
-		this.batch.end();
+//		this.batch.begin();
+//		//tileRenderDataList.forEach(mapScreen::displayTile);
+//		this.batch.end();
 	}
 
 	@Override
@@ -65,5 +65,13 @@ public class KingOfTheCastle extends Game {
 		batch.dispose();
 		font.dispose();
 		thiccFont.dispose();
+	}
+
+	public int getScreenWidth() {
+		return screenWidth;
+	}
+
+	public int getScreenHeight() {
+		return screenHeight;
 	}
 }

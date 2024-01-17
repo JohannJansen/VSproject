@@ -56,8 +56,6 @@ public class StartScreen implements Screen {
         }else {
             kingOfTheCastle.batch.draw(exitButtonInactive,x,EXIT_BUTTON_Y,exitButtonWidth, exitButtonHeight);
         }
-
-
         x = kingOfTheCastle.getScreenWidth()/2 - playButtonWidth /2;
 
         if(Gdx.input.getX() < x + playButtonWidth && Gdx.input.getX() > x
@@ -70,11 +68,6 @@ public class StartScreen implements Screen {
         }else {
             kingOfTheCastle.batch.draw(playButtonActive,x,PLAY_BUTTON_Y,playButtonWidth,playButtonheight);
         }
-
-
-
-
-
         kingOfTheCastle.batch.end();
 
     }
