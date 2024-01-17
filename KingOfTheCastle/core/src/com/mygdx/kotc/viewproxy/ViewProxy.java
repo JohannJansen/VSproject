@@ -40,7 +40,8 @@ public class ViewProxy implements OutputI{
 
     public List<TileRenderData> mapToTileRenderData() {
         List<TileRenderData> tileRenderDataList = new ArrayList<>();
-        Map map = gameStateOutput.getMap();
+        //Map map = gameStateOutput.getMap();
+        Map map = MapFactory.createDefaultMap();
         for (int y = 0; y < map.getHeight(); y++){
             for (int x = 0; x < map.getWidth(); x++){
                 Tile tile = map.getTiles()[y][x];
