@@ -18,12 +18,13 @@ import com.mygdx.kotc.viewproxy.TileRenderData;
 
 import java.util.List;
 
-public class MapScreen implements Screen, InputI{
+public class MapScreen implements Screen{
     private KingOfTheCastle kingOfTheCastle;
     private MapManager mapManager;
     private Player player;
     private List<Player> playerList;
     private List<TileRenderData> tileRenderDataList;
+
 
 
     public MapScreen(KingOfTheCastle kingOfTheCastle) {
@@ -125,7 +126,7 @@ public class MapScreen implements Screen, InputI{
 
 
     // InputI methods
-    @Override
+
     public void left(){
         try {
             int posX = player.getPosition().getPosX();
@@ -137,7 +138,7 @@ public class MapScreen implements Screen, InputI{
         }
     }
 
-    @Override
+
     public void right() {
         try {
             int posX = player.getPosition().getPosX();
@@ -148,7 +149,7 @@ public class MapScreen implements Screen, InputI{
         }
     }
 
-    @Override
+
     public void up() {
         try {
             int posX = player.getPosition().getPosX();
@@ -159,7 +160,7 @@ public class MapScreen implements Screen, InputI{
         }
     }
 
-    @Override
+
     public void down() {
         try {
             int posX = player.getPosition().getPosX();

@@ -139,4 +139,8 @@ public class Player {
     public void setDefenseModifiers(List<Modifier> defenseModifiers) {
         this.defenseModifiers = defenseModifiers;
     }
+
+    public long getPlayerId() {
+        return playerId;
+    }
 }

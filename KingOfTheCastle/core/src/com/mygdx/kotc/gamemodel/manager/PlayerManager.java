@@ -9,6 +9,7 @@ import com.mygdx.kotc.gamemodel.repositories.PlayerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PlayerManager implements PlayerI {
     private List<Player> playerList = new ArrayList<>();
@@ -33,5 +34,14 @@ public class PlayerManager implements PlayerI {
 
     public void setPlayerList(List<Player> playerList) {
         this.playerList = playerList;
+    }
+
+    public Player getPlayerById(int playerId){
+        Optional<Player> playerOptional = playerList.stream().filter(p -> p.getPlayerId() == playerId).findFirst();
+        if (playerOptional.isPresent()){
+            return playerOptional.get();
+        } else {
+            throw new IllegalArgumentException("No Player with the given PlayerID was found");
+        }
     }
 }

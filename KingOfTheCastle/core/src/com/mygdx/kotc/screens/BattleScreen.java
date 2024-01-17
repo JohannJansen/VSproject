@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.mygdx.kotc.KingOfTheCastle;
 import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
+import com.mygdx.kotc.inputprocessors.BattleScreenInputProcessor;
 
 
 public class BattleScreen implements Screen {
@@ -30,6 +31,7 @@ public class BattleScreen implements Screen {
         this.kingOfTheCastle = kingOfTheCastle;
         this.startButton = new Texture("startButton.png");
         this.startButtonUnactive = new Texture("startButtonUnactive.png");
+        Gdx.input.setInputProcessor(new BattleScreenInputProcessor(kingOfTheCastle.gameControllerClient));
     }
 
     @Override

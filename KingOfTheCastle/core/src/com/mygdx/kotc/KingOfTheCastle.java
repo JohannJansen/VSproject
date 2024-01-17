@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.kotc.gamecontroller.GameControllerClient;
 import com.mygdx.kotc.screens.CharacterSelectScreen;
 import com.mygdx.kotc.screens.StartScreen;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
@@ -33,8 +34,12 @@ public class KingOfTheCastle extends Game {
 	private int screenWidth = 1024;
 	private int screenHeight = 1024;
 
+	public GameControllerClient gameControllerClient;
+
 	@Override
 	public void create() {
+		gameControllerClient = new GameControllerClient();
+		gameControllerClient.start();
 
 		viewProxy = new ViewProxy();
 		tileRenderDataList  = viewProxy.mapToTileRenderData();

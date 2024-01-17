@@ -52,6 +52,4 @@ public class ViewProxy implements OutputI{
         }
         return tileRenderDataList;
     }
-
-
 }
