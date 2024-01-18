@@ -53,11 +53,11 @@ public  class GameControllerServer implements ControllerOutputI{
         }
     }
 
-    private void movePlayer(Player player, Vec2d vec2d) throws TileNotReachableException {
+    public void movePlayer(Player player, Vec2d vec2d) throws TileNotReachableException {
         mapManager.movePlayer(player, vec2d);
     }
 
-    private void registerPlayer(Player player) throws MaxPlayersReachedException {
+    public void registerPlayer(Player player) throws MaxPlayersReachedException {
         if(playerMapping.size() >= MAXPLAYERS){
             throw new MaxPlayersReachedException();
         }

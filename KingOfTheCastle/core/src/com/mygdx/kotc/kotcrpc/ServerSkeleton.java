@@ -2,6 +2,8 @@ package com.mygdx.kotc.kotcrpc;
 
 import com.badlogic.gdx.utils.Json;
 import com.mygdx.kotc.applicationstub.ApplicationStub;
+import com.mygdx.kotc.gamemodel.entities.Player;
+import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,6 +21,12 @@ public class ServerSkeleton implements RPCIServer{
     private ApplicationStub applicationStub;
     public ServerSkeleton(ApplicationStub applicationStub) {
         this.applicationStub = applicationStub;
+        try {
+            serverSocket = new ServerSocket(8888);
+            System.out.println("Server started on port 8888");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ServerSkeleton() {
@@ -70,7 +78,8 @@ public class ServerSkeleton implements RPCIServer{
             String receivedJson = reader.readLine();
             System.out.println("Received JSON from client: " + receivedJson);
 
-            Message message = marshallFromJson(receivedJson);
+            Message message = unmarshallFromJson(receivedJson);
+            assert message != null;
             String methodname = message.getMethodname();
             Object[] parameters = message.getParameters();
             System.out.println(message.getMethodname());
@@ -86,7 +95,7 @@ public class ServerSkeleton implements RPCIServer{
         }
     }
 
-    private Message marshallFromJson(String jsonString){
+    private Message unmarshallFromJson(String jsonString){
         Json json = new Json();
         return json.fromJson(Message.class, jsonString);
     }
@@ -99,7 +108,7 @@ public class ServerSkeleton implements RPCIServer{
     }
 
     public static void main(String[] args) {
-        ServerSkeleton serverSkeleton = new ServerSkeleton();
+        ServerSkeleton serverSkeleton = new ServerSkeleton(new ApplicationStub());
         serverSkeleton.listenForIncomingCalls();
     }
 }

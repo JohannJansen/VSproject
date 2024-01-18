@@ -19,6 +19,9 @@ public class Player {
     private boolean playerInCombat;
     private PlayerTextureType playerTextureType;
 
+    public Player() {
+    }
+
     public Player(long playerId, Vec2d position, boolean isBlocking, int speed, int totalHp, int defense, int currentHealth, int strength, Equipment weapon, Equipment shield, Equipment armor, List<Modifier> attackModifiers, List<Modifier> defenseModifiers, boolean playerInCombat) {
         this.playerId = playerId;
         this.position = position;

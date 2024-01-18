@@ -7,6 +7,8 @@ public class Equipment {
     private EquipmentType equipmentType;
     private int equipmentValue;
 
+    public Equipment(){
+    }
     public Equipment(EquipmentType equipmentType, int equipmentValue) {
         this.equipmentType = equipmentType;
         this.equipmentValue = equipmentValue;

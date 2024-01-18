@@ -3,12 +3,9 @@ package com.mygdx.kotc.applicationstub;
 import com.mygdx.kotc.gamecontroller.GameControllerServer;
 import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.State;
-import com.mygdx.kotc.gamemodel.manager.MapManager;
 import com.mygdx.kotc.kotcrpc.ClientStub;
 import com.mygdx.kotc.kotcrpc.Message;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import com.mygdx.kotc.kotcrpc.MethodUtils;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,14 +17,15 @@ public class ApplicationStub implements MultiplayerI{
 
     @Override
     public void callServerControllerMethod(String method, Object[] parameters) {
-        Class<?> controllerClass = gameControllerServer.getClass();
-        try {
-            Method serverMethod = controllerClass.getMethod(method, Object[].class);
-            serverMethod.invoke(gameControllerServer, (Object) parameters);
-        } catch (NoSuchMethodException | IllegalAccessException |InvocationTargetException e) {
-            System.out.println("Error invoking method on server controller");
-            throw new RuntimeException(e);
-        }
+//        Class<?> controllerClass = gameControllerServer.getClass();
+//        try {
+//            Method serverMethod = controllerClass.getMethod(method, Object[].class);
+//            serverMethod.invoke(gameControllerServer, (Object) parameters);
+//        } catch (NoSuchMethodException | IllegalAccessException |InvocationTargetException e) {
+//            System.out.println("Error invoking method on server controller");
+//            throw new RuntimeException(e);
+//        }
+        MethodUtils.invokeMethod(gameControllerServer, method, parameters);
     }
 
     public void invokeServerMethod(String method, Object[] parameters) {

@@ -19,6 +19,7 @@ public class ClientStub implements RPCIClient {
         String messageJson = marshallToJson(message);
 
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
+            assert messageJson != null;
             writer.write(messageJson);
             writer.flush();
             System.out.println(messageJson + " written to server");
