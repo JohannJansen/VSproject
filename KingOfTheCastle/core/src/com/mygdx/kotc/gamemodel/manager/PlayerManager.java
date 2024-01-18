@@ -20,11 +20,11 @@ public class PlayerManager implements PlayerI {
         modifiers.add(modifier);
     }
 
+    //not used
     @Override
     public void updatePosition(Player player, Vec2d newPos) {
         Preconditions.checkArgument(player != null, "Player Id cannot be null!");
         Preconditions.checkArgument(newPos != null, "New Position cannot be null!");
-        //Player player = (Player) playerRepository.findById(Id);
         player.setPosition(newPos);
     }
 

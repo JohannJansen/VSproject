@@ -34,6 +34,7 @@ public class BattleScreen implements Screen, InputProcessor {
         this.kingOfTheCastle = kingOfTheCastle;
         this.startButton = new Texture("startButton.png");
         this.startButtonUnactive = new Texture("startButtonUnactive.png");
+        kingOfTheCastle.gameControllerClient.setCurrentScreen(CurrentScreen.BATTLE);
         Gdx.input.setInputProcessor(new BattleScreenInputProcessor(kingOfTheCastle.gameControllerClient));
     }
 

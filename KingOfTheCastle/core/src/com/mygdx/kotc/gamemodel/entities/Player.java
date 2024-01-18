@@ -145,6 +145,10 @@ public class Player {
         return playerId;
     }
 
+    public void setPlayerId(long playerId) {
+        this.playerId = playerId;
+    }
+
     public PlayerTextureType getPlayerTextureType() {
         return playerTextureType;
     }

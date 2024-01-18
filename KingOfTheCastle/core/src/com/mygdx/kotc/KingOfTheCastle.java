@@ -3,18 +3,13 @@ package com.mygdx.kotc;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.kotc.gamecontroller.GameControllerClient;
-import com.mygdx.kotc.screens.BattleScreen;
-import com.mygdx.kotc.screens.CharacterSelectScreen;
 import com.mygdx.kotc.screens.StartScreen;
-import com.mygdx.kotc.gamemodel.manager.MapManager;
 import com.mygdx.kotc.screens.MapScreen;
-import com.mygdx.kotc.viewproxy.TileRenderData;
+import com.mygdx.kotc.viewproxy.MapRenderData;
 import com.mygdx.kotc.viewproxy.ViewProxy;
 
 import java.util.List;
@@ -30,7 +25,7 @@ public class KingOfTheCastle extends Game {
 	public static final int TEXTUREWIDTH = 32;
 	//private Random random;
 	public ViewProxy viewProxy;
-	public List<TileRenderData> tileRenderDataList;
+	public List<MapRenderData> mapRenderDataList;
 	MapScreen mapScreen;
 	private int screenWidth = 1024;
 	private int screenHeight = 1024;
@@ -40,7 +35,7 @@ public class KingOfTheCastle extends Game {
 	@Override
 	public void create() {
 		gameControllerClient = new GameControllerClient();
-		gameControllerClient.start();
+//		gameControllerClient.start();
 
 		viewProxy = new ViewProxy();
 		//tileRenderDataList  = viewProxy.mapToTileRenderData();

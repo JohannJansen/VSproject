@@ -40,9 +40,8 @@ public class MapManager implements MapI{
         Vec2d newPos = new Vec2d(player.getPosition().getPosX() + direction.getPosX(), player.getPosition().getPosY() + direction.getPosY());
         Tile tile = map.getTiles()[newPos.getPosX()][newPos.getPosY()];
 
-        if(!player.getPlayerInCombat() && tile.isTraversible()){
+        if(!player.getPlayerInCombat() && tile.isTraversable()){
             removePlayerFromCurrentTile(player);
-            //player.setPosition(newPos);
             setPlayerPosOnTile(newPos, player);
         }else {
             System.out.println("This Tile is an obstacle and isn't reachable!");
@@ -60,7 +59,7 @@ public class MapManager implements MapI{
         for(int i = spawnZoneStart.getPosY(); i <= spawnZoneEnd.getPosY(); i++){
             for(int j = spawnZoneStart.getPosX(); j <= spawnZoneEnd.getPosX(); j++){
                 Tile tile = map.getTiles()[j][i];
-                if(!tile.isTraversible()){
+                if(!tile.isTraversable()){
                     continue;
                 }
                 Random random = new Random();
@@ -93,6 +92,7 @@ public class MapManager implements MapI{
 
     private void removePlayerFromCurrentTile(Player player){
         map.getTiles()[player.getPosition().getPosX()][player.getPosition().getPosY()].setOccupiedBy(null);
+        map.getTiles()[player.getPosition().getPosX()][player.getPosition().getPosY()].setTraversable(true);
     }
 
     public Map getMap() {

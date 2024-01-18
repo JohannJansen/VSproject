@@ -2,6 +2,7 @@ package com.mygdx.kotc.gamecontroller;
 
 import com.badlogic.gdx.Input;
 import com.mygdx.kotc.applicationstub.ApplicationStub;
+import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.manager.CombatManager;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
@@ -13,6 +14,7 @@ import com.mygdx.kotc.screens.CurrentScreen;
 
 public class GameControllerClient implements InputI{
     private int playerID;
+
     private final ApplicationStub applicationStub = new ApplicationStub();
 
     private CurrentScreen currentScreen;
@@ -23,10 +25,13 @@ public class GameControllerClient implements InputI{
 
     private PlayerManager playerManager;
 
+    private Player player;
+
     public void start(){
-        applicationStub.callServerControllerMethod("registerPlayer", new Object[]{});
-
-
+        //applicationStub.invokeServerMethod("registerPlayer", new Object[]{});
+        playerManager = new PlayerManager();
+        mapManager = new MapManager();
+        applicationStub.joinServer(player);
     }
 
 
@@ -55,11 +60,32 @@ public class GameControllerClient implements InputI{
 
     private void handleButtonMap(ButtonPressEvent buttonPressEvent){
         if (buttonPressEvent.keycode == Input.Keys.W) {
-            applicationStub.callServerControllerMethod("moveplayer", new Object[]{playerManager.getPlayerById(playerID), new Vec2d(0,1)});
+            applicationStub.invokeServerMethod("movePlayer", new Object[]{playerManager.getPlayerById(playerID), new Vec2d(0,1)});
+        }
+        if (buttonPressEvent.keycode == Input.Keys.A) {
+            applicationStub.invokeServerMethod("movePlayer", new Object[]{playerManager.getPlayerById(playerID), new Vec2d(-1,0)});
+        }
+        if (buttonPressEvent.keycode == Input.Keys.S) {
+            applicationStub.invokeServerMethod("movePlayer", new Object[]{playerManager.getPlayerById(playerID), new Vec2d(0,-1)});
+        }
+        if (buttonPressEvent.keycode == Input.Keys.D) {
+            applicationStub.invokeServerMethod("movePlayer", new Object[]{playerManager.getPlayerById(playerID), new Vec2d(1,0)});
         }
     }
 
     private void handleButtonBattle(ButtonPressEvent buttonPressEvent){
 
+    }
+
+    public void setCurrentScreen(CurrentScreen currentScreen) {
+        this.currentScreen = currentScreen;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

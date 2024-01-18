@@ -1,14 +1,16 @@
 package com.mygdx.kotc.kotcrpc;
 import com.badlogic.gdx.utils.Json;
+import com.mygdx.kotc.gamecontroller.GameControllerClient;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Arrays;
 
 public class ClientStub implements RPCIClient {
-    Socket socket;
+    private Socket socket;
 
     @Override
     public void invoke(String method, Object[] parameters) {
@@ -28,6 +30,14 @@ public class ClientStub implements RPCIClient {
     public void connectToServer(String host, int port){
         try {
             socket = new Socket(host, port);
+        } catch (IOException e) {
+            System.out.println("Error when trying to connect Client to server");
+        }
+    }
+
+    public void connectToServer(InetAddress address, int port){
+        try {
+            socket = new Socket(address, port);
         } catch (IOException e) {
             System.out.println("Error when trying to connect Client to server");
         }
