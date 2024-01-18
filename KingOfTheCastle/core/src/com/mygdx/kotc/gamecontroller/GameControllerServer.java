@@ -63,7 +63,7 @@ public  class GameControllerServer implements ControllerOutputI{
         }
         long playerId = idGenerator.newId();
         playerMapping.put(playerId, player);
-//        player.setPlayerId(playerId);
+        player.setPlayerId(playerId);
         playerManager.getPlayerList().add(player);
     }
 
