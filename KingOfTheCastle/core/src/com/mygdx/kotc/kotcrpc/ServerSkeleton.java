@@ -22,6 +22,7 @@ public class ServerSkeleton implements RPCIServer{
     private ExecutorService executorService;
     private CopyOnWriteArrayList<Socket> connectedClients;
     private ApplicationStub applicationStub;
+
     public ServerSkeleton(ApplicationStub applicationStub) {
         this.applicationStub = applicationStub;
         try {
@@ -68,15 +69,16 @@ public class ServerSkeleton implements RPCIServer{
 
     @Override
     public void listenForIncomingCalls() {
-        while (true) {
+        while (!Thread.interrupted()) {
             try {
                 Socket clientSocket = serverSocket.accept();
                 // Handle each client in a separate thread
 //                new Thread(() -> handleClient(clientSocket)).start();
+                clientSocket.setKeepAlive(true);
                 connectedClients.add(clientSocket);
                 executorService.submit(() -> handleClient(clientSocket));
             } catch (IOException e) {
-                System.out.println("Error when connecting to Server");
+                System.out.println("Error when accepting Connection to Server");
                 throw new RuntimeException(e);
             }
         }
@@ -94,6 +96,7 @@ public class ServerSkeleton implements RPCIServer{
             System.out.println(message.getMethodname());
             System.out.println(Arrays.toString(message.getParameters()));
             applicationStub.callServerControllerMethod(methodname, parameters);
+            System.out.println("CLIENT SOCKET IS CONNECTED: " + clientSocket.isConnected());
 
             // TODO: Implement your logic to process the message and send a response if needed
 
@@ -113,15 +116,18 @@ public class ServerSkeleton implements RPCIServer{
             }
         }
         for (Socket clientSocket : connectedClients) {
-            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()))) {
-                writer.write(marshallToJson(message));
-                writer.flush();
-                System.out.println("Game state sent to clients");
-            } catch (IOException e) {
-                System.out.println("Error sending game state to client");
+            System.out.println("CLIENT SOCKET IS CONNECTED: " + clientSocket.isClosed());
+            if(!clientSocket.isClosed()) {
+                try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()))) {
+                    String marshalledMessage = marshallToJson(message);
+                    writer.write(marshalledMessage);
+                    writer.flush();
+                    System.out.println("Game state sent to clients");
+                } catch (IOException e) {
+                    System.out.println("Error sending game state to client");
+                }
             }
         }
-
     }
 
     private Message unmarshallFromJson(String jsonString){

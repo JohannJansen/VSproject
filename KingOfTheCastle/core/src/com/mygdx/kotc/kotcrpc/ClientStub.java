@@ -60,7 +60,7 @@ public class ClientStub implements RPCIClient {
     }
 
     public void startListening() {
-        while (!socket.isConnected()) {
+        while (!socket.isClosed()) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -71,14 +71,12 @@ public class ClientStub implements RPCIClient {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
             while (true) {
                 String receivedGameState = reader.readLine();
-                if (receivedGameState == null) {
-                    break; // Server disconnected
+                if (receivedGameState != null) {
+                    Message message = unmarshallFromJson(receivedGameState);
+                    String methodname = message.getMethodname();
+                    Object[] parameters = message.getParameters();
+                    applicationStub.receiveGameState(methodname, parameters);
                 }
-                Message message = unmarshallFromJson(receivedGameState);
-                String methodname = message.getMethodname();
-                Object[] parameters = message.getParameters();
-                applicationStub.receiveGameState(methodname, parameters);
-
             }
         } catch (IOException e) {
             System.out.println("Error listening for messages from server: " + e.getMessage());

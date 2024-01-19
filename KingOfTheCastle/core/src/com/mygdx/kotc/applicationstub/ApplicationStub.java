@@ -74,9 +74,7 @@ public class ApplicationStub implements MultiplayerI{
 
     @Override
     public void hostLobby() {
-        ServerSkeleton serverSkeleton = new ServerSkeleton(this);
         serverSkeleton.listenForIncomingCalls();
-
     }
 
     @Override
