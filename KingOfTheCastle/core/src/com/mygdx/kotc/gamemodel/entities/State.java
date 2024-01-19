@@ -7,6 +7,14 @@ public class State {
     private List<Combat> combatList;
     private Map map;
 
+    public State() {}
+
+    public State(List<Player> playerList, List<Combat> combatList, Map map) {
+        this.playerList = playerList;
+        this.combatList = combatList;
+        this.map = map;
+    }
+
     public List<Player> getPlayerList() {
         return playerList;
     }

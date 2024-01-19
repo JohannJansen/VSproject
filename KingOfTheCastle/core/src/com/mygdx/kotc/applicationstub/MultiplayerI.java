@@ -5,7 +5,7 @@ import com.mygdx.kotc.kotcrpc.Message;
 
 public interface MultiplayerI {
     void callServerControllerMethod(String method, Object[] parameters);
-    State receiveGameState();
+    void receiveGameState(String method, Object[] parameters);
     Message getCallForPlayer(int playerID);
     void sendGameState(State state);
     void hostLobby();

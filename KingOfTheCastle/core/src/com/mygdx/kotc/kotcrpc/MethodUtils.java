@@ -3,16 +3,6 @@ package com.mygdx.kotc.kotcrpc;
 import java.lang.reflect.Method;
 
 public class MethodUtils {
-    public static void main(String[] args) {
-        MyClass myObject = new MyClass();
-
-        // Suppose you have the method name and parameters
-        String methodName = "myMethod";
-        Object[] parameters = new Object[]{1, "parameter2"};
-
-        // Invoke the method through reflection
-        invokeMethod(myObject, methodName, parameters);
-    }
 
     public static void invokeMethod(Object targetObject, String methodName, Object[] parameters) {
         Class<?> targetClass = targetObject.getClass();
@@ -80,11 +70,5 @@ public class MethodUtils {
 
         // Check assignability for non-primitive and non-array types
         return targetType.isInstance(value);
-    }
-}
-
-class MyClass {
-    public void myMethod(int param1, String param2) {
-        System.out.println("Method invoked with parameters: " + param1 + ", " + param2);
     }
 }

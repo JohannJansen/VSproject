@@ -3,19 +3,25 @@ package com.mygdx.kotc.gamecontroller;
 import com.badlogic.gdx.Input;
 import com.mygdx.kotc.applicationstub.ApplicationStub;
 import com.mygdx.kotc.gamemodel.entities.Player;
+import com.mygdx.kotc.gamemodel.entities.State;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.manager.CombatManager;
+import com.mygdx.kotc.gamemodel.manager.GameStateOutput;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
 import com.mygdx.kotc.gamemodel.manager.PlayerManager;
 import com.mygdx.kotc.inputprocessors.inputevents.ButtonPressEvent;
 import com.mygdx.kotc.inputprocessors.inputevents.MouseClickEvent;
 import com.mygdx.kotc.inputprocessors.inputevents.Event;
+import com.mygdx.kotc.kotcrpc.Status;
 import com.mygdx.kotc.screens.CurrentScreen;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GameControllerClient implements InputI{
     private int playerID;
 
-    private final ApplicationStub applicationStub = new ApplicationStub();
+    private ApplicationStub applicationStub;
 
     private CurrentScreen currentScreen;
 
@@ -29,9 +35,21 @@ public class GameControllerClient implements InputI{
 
     public void start(){
         //applicationStub.invokeServerMethod("registerPlayer", new Object[]{});
-        playerManager = new PlayerManager();
-        mapManager = new MapManager();
+        applicationStub = new ApplicationStub(Status.CLIENT);
         applicationStub.joinServer(player);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(() -> applicationStub.getClientStub().startListening());
+        executorService.shutdown();
+        applicationStub.setGameControllerClient(this);
+        playerManager = new PlayerManager();
+        combatManager = new CombatManager();
+        mapManager = new MapManager();
+    }
+
+    public void updateGameState(State state){ //method to call from ApplicationStub
+        mapManager.setMap(state.getMap());
+        combatManager.setActiveCombats(state.getCombatList());
+        playerManager.setPlayerList(state.getPlayerList());
     }
 
 
