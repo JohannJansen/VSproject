@@ -103,18 +103,25 @@ public class ServerSkeleton implements RPCIServer{
         }
     }
 
-    public void sendToAllClients(Message message){
-        if(!connectedClients.isEmpty()){
-            for (Socket clientSocket : connectedClients) {
-                try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()))) {
-                    writer.write(marshallToJson(message));
-                    writer.flush();
-                    System.out.println("Game state sent to clients");
-                } catch (IOException e) {
-                    System.out.println("Error sending game state to client");
-                }
+    public void sendToAllClients(Message message) {
+        while (connectedClients.isEmpty()) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Error while waiting for socket to connect: " + e.getMessage());
             }
         }
+        for (Socket clientSocket : connectedClients) {
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()))) {
+                writer.write(marshallToJson(message));
+                writer.flush();
+                System.out.println("Game state sent to clients");
+            } catch (IOException e) {
+                System.out.println("Error sending game state to client");
+            }
+        }
+
     }
 
     private Message unmarshallFromJson(String jsonString){

@@ -62,7 +62,7 @@ public class ClientStub implements RPCIClient {
     public void startListening() {
         while (!socket.isConnected()) {
             try {
-                Thread.sleep(1000); // Adjust the delay as needed
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 System.err.println("Error while waiting for socket to connect: " + e.getMessage());
