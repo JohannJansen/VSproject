@@ -127,7 +127,33 @@ public class ServerSkeleton implements RPCIServer{
                     System.out.println("Game state sent to clients");
                 } catch (IOException e) {
                     System.out.println("Error sending game state to client");
+                    e.printStackTrace();
                 }
+            }
+        }
+    }
+
+    public class MessageSplitter {
+        public static void main(String[] args) {
+            String message = "This is a long message that needs to be split into kilobyte-sized packets.";
+
+            // Specify the desired kilobyte size
+            int kilobyteSize = 1024;
+
+            // Create a BufferedWriter with a custom buffer size
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("example.txt"))) {
+                // Iterate over the message and split it into kilobyte-sized chunks
+                for (int i = 0; i < message.length(); i += kilobyteSize) {
+                    int end = Math.min(i + kilobyteSize, message.length());
+                    String chunk = message.substring(i, end);
+
+                    // Write the chunk to the buffer
+                    writer.write(chunk);
+                    // Optionally, write a newline or separator between chunks
+                    writer.newLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

@@ -86,6 +86,47 @@ public class ClientStub implements RPCIClient {
         }
     }
 
+    public class PacketReader {
+        public static void main(String[] args) {
+            // Specify the desired kilobyte size
+            int kilobyteSize = 1024;
+
+            try (BufferedReader reader = new BufferedReader(new FileReader("example.txt"))) {
+                StringBuilder packetBuilder = new StringBuilder();
+                char[] buffer = new char[kilobyteSize];
+
+                int bytesRead;
+                while ((bytesRead = reader.read(buffer)) != -1) {
+                    // Append the read characters to the packet builder
+                    packetBuilder.append(buffer, 0, bytesRead);
+
+                    // Check if the packet size has reached the desired kilobyte size
+                    if (packetBuilder.length() >= kilobyteSize) {
+                        // Process the kilobyte-sized packet
+                        processPacket(packetBuilder.toString());
+
+                        // Clear the packet builder for the next packet
+                        packetBuilder.setLength(0);
+                    }
+                }
+
+                // Process any remaining partial packet (if exists)
+                if (packetBuilder.length() > 0) {
+                    processPacket(packetBuilder.toString());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private static void processPacket(String packet) {
+            // Perform processing on the kilobyte-sized packet
+            System.out.println("Received packet:\n" + packet);
+            System.out.println("Packet size: " + packet.length() + " characters");
+            System.out.println("----------");
+        }
+    }
+
     public Message getMessage() {
         return message;
     }
