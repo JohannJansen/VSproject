@@ -105,14 +105,10 @@ public class MapScreen implements Screen{
 
     public void displayPlayer(PlayerRenderData playerRenderData){
         Texture texture = switch (playerRenderData.getPlayerTextureType()){
-            case WIZARD_LEFT -> new Texture(Gdx.files.internal("png/cats/mageCat_cobble_left.png"));
-            case WIZARD_RIGHT -> new Texture(Gdx.files.internal("png/cats/mageCat_cobble_right.png"));
-            case KNIGHT_LEFT -> new Texture(Gdx.files.internal("png/cats/warriorCat_cobble_left.png"));
-            case KNIGHT_RIGHT -> new Texture(Gdx.files.internal("png/cats/warriorCat_cobble_right.png"));
-            case WIZARD -> null;
-            case KNIGHT -> null;
-            case MONK -> null;
-            case ARCHER -> null;
+            case WIZARD -> new Texture(Gdx.files.internal("png/cats/mageCat.png"));
+            case KNIGHT -> new Texture(Gdx.files.internal("png/cats/warriorCat.png"));
+            case MONK -> new Texture(Gdx.files.internal("png/cats/monkCat.png"));
+            case ARCHER -> new Texture(Gdx.files.internal("png/cats/greyArcherCat.png"));
             default -> null;
         };
         kingOfTheCastle.batch.draw(texture
