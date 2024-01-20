@@ -30,6 +30,7 @@ public class BattleScreen implements Screen, InputProcessor {
     private ShapeRenderer shapeRenderer;
     private GlyphLayout glyphLayout = new GlyphLayout();
     private OrthographicCamera camera = new OrthographicCamera();
+
     public BattleScreen(KingOfTheCastle kingOfTheCastle) {
         this.kingOfTheCastle = kingOfTheCastle;
         this.startButton = new Texture("startButton.png");
@@ -47,7 +48,6 @@ public class BattleScreen implements Screen, InputProcessor {
         camera.setToOrtho(false, kingOfTheCastle.getScreenWidth(), kingOfTheCastle.getScreenHeight());
         kingOfTheCastle.batch.setProjectionMatrix(camera.combined);
         Gdx.input.setInputProcessor(this);
-
     }
 
     @Override

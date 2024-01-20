@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class PlayerManager implements PlayerI {
-    private List<Player> playerList = new ArrayList<>();
+    private List<Player> playerList = new ArrayList<Player>();
 
     @Override
     public void extendModifiers(Modifier modifier, List<Modifier> modifiers) {
