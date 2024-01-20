@@ -9,6 +9,7 @@ import com.mygdx.kotc.gamemodel.repositories.PlayerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class PlayerManager implements PlayerI {
@@ -36,8 +37,8 @@ public class PlayerManager implements PlayerI {
         this.playerList = playerList;
     }
 
-    public Player getPlayerById(int playerId){
-        Optional<Player> playerOptional = playerList.stream().filter(p -> p.getPlayerId() == playerId).findFirst();
+    public Player getPlayerById(String playerId){
+        Optional<Player> playerOptional = playerList.stream().filter(p -> p.getPlayerId().equals(playerId)).findFirst();
         if (playerOptional.isPresent()){
             return playerOptional.get();
         } else {

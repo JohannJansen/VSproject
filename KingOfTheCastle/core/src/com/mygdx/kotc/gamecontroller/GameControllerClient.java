@@ -1,7 +1,7 @@
 package com.mygdx.kotc.gamecontroller;
 
 import com.badlogic.gdx.Input;
-import com.mygdx.kotc.applicationstub.ApplicationStub;
+import com.mygdx.kotc.applicationstub.ApplicationStubClient;
 import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.State;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
@@ -12,8 +12,9 @@ import com.mygdx.kotc.gamemodel.manager.PlayerManager;
 import com.mygdx.kotc.inputprocessors.inputevents.ButtonPressEvent;
 import com.mygdx.kotc.inputprocessors.inputevents.MouseClickEvent;
 import com.mygdx.kotc.inputprocessors.inputevents.Event;
-import com.mygdx.kotc.kotcrpc.Status;
+import com.mygdx.kotc.kotcrpc.Message;
 import com.mygdx.kotc.screens.CurrentScreen;
+import com.mygdx.kotc.viewproxy.ViewProxy;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,7 +22,7 @@ import java.util.concurrent.Executors;
 public class GameControllerClient implements InputI{
     private int playerID;
 
-    private ApplicationStub applicationStub;
+    private ApplicationStubClient applicationStubClient;
 
     private CurrentScreen currentScreen;
 
@@ -33,17 +34,36 @@ public class GameControllerClient implements InputI{
 
     private Player player;
 
+    public GameControllerClient() {
+        this.applicationStubClient = new ApplicationStubClient();
+        this.mapManager = new MapManager();
+        this.combatManager = new CombatManager();
+        this.playerManager = new PlayerManager();
+        this.gameStateOutput = new GameStateOutput(playerManager, combatManager, mapManager);
+        this.viewProxy = new ViewProxy(gameStateOutput);
+        isRunning = true;
+
+        playerID = "jem";
+    }
+
     public void start(){
         //applicationStub.invokeServerMethod("registerPlayer", new Object[]{});
-        applicationStub = new ApplicationStub(Status.CLIENT);
-        applicationStub.joinServer(player);
+        applicationStubClient.joinServer(playerID);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.submit(() -> applicationStub.getClientStub().startListening());
+        executorService.submit(() -> applicationStubClient.getClientStub().startListening());
+
+        while (isRunning){
+
+            //TODO notify
+            Message message = applicationStubClient.receiveMessage();
+            if (message != null){
+                State state = (State) message.getParameters()[0];
+                if (state != null) {
+                    updateGameState(state);
+                }
+            }
+        }
         executorService.shutdown();
-        applicationStub.setGameControllerClient(this);
-        playerManager = new PlayerManager();
-        combatManager = new CombatManager();
-        mapManager = new MapManager();
     }
 
     public void updateGameState(State state){ //method to call from ApplicationStub
@@ -78,16 +98,16 @@ public class GameControllerClient implements InputI{
 
     private void handleButtonMap(ButtonPressEvent buttonPressEvent){
         if (buttonPressEvent.keycode == Input.Keys.W) {
-            applicationStub.invokeServerMethod("movePlayer", new Object[]{playerManager.getPlayerById(playerID), new Vec2d(0,1)});
+            applicationStubClient.callServerMethod(playerID, "movePlayer", new Object[]{playerID, new Vec2d(0,1)});
         }
         if (buttonPressEvent.keycode == Input.Keys.A) {
-            applicationStub.invokeServerMethod("movePlayer", new Object[]{playerManager.getPlayerById(playerID), new Vec2d(-1,0)});
+            applicationStubClient.callServerMethod(playerID, "movePlayer", new Object[]{playerID, new Vec2d(-1,0)});
         }
         if (buttonPressEvent.keycode == Input.Keys.S) {
-            applicationStub.invokeServerMethod("movePlayer", new Object[]{playerManager.getPlayerById(playerID), new Vec2d(0,-1)});
+            applicationStubClient.callServerMethod(playerID, "movePlayer", new Object[]{playerID, new Vec2d(0,-1)});
         }
         if (buttonPressEvent.keycode == Input.Keys.D) {
-            applicationStub.invokeServerMethod("movePlayer", new Object[]{playerManager.getPlayerById(playerID), new Vec2d(1,0)});
+            applicationStubClient.callServerMethod(playerID, "movePlayer", new Object[]{playerID, new Vec2d(1,0)});
         }
     }
 
@@ -105,5 +125,9 @@ public class GameControllerClient implements InputI{
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public ViewProxy getViewProxy() {
+        return viewProxy;
     }
 }

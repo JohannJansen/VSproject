@@ -1,16 +1,12 @@
 package com.mygdx.kotc.server;
 
-import com.mygdx.kotc.applicationstub.ApplicationStub;
+import com.mygdx.kotc.applicationstub.ApplicationStubClient;
 import com.mygdx.kotc.gamecontroller.GameControllerServer;
-import com.mygdx.kotc.kotcrpc.ServerSkeleton;
 import com.mygdx.kotc.kotcrpc.Status;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Server{
 
-    public static ApplicationStub applicationStub;
+    public static ApplicationStubClient applicationStubClient;
 
 //    public Server(GameControllerServer gameControllerServer) {
 //        this.gameControllerServer = gameControllerServer;
@@ -27,6 +23,7 @@ public class Server{
 //    }
 
     public static void main(String[] args) {
-        applicationStub = new ApplicationStub(Status.SERVER);
+        GameControllerServer gameControllerServer = new GameControllerServer();
+        gameControllerServer.run();
     }
 }

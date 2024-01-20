@@ -1,9 +1,6 @@
 package com.mygdx.kotc.kotcrpc;
 
 import com.badlogic.gdx.utils.Json;
-import com.mygdx.kotc.applicationstub.ApplicationStub;
-import com.mygdx.kotc.gamemodel.entities.Player;
-import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -21,10 +18,13 @@ public class ServerSkeleton implements RPCIServer{
     private ServerSocket serverSocket;
     private ExecutorService executorService;
     private CopyOnWriteArrayList<Socket> connectedClients;
-    private ApplicationStub applicationStub;
+//    private ConcurrentHashMap<Long, Socket> iddClients;
+    private CopyOnWriteArrayList<Message> messageQueue;
 
-    public ServerSkeleton(ApplicationStub applicationStub) {
-        this.applicationStub = applicationStub;
+
+    public ServerSkeleton() {
+        messageQueue = new CopyOnWriteArrayList<>();
+//        iddClients = new ConcurrentHashMap<>();
         try {
             serverSocket = new ServerSocket(8888);
             executorService = Executors.newCachedThreadPool();
@@ -85,17 +85,19 @@ public class ServerSkeleton implements RPCIServer{
     }
 
     private void handleClient(Socket clientSocket) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String receivedJson = reader.readLine();
             System.out.println("Received JSON from client: " + receivedJson);
 
+            System.out.println("test");
             Message message = unmarshallFromJson(receivedJson);
+
             assert message != null;
-            String methodname = message.getMethodname();
-            Object[] parameters = message.getParameters();
+            messageQueue.add(message);
+
             System.out.println(message.getMethodname());
             System.out.println(Arrays.toString(message.getParameters()));
-            applicationStub.callServerControllerMethod(methodname, parameters);
             System.out.println("CLIENT SOCKET IS CONNECTED: " + clientSocket.isConnected());
 
             // TODO: Implement your logic to process the message and send a response if needed
@@ -116,7 +118,7 @@ public class ServerSkeleton implements RPCIServer{
             }
         }
         for (Socket clientSocket : connectedClients) {
-            System.out.println("CLIENT SOCKET IS CONNECTED: " + clientSocket.isClosed());
+            //System.out.println("CLIENT SOCKET IS CONNECTED: " + clientSocket.isClosed());
             if(!clientSocket.isClosed()) {
                 try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()))) {
                     String marshalledMessage = marshallToJson(message);
@@ -139,7 +141,6 @@ public class ServerSkeleton implements RPCIServer{
         Json json = new Json();
         return json.toJson(message);
     }
-
 
     public void getOwnHostName() throws UnknownHostException {
         InetAddress localHost = InetAddress.getLocalHost();

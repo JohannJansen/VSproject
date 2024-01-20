@@ -1,7 +1,6 @@
 package com.mygdx.kotc.gamecontroller;
 
-import com.mygdx.kotc.applicationstub.ApplicationStub;
-import com.mygdx.kotc.applicationstub.MultiplayerI;
+import com.mygdx.kotc.applicationstub.ApplicationStubServer;
 import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.State;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
@@ -12,16 +11,13 @@ import com.mygdx.kotc.gamemodel.manager.CombatManager;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
 import com.mygdx.kotc.gamemodel.manager.PlayerManager;
 import com.mygdx.kotc.gamemodel.repositories.IdGenerator;
-import com.mygdx.kotc.kotcrpc.ServerSkeleton;
-import com.mygdx.kotc.kotcrpc.Status;
+import com.mygdx.kotc.kotcrpc.Message;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Set;
 
 public  class GameControllerServer implements ControllerOutputI{
     public int MAXPLAYERS = 8;
@@ -34,13 +30,15 @@ public  class GameControllerServer implements ControllerOutputI{
 
     private Map<Long, Player> playerMapping = new HashMap<>(); //Ids of players
 
-    private MapManager mapManager = new MapManager();
+    private MapManager mapManager;
 
-    private CombatManager combatManager = new CombatManager();
+    private CombatManager combatManager;
 
-    private PlayerManager playerManager = new PlayerManager();
+    private PlayerManager playerManager;
 
-    private ApplicationStub applicationStub;
+    private GameStateOutput gameStateOutput;
+
+    private ApplicationStubServer applicationStubServer;
 
     public GameControllerServer(ApplicationStub applicationStub) {
         this.applicationStub = applicationStub;
@@ -59,7 +57,7 @@ public  class GameControllerServer implements ControllerOutputI{
                 //launch and join thread for model update
 
                 State state = getServerState();
-                applicationStub.updateClientGamestates("updateGameState", new Object[]{state});
+                applicationStubServer.updateClientGamestates("updateGameState", new Object[]{state});
 
                 long remainingtimeInTick = TICKDURATIONMILLIS/2 - (System.currentTimeMillis() - starttimeModelUpdate);
                 Thread.sleep(TICKDURATIONMILLIS);
@@ -67,7 +65,6 @@ public  class GameControllerServer implements ControllerOutputI{
                 System.out.println("Interrupt in Controller Thread");
                 throw new RuntimeException(e);
             }
-
         }
     }
 
@@ -101,12 +98,14 @@ public  class GameControllerServer implements ControllerOutputI{
     }
 
     public State getServerState(){
-        State currentState = new State(playerManager.getPlayerList(),
-                combatManager.getActiveCombats(), mapManager.getMap());
-        return currentState;
+        return gameStateOutput.getState();
     }
 
-//    @Override
+    public Map<String, Player> getPlayerMapping() {
+        return playerMapping;
+    }
+
+    //    @Override
 //    public void run() {
 //        applicationStub.hostLobby();
 //        while (!Thread.interrupted()){

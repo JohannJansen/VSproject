@@ -6,14 +6,13 @@ import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.State;
 import com.mygdx.kotc.kotcrpc.*;
 
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ApplicationStub implements MultiplayerI{
+public class ApplicationStubClient{
 
 //    private Status status;
     private Map<Long, Message> currentMoveForPlayer = new HashMap<>();
@@ -23,24 +22,8 @@ public class ApplicationStub implements MultiplayerI{
     private ServerSkeleton serverSkeleton;
     private BlockingQueue<State> gameStateQueue;
 
-    public ApplicationStub(Status status) {
-        if(status == Status.CLIENT){
-//            gameControllerClient.updateGameState();
-            currentMoveForPlayer = new HashMap<>();
-            clientStub = new ClientStub(this);
-//            ExecutorService executorService = Executors.newSingleThreadExecutor();
-//            executorService.submit(() -> clientStub.startListening());
-//            executorService.shutdown();
-        }else{
-            serverSkeleton = new ServerSkeleton(this);
-            gameControllerServer = new GameControllerServer(this);
-            ExecutorService executorService = Executors.newFixedThreadPool(2);
-            // Submit tasks for the game loop and listening loop
-            executorService.submit(gameControllerServer::start);
-            executorService.submit(serverSkeleton::listenForIncomingCalls);
-            // Shutdown the executor service when the application is done
-            executorService.shutdown();
-        }
+    public ApplicationStubClient() {
+        clientStub = new ClientStub();
     }
 
     @Override
@@ -95,4 +78,6 @@ public class ApplicationStub implements MultiplayerI{
     public ClientStub getClientStub() {
         return clientStub;
     }
+
+
 }

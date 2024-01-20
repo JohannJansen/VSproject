@@ -10,7 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewProxy implements OutputI{
-    GameStateOutput gameStateOutput = new GameStateOutput();
+    GameStateOutput gameStateOutput;
+
+    public ViewProxy(GameStateOutput gameStateOutput) {
+        this.gameStateOutput = gameStateOutput;
+    }
+
     @Override
     public List<Rectangle> stateToRenderableObject() {
         List<Rectangle> list = new ArrayList<>();

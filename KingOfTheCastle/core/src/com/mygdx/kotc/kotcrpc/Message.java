@@ -28,4 +28,8 @@ public class Message {
     public void setParameters(Object[] parameters) {
         this.parameters = parameters;
     }
+
+    public String getPlayerId() {
+        return playerId;
+    }
 }
