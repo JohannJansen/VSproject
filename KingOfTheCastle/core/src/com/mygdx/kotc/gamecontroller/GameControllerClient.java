@@ -48,7 +48,6 @@ public class GameControllerClient implements InputI{
         this.gameStateOutput = new GameStateOutput(playerManager, combatManager, mapManager);
         this.viewProxy = new ViewProxy(gameStateOutput);
         isRunning = true;
-
         playerID = "jem";
     }
 
@@ -59,7 +58,6 @@ public class GameControllerClient implements InputI{
         executorService.submit(() -> applicationStubClient.getClientStub().startListening());
 
         while (isRunning){
-
             //TODO notify
             Message message = applicationStubClient.receiveMessage();
             if (message != null){
@@ -99,6 +97,8 @@ public class GameControllerClient implements InputI{
             handleButtonMap(buttonPressEvent);
         } else if (currentScreen == CurrentScreen.BATTLE){
             handleButtonBattle(buttonPressEvent);
+        } else {
+            throw new IllegalArgumentException("Current screen was not valid");
         }
     }
 

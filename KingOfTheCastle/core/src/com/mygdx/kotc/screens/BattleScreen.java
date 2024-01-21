@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.kotc.KingOfTheCastle;
@@ -144,8 +145,7 @@ public class BattleScreen implements Screen, InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         // Koordinaten von Bildschirm zu Welt umwandeln
-        Vector3 worldCoordinates = camera.unproject(new Vector3(screenX, screenY, 0));
-
+        Vector3 worldCoordinates = camera.unproject(new Vector3(screenX, screenY, 0 ));
         // Überprüfe, welcher Text geklickt wurde
         if (isInBounds(worldCoordinates, "Attacke", (kingOfTheCastle.getScreenWidth() - 660), 150, 0, 10)) {
             handleAttackeClick();
@@ -156,7 +156,6 @@ public class BattleScreen implements Screen, InputProcessor {
         } else if (isInBounds(worldCoordinates, "Fliehen", (kingOfTheCastle.getScreenWidth() - 512) + 100, 250, 0, 10)) {
             handleFliehenClick();
         }
-
         return true; // Eingabe wurde verarbeitet
     }
 

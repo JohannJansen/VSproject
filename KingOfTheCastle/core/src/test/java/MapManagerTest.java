@@ -1,4 +1,6 @@
+import com.mygdx.kotc.gamemodel.entities.Map;
 import com.mygdx.kotc.gamemodel.entities.Player;
+import com.mygdx.kotc.gamemodel.entities.Tile;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
@@ -7,6 +9,8 @@ import com.mygdx.kotc.gamemodel.manager.MapManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 public class MapManagerTest {
     private Player player;
@@ -19,6 +23,21 @@ public class MapManagerTest {
         player2 = PlayerFactory.createTestPlayer();
         mapManager.setPlayerPosOnTile(new Vec2d(8,9),player);
     }
+
+    @Test
+    public void testFindNearbyPlayers() {
+        // Erstellen Sie einige Testspieler und fügen Sie sie der Karte hinzu
+        Player player1 = new Player();
+        Player player2 = new Player();
+        player1.setPosition(new Vec2d(5, 5));
+        player2.setPosition(new Vec2d(6, 5));
+        mapManager.getMap().getTiles()[5][5].setOccupiedBy(player1);
+        mapManager.getMap().getTiles()[6][5].setOccupiedBy(player2);
+
+        // Rufen Sie die Methode findNearbyPlayers auf und überprüfen Sie das Ergebnis
+        mapManager.findNearbyPlayers(player1,combatManager);
+        Assertions.assertEquals(1, combatManager.getActiveCombats().size());
+}
 
     @Test
     public void movePlayerToNotTraversableShouldNotWork() throws TileNotReachableException {

@@ -69,6 +69,31 @@ public  class GameControllerServer implements ControllerOutputI{
                 }
 
                 //combat updates
+                for (Combat combat: combatManager.getActiveCombats()) {
+                   Action action =  combat.getActionQueue().poll();
+                   switch (action.getActionIdentifier()){
+                          case ATTACK:
+                            combatManager.attack(action.getPlayer(), combat.getPlayer2());
+                            if(action.getPlayer().getCurrentHealth()<=0 || combat.getPlayer2().getCurrentHealth()<=0){
+                                combatManager.endCombat(combat);
+                            }
+                            break;
+                          case CHARGE:
+                            combatManager.charge(action.getPlayer());
+                              if(action.getPlayer().getCurrentHealth()<=0 || combat.getPlayer2().getCurrentHealth()<=0){
+                                  combatManager.endCombat(combat);
+                              }
+                            break;
+                       case DEFENSE:
+                            combatManager.block(action.getPlayer());
+                           if(action.getPlayer().getCurrentHealth()<=0 || combat.getPlayer2().getCurrentHealth()<=0){
+                               combatManager.endCombat(combat);
+                           }
+                            break;
+                          default:
+                            System.out.println("No action by that name");
+                   }
+                }
 
                 State state = getServerState();
                 applicationStubServer.updateClientGamestates("updateGameState", new Object[]{state});
