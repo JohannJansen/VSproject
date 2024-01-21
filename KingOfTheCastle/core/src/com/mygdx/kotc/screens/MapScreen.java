@@ -66,19 +66,12 @@ public class MapScreen implements Screen {
             case COBBLE3 -> new Texture(Gdx.files.internal("png/cobble/cobble_4_new.png"));
             default -> new Texture(Gdx.files.internal("png/cobble/cobble_1.png"));
         };
-        kingOfTheCastle.batch.draw(texture
-                , mapRenderData.getX()*KingOfTheCastle.TEXTUREWIDTH
-                , mapRenderData.getY()*KingOfTheCastle.TEXTUREHEIGHT);
         if(mapRenderData.getPlayerTextureType() != null){
             Texture playerTexture = switch (mapRenderData.getPlayerTextureType()) {
-                case WIZARD_LEFT -> new Texture(Gdx.files.internal("png/cats/mageCat_cobble_left.png"));
-                case WIZARD_RIGHT -> new Texture(Gdx.files.internal("png/cats/mageCat_cobble_right.png"));
-                case KNIGHT_LEFT -> new Texture(Gdx.files.internal("png/cats/warriorCat_cobble_left.png"));
-                case KNIGHT_RIGHT -> new Texture(Gdx.files.internal("png/cats/warriorCat_cobble_right.png"));
-                case WIZARD -> new Texture(Gdx.files.internal("png/cats/mageCat_cobble_right.png"));
-                case KNIGHT -> null;
-                case MONK -> null;
-                case ARCHER -> null;
+                case WIZARD -> new Texture(Gdx.files.internal("png/cats/mageCat.png"));
+                case KNIGHT -> new Texture(Gdx.files.internal("png/cats/warriorCat.png"));
+                case MONK -> new Texture(Gdx.files.internal("png/cats/monkCat.png"));
+                case ARCHER -> new Texture(Gdx.files.internal("png/cats/greyArcherCat.png"));
                 default -> null;
             };
             kingOfTheCastle.batch.draw(playerTexture
@@ -86,6 +79,8 @@ public class MapScreen implements Screen {
                     , mapRenderData.getY()*KingOfTheCastle.TEXTUREHEIGHT);
         }
     }
+
+
 
     @Override
     public void resize(int width, int height) {
