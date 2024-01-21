@@ -188,7 +188,7 @@ public class CharacterSelectScreen implements Screen {
             if(Gdx.input.isTouched()) {
 
                 kingOfTheCastle.gameControllerClient.setPlayer(selectedPlayer);
-                kingOfTheCastle.gameControllerClient.start();
+
 
                 kingOfTheCastle.setScreen(new MapScreen(kingOfTheCastle));
             }

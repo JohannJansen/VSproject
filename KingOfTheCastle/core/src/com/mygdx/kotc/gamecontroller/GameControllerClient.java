@@ -20,7 +20,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class GameControllerClient implements InputI{
-    private int playerID;
+    private String playerID;
+
+    private boolean isRunning;
 
     private ApplicationStubClient applicationStubClient;
 
@@ -31,6 +33,10 @@ public class GameControllerClient implements InputI{
     private MapManager mapManager;
 
     private PlayerManager playerManager;
+
+    private GameStateOutput gameStateOutput;
+
+    private ViewProxy viewProxy;
 
     private Player player;
 
@@ -46,7 +52,7 @@ public class GameControllerClient implements InputI{
         playerID = "jem";
     }
 
-    public void start(){
+    public void run(){
         //applicationStub.invokeServerMethod("registerPlayer", new Object[]{});
         applicationStubClient.joinServer(playerID);
         ExecutorService executorService = Executors.newSingleThreadExecutor();

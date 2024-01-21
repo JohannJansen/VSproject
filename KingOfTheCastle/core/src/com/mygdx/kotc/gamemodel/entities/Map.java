@@ -7,6 +7,9 @@ public class Map {
     private int height;
     private int width;
 
+    public final Vec2d SPAWNZONEBOTLEFT = new Vec2d(10,2);
+    public final Vec2d SPAWNZONETOPRIGHT = new Vec2d(20,10);
+
     public Map(int height, int width) {
         this.height = height;
         this.width = width;

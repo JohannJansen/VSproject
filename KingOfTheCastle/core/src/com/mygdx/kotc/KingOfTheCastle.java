@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.kotc.gamecontroller.GameControllerClient;
+import com.mygdx.kotc.gamecontroller.GameControllerServer;
 import com.mygdx.kotc.screens.StartScreen;
 import com.mygdx.kotc.screens.MapScreen;
 import com.mygdx.kotc.viewproxy.MapRenderData;
@@ -36,10 +37,9 @@ public class KingOfTheCastle extends Game {
 
 	@Override
 	public void create() {
-		gameControllerClient = new GameControllerClient();
-//		gameControllerClient.start();
+		startClient();
 
-		viewProxy = new ViewProxy();
+		viewProxy = gameControllerClient.getViewProxy();
 		//tileRenderDataList  = viewProxy.mapToTileRenderData();
 		Gdx.graphics.setWindowedMode(getScreenWidth(), getScreenHeight());
 		batch = new SpriteBatch();
@@ -57,10 +57,7 @@ public class KingOfTheCastle extends Game {
 	@Override
 	public void render() {
 		super.render();
-		//Gdx.gl.glClearColor(0.36f, 0.36f, 0.36f, 1);
-//		this.batch.begin();
-//		//tileRenderDataList.forEach(mapScreen::displayTile);
-//		this.batch.end();
+
 	}
 
 	@Override
@@ -76,5 +73,19 @@ public class KingOfTheCastle extends Game {
 
 	public int getScreenHeight() {
 		return screenHeight;
+	}
+
+	public void startSever() {
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		GameControllerServer server = new GameControllerServer();
+		executorService.submit(server::run);
+		executorService.shutdown();
+	}
+
+	public void startClient(){
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		gameControllerClient = new GameControllerClient();
+		executorService.submit(gameControllerClient::run);
+		executorService.shutdown();
 	}
 }

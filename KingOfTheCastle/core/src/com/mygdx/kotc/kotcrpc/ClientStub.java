@@ -15,12 +15,13 @@ public class ClientStub implements RPCIClient {
     }
 
     @Override
-    public void invoke(String method, Object[] parameters) {
+    public void call(String playerId, String method, Object[] parameters) {
 
         Message message = new Message(playerId, method, parameters);
         String messageJson = marshallToJson(message);
 
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             assert messageJson != null;
             writer.write(messageJson);
             writer.flush();

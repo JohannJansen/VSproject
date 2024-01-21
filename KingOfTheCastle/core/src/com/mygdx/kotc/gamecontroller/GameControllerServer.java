@@ -7,7 +7,9 @@ import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.exceptions.MaxPlayersReachedException;
 import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
 import com.mygdx.kotc.gamemodel.factories.MapFactory;
+import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 import com.mygdx.kotc.gamemodel.manager.CombatManager;
+import com.mygdx.kotc.gamemodel.manager.GameStateOutput;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
 import com.mygdx.kotc.gamemodel.manager.PlayerManager;
 import com.mygdx.kotc.gamemodel.repositories.IdGenerator;
@@ -28,7 +30,7 @@ public  class GameControllerServer implements ControllerOutputI{
 
     private IdGenerator idGenerator = new IdGenerator();
 
-    private Map<Long, Player> playerMapping = new HashMap<>(); //Ids of players
+    private Map<String, Player> playerMapping = new HashMap<>(); //Ids of players
 
     private MapManager mapManager;
 
@@ -40,27 +42,41 @@ public  class GameControllerServer implements ControllerOutputI{
 
     private ApplicationStubServer applicationStubServer;
 
-    public GameControllerServer(ApplicationStub applicationStub) {
-        this.applicationStub = applicationStub;
+    public GameControllerServer() {
+        this.applicationStubServer = new ApplicationStubServer();
+        this.mapManager = new MapManager();
+        this.combatManager = new CombatManager();
+        this.playerManager = new PlayerManager();
+        this.gameStateOutput = new GameStateOutput(playerManager, combatManager, mapManager);
     }
 
     //private final ApplicationStub applicationStub = new ApplicationStub();
 
-    public void start(){
+    public void run(){
         //Setup start map
         mapManager.setMap(MapFactory.createDefaultMap());
 
-        while (!Thread.interrupted()){
+        while (isRunning){
             try {
                 Thread.sleep(TICKDURATIONMILLIS/2);
                 long starttimeModelUpdate = System.currentTimeMillis();
+
                 //launch and join thread for model update
+                applicationStubServer.updateCurrentMove();
+                Set<String> keys = applicationStubServer.getCurrentMoveForPlayers().keySet();
+                for (String key: keys){
+                    Message message = applicationStubServer.getCurrentMoveForPlayers().get(key);
+                    Player player = playerMapping.get(key);
+                    invokeMethodFromMessage(message, player);
+                    applicationStubServer.getCurrentMoveForPlayers().put(key, null);
+                }
 
                 State state = getServerState();
                 applicationStubServer.updateClientGamestates("updateGameState", new Object[]{state});
 
                 long remainingtimeInTick = TICKDURATIONMILLIS/2 - (System.currentTimeMillis() - starttimeModelUpdate);
-                Thread.sleep(TICKDURATIONMILLIS);
+                remainingtimeInTick = remainingtimeInTick < 0 ? 0 : remainingtimeInTick;
+                Thread.sleep(remainingtimeInTick);
             } catch (InterruptedException e) {
                 System.out.println("Interrupt in Controller Thread");
                 throw new RuntimeException(e);
@@ -68,18 +84,53 @@ public  class GameControllerServer implements ControllerOutputI{
         }
     }
 
+    public void invokeMethodFromMessage(Message message, Player player) {
+        if (message == null) {
+            if (!player.getPlayerInCombat()) {
+                return;
+            } else {
+                //TODO add default for attack
+                return;
+            }
+        }
+
+        String methodname = message.getMethodname();
+        Object[] parameters =  message.getParameters();
+
+        if (methodname.equals("movePlayer")){
+            try {
+                mapManager.movePlayer((Player) parameters[0], (Vec2d) parameters[1]);
+            } catch (TileNotReachableException e) {
+                System.out.println(new StringBuilder()
+                        .append("Tile not reachable player with ID:").append(" ")
+                        .append(((Player) parameters[0]).getPlayerId()).append("skips turn"));
+            }
+        } else if (methodname.equals("registerPlayer")) {
+            try {
+                String playerId = (String) parameters[0];
+                registerPlayer(playerId);
+                mapManager.spawnPlayer(playerMapping.get(playerId), mapManager.getMap().SPAWNZONEBOTLEFT, mapManager.getMap().SPAWNZONETOPRIGHT );
+            } catch (MaxPlayersReachedException e) {
+                System.out.println("Max players reached");
+            }
+        } else {
+            System.out.println("no method by that name");
+        }
+    }
+
     public void movePlayer(Player player, Vec2d vec2d) throws TileNotReachableException {
         mapManager.movePlayer(player, vec2d);
     }
 
-    public void registerPlayer(Player player) throws MaxPlayersReachedException {
+    public String registerPlayer(String playerId) throws MaxPlayersReachedException {
         if(playerMapping.size() >= MAXPLAYERS){
             throw new MaxPlayersReachedException();
         }
-        long playerId = idGenerator.newId();
+        Player player = PlayerFactory.createWizard();
         playerMapping.put(playerId, player);
         player.setPlayerId(playerId);
         playerManager.getPlayerList().add(player);
+        return playerId;
     }
 
     @Override

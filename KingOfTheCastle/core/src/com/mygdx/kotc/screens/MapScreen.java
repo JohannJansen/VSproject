@@ -54,7 +54,7 @@ public class MapScreen implements Screen{
         mapRenderDataList = kingOfTheCastle.viewProxy.mapToMapRenderData();
 //        playerRenderDataList = kingOfTheCastle.viewProxy.mapToPlayerRenderData();
 
-        handleInput(delta);
+//        handleInput(delta);
         update(delta);
 
         kingOfTheCastle.batch.begin();
@@ -63,24 +63,24 @@ public class MapScreen implements Screen{
         kingOfTheCastle.batch.end();
     }
 
-    public void handleInput(float delta){
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            Gdx.input.getInputProcessor().keyDown(29);
-//            kingOfTheCastle.gameControllerClient.sendInputEvent(new ButtonPressEvent(51));
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            Gdx.input.getInputProcessor().keyDown(32);
-//            right();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)){
-            Gdx.input.getInputProcessor().keyDown(51);
-//            up();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-//            down();
-            Gdx.input.getInputProcessor().keyDown(47);
-        }
-    }
+//    public void handleInput(float delta){
+//        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+//            Gdx.input.getInputProcessor().keyDown(29);
+////            kingOfTheCastle.gameControllerClient.sendInputEvent(new ButtonPressEvent(51));
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+//            Gdx.input.getInputProcessor().keyDown(32);
+////            right();
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.UP)){
+//            Gdx.input.getInputProcessor().keyDown(51);
+////            up();
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+////            down();
+//            Gdx.input.getInputProcessor().keyDown(47);
+//        }
+//    }
 
 
     private void update(float delta) {

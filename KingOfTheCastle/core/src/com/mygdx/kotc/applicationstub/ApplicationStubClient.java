@@ -15,60 +15,27 @@ import java.util.concurrent.Executors;
 public class ApplicationStubClient{
 
 //    private Status status;
-    private Map<Long, Message> currentMoveForPlayer = new HashMap<>();
-    private GameControllerServer gameControllerServer;
     private GameControllerClient gameControllerClient;
     private ClientStub clientStub;
-    private ServerSkeleton serverSkeleton;
-    private BlockingQueue<State> gameStateQueue;
 
     public ApplicationStubClient() {
         clientStub = new ClientStub();
     }
 
-    @Override
-    public void callServerControllerMethod(String method, Object[] parameters) { //server
-        MethodUtils.invokeMethod(gameControllerServer, method, parameters);
+
+    public void callServerMethod(String playerId, String method, Object[] parameters) { //client
+        clientStub.call(playerId, method, parameters);
     }
 
-    public void invokeServerMethod(String method, Object[] parameters) { //client
-        clientStub.invoke(method, parameters);
+
+    public Message receiveMessage() { //ran on client side
+       return clientStub.getMessage();
     }
 
-    public void updateClientGamestates(String method, Object[] parameters){ //sendUpdatedState from server
-        Message message = new Message(method, parameters);
-        serverSkeleton.sendToAllClients(message);
-    }
 
-    @Override
-    public void receiveGameState(String method, Object[] parameters) { //ran on client side
-       MethodUtils.invokeMethod(gameControllerClient, method, parameters);
-    }
-
-    @Override
-    public Message getCallForPlayer(int playerID) {
-        return null;
-    }
-
-    @Override
-    public void sendGameState(State state) {
-
-    }
-
-    @Override
-    public void hostLobby() {
-        serverSkeleton.listenForIncomingCalls();
-    }
-
-    @Override
-    public void joinLobby(int lobbyID) {
-
-    }
-
-    public void joinServer(Player player){
+    public void joinServer(String playerId){
         clientStub.connectToServer("DESKTOP-3UNJBSN", 8888);
-        clientStub.invoke("registerPlayer", new Object[]{player});
-
+        clientStub.call(playerId, "registerPlayer", new Object[]{playerId});
     }
 
     public void setGameControllerClient(GameControllerClient gameControllerClient) {

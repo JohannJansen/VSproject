@@ -37,6 +37,8 @@ public class Player {
         this.attackModifiers = attackModifiers;
         this.defenseModifiers = defenseModifiers;
         this.playerInCombat = playerInCombat;
+
+        this.playerTextureType = PlayerTextureType.WIZARD;
     }
 
     // -------------------------------- Getter Setter -------------------------------//
