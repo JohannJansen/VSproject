@@ -19,6 +19,7 @@ import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 import com.mygdx.kotc.gamemodel.manager.CombatManager;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
+import com.mygdx.kotc.gamemodel.manager.PlayerManager;
 import com.mygdx.kotc.inputprocessors.BattleScreenInputProcessor;
 import com.mygdx.kotc.inputprocessors.inputevents.ButtonPressEvent;
 import com.mygdx.kotc.inputprocessors.inputevents.Event;
@@ -36,6 +37,7 @@ public class MapScreen implements Screen, InputProcessor {
     private Player player;
     private Player player2;
     private List<Player> playerList;
+    private PlayerManager playerManager = new PlayerManager();
     private List<MapRenderData> mapRenderDataList;
     private List<PlayerRenderData> playerRenderDataList;
     private OrthographicCamera camera;
