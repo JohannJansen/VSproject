@@ -39,7 +39,7 @@ public class TileFactory {
 
     public static Tile createRandomWallTile(Vec2d pos) {
         Tile tile = new Tile();
-        tile.setTraversable(true);
+        tile.setTraversable(false); //bug found
         tile.setPosition(pos);
         TextureType[] possibleTextures = new TextureType[]{TextureType.WALL1, TextureType.WALL2, TextureType.WALL3};
         TextureType randomType = possibleTextures[new Random().nextInt(possibleTextures.length)];
@@ -49,7 +49,7 @@ public class TileFactory {
 
     public static Tile createBarrelObstacleTile(Vec2d pos) {
         Tile tile = new Tile();
-        tile.setTraversable(true);
+        tile.setTraversable(false);  //bug found
         tile.setPosition(pos);
         tile.setTextureType(TextureType.BARREL);
         return tile;

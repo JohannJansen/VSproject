@@ -35,7 +35,7 @@ public class MapFactory {
         //Create Ground
         for (int x = 0; x < DEFAULTWIDTH; x++) {
             for (int y = 0; y < DEFAULTHEIGHT; y++) {
-                tiles[y][x] = TileFactory.createTraversableCobbleTile(new Vec2d(x,y));
+                tiles[x][y] = TileFactory.createTraversableCobbleTile(new Vec2d(x,y)); //Bug [y][x] found
             }
         }
         //Create Walls
@@ -53,7 +53,7 @@ public class MapFactory {
         }
 
         //Create obstacles
-        tiles[5][7] = TileFactory.createBarrelObstacleTile(new Vec2d(7,5));
+        tiles[7][5] = TileFactory.createBarrelObstacleTile(new Vec2d(7,5));
         return map;
     }
 }

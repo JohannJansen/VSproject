@@ -1,10 +1,16 @@
 package com.mygdx.kotc.gamemodel.entities;
 
+import java.io.Serializable;
+
 public class Tile {
     private Vec2d position;
-    private boolean traversible;
+    private boolean traversable;
     private Player occupiedBy;
     private TextureType textureType;
+
+    public Tile(){
+
+    }
 
     public Vec2d getPosition() {
         return position;
@@ -14,12 +20,12 @@ public class Tile {
         this.position = position;
     }
 
-    public boolean isTraversible() {
-        return traversible;
+    public boolean isTraversable() {
+        return traversable;
     }
 
     public void setTraversable(boolean traversible) {
-        this.traversible = traversible;
+        this.traversable = traversible;
     }
 
     public Player getOccupiedBy() {
@@ -28,8 +34,12 @@ public class Tile {
 
     public void setOccupiedBy(Player occupiedBy) {
         this.occupiedBy = occupiedBy;
+        traversable = false;
     }
 
+    public boolean isOccupied(){
+        return occupiedBy != null;
+    }
     public void setTextureType(TextureType textureType){ this.textureType = textureType; }
 
     public TextureType getTextureType(){return textureType;}

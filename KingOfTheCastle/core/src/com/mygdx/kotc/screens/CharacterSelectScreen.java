@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.mygdx.kotc.KingOfTheCastle;
+import com.mygdx.kotc.gamecontroller.GameControllerClient;
 import com.mygdx.kotc.gamemodel.entities.Player;
+import com.mygdx.kotc.gamemodel.entities.PlayerTextureType;
+import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 
 
@@ -87,7 +90,12 @@ public class CharacterSelectScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > wizCat_Y){
             kingOfTheCastle.batch.draw(wizardCat,x ,wizCat_Y, CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
-                selectedPlayer = PlayerFactory.createWizzard();
+                selectedPlayer = PlayerFactory.createWizard();
+                //DEMO player spawn (in final version through GameStates)
+                selectedPlayer.setPlayerTextureType(PlayerTextureType.WIZARD_RIGHT);
+                selectedPlayer.setPosition(new Vec2d(7,6));
+//                kingOfTheCastle.viewProxy.map.getTiles()[7][6].setOccupiedBy(selectedPlayer);
+
                 isWizardCatActive = true;
                 isMonkCatActive= false;
                 isArcherCatActive=false;
@@ -177,8 +185,13 @@ public class CharacterSelectScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() < startButton_Y + startButtonHeight
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > startButton_Y){
             kingOfTheCastle.batch.draw(startButton,x ,startButton_Y,CatWidth, CatHeight);
-            if(Gdx.input.isTouched()){
+            if(Gdx.input.isTouched()) {
+
+                kingOfTheCastle.gameControllerClient.setPlayer(selectedPlayer);
+
+
                 kingOfTheCastle.setScreen(new MapScreen(kingOfTheCastle));
+
             }
         }else {
             kingOfTheCastle.batch.draw(startButtonUnactive,x,startButton_Y,CatWidth, CatHeight);

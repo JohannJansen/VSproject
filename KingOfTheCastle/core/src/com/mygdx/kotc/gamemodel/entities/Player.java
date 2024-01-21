@@ -3,7 +3,7 @@ package com.mygdx.kotc.gamemodel.entities;
 import java.util.List;
 
 public class Player {
-    private long playerId;
+    private String playerId;
     private Vec2d position;
     private boolean isBlocking;
     private int speed;
@@ -17,8 +17,12 @@ public class Player {
     private List<Modifier> attackModifiers;
     private List<Modifier> defenseModifiers;
     private boolean playerInCombat;
+    private PlayerTextureType playerTextureType;
 
-    public Player(long playerId, Vec2d position, boolean isBlocking, int speed, int totalHp, int defense, int currentHealth, int strength, Equipment weapon, Equipment shield, Equipment armor, List<Modifier> attackModifiers, List<Modifier> defenseModifiers, boolean playerInCombat) {
+    public Player() {
+    }
+
+    public Player(String playerId, Vec2d position, boolean isBlocking, int speed, int totalHp, int defense, int currentHealth, int strength, Equipment weapon, Equipment shield, Equipment armor, List<Modifier> attackModifiers, List<Modifier> defenseModifiers, boolean playerInCombat) {
         this.playerId = playerId;
         this.position = position;
         this.isBlocking = isBlocking;
@@ -33,6 +37,8 @@ public class Player {
         this.attackModifiers = attackModifiers;
         this.defenseModifiers = defenseModifiers;
         this.playerInCombat = playerInCombat;
+
+        this.playerTextureType = PlayerTextureType.WIZARD;
     }
 
     // -------------------------------- Getter Setter -------------------------------//
@@ -140,7 +146,19 @@ public class Player {
         this.defenseModifiers = defenseModifiers;
     }
 
-    public long getPlayerId() {
+    public String getPlayerId() {
         return playerId;
+    }
+
+    public void setPlayerId(String playerId) {
+        this.playerId = playerId;
+    }
+
+    public PlayerTextureType getPlayerTextureType() {
+        return playerTextureType;
+    }
+
+    public void setPlayerTextureType(PlayerTextureType playerTextureType) {
+        this.playerTextureType = playerTextureType;
     }
 }

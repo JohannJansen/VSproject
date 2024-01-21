@@ -1,10 +1,13 @@
 package com.mygdx.kotc.gamemodel.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 public class Vec2d {
     private int posX;
     private int posY;
+
+    public Vec2d() {}
 
     public Vec2d(int posX, int posY){
         this.posX = posX;

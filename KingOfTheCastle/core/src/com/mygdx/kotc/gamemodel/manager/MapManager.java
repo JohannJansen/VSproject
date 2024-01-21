@@ -1,9 +1,6 @@
 package com.mygdx.kotc.gamemodel.manager;
 
-import com.mygdx.kotc.gamemodel.entities.Map;
-import com.mygdx.kotc.gamemodel.entities.Player;
-import com.mygdx.kotc.gamemodel.entities.Vec2d;
-import com.mygdx.kotc.gamemodel.entities.Tile;
+import com.mygdx.kotc.gamemodel.entities.*;
 import com.mygdx.kotc.gamemodel.exceptions.CombatNotInitiatableException;
 import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
 import com.mygdx.kotc.gamemodel.factories.MapFactory;
@@ -15,8 +12,9 @@ import java.util.Random;
 public class MapManager implements MapI{
     int DEFAULTMAPWIDTH = 32;
     int DEFAULTMAPHEIGHT = 32;
+    private CombatManager combatManager = new CombatManager();
 
-    Map map = MapFactory.createTestMap(DEFAULTMAPWIDTH, DEFAULTMAPHEIGHT);
+    public Map map = MapFactory.createTestMap(DEFAULTMAPWIDTH, DEFAULTMAPHEIGHT);
 
     /**
      * creates a new Map with the given height and widht
@@ -40,12 +38,12 @@ public class MapManager implements MapI{
         Vec2d newPos = new Vec2d(player.getPosition().getPosX() + direction.getPosX(), player.getPosition().getPosY() + direction.getPosY());
         Tile tile = map.getTiles()[newPos.getPosX()][newPos.getPosY()];
 
-        if(!player.getPlayerInCombat() && tile.isTraversible()){
+        if(!player.getPlayerInCombat() && tile.isTraversable()){
             removePlayerFromCurrentTile(player);
-            player.setPosition(newPos);
-            setPlayerPos(newPos, player);
+            setPlayerPosOnTile(newPos, player);
         }else {
-            throw new TileNotReachableException();
+            System.out.println("This Tile is an obstacle and isn't reachable!");
+            //throw new TileNotReachableException();
         }
     }
     /**
@@ -59,21 +57,21 @@ public class MapManager implements MapI{
         for(int i = spawnZoneStart.getPosY(); i <= spawnZoneEnd.getPosY(); i++){
             for(int j = spawnZoneStart.getPosX(); j <= spawnZoneEnd.getPosX(); j++){
                 Tile tile = map.getTiles()[j][i];
-                if(!tile.isTraversible()){
+                if(!tile.isTraversable()){
                     continue;
                 }
-                Random random = new Random();
-                int randomNum = random.nextInt(2)+1;
-                if (randomNum == 2){
-                    Vec2d playerSpawnPos = new Vec2d(j,i);
-                    setPlayerPos(playerSpawnPos,player);
+
+                if (!tile.isOccupied()){
+                    Vec2d playerSpawnPos = new Vec2d(j, i);
+                    setPlayerPosOnTile(playerSpawnPos, player);
+                    return;
                 }
             }
         }
     }
 
     @Override
-    public void setPlayerPos(Vec2d pos, Player player) {
+    public void setPlayerPosOnTile(Vec2d pos, Player player) {
         player.setPosition(pos);
         Tile tile = map.getTiles()[pos.getPosX()][pos.getPosY()];
         tile.setOccupiedBy(player);
@@ -85,6 +83,7 @@ public class MapManager implements MapI{
                 && Vec2d.calculateDistance(player1.getPosition(), player2.getPosition()) <= interactionDistance){
             player1.setPlayerInCombat(true);
             player2.setPlayerInCombat(true);
+            combatManager.createCombat(player1,player2);
         }else{
             throw new CombatNotInitiatableException();
         }
@@ -92,6 +91,7 @@ public class MapManager implements MapI{
 
     private void removePlayerFromCurrentTile(Player player){
         map.getTiles()[player.getPosition().getPosX()][player.getPosition().getPosY()].setOccupiedBy(null);
+        map.getTiles()[player.getPosition().getPosX()][player.getPosition().getPosY()].setTraversable(true);
     }
 
     public Map getMap() {
@@ -101,4 +101,35 @@ public class MapManager implements MapI{
     public void setMap(Map map) {
         this.map = map;
     }
+
+    public boolean findNearbyPlayers(Player player, CombatManager combatManager){
+
+        Tile tiles [][] = getMap().getTiles();
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dy = -2; dy <= 2; dy++) {
+                // Skip the center tile
+                if (dx == 0 && dy == 0) continue;
+
+                int x = player.getPosition().getPosX() + dx;
+                int y = player.getPosition().getPosY() + dy;
+
+                // Check bounds
+                if (x < 0 || x >= tiles.length || y < 0 || y >= tiles[0].length) continue;
+
+                // Check if tile is occupied by a player
+                Player occupyingPlayer = tiles[x][y].getOccupiedBy();
+                if (occupyingPlayer != null && !occupyingPlayer.getPlayerInCombat()) {
+                    combatManager.createCombat(player,occupyingPlayer);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+
 }
+
+
+

@@ -9,9 +9,15 @@ import com.mygdx.kotc.gamemodel.interfaces.GameStateOutputI;
 import java.util.List;
 
 public class GameStateOutput implements GameStateOutputI {
-    PlayerManager playerManager = new PlayerManager();
-    CombatManager combatManager = new CombatManager();
-    MapManager mapManager = new MapManager();
+    PlayerManager playerManager;
+    CombatManager combatManager;
+    MapManager mapManager;
+
+    public GameStateOutput(PlayerManager playerManager, CombatManager combatManager, MapManager mapManager) {
+        this.playerManager = playerManager;
+        this.combatManager = combatManager;
+        this.mapManager = mapManager;
+    }
 
     @Override
     public List<Player> getPlayerList() {
@@ -29,11 +35,13 @@ public class GameStateOutput implements GameStateOutputI {
     }
 
     @Override
-    public State getState() {
+    public State getState() { //use on server after a new move has been made from client and approved by server
         State state = new State();
-        state.setCombatList(combatManager.getActiveCombats());
+        state.setCombatList(combatManager.getActiveCombats()); //use overridden methods
         state.setMap(mapManager.getMap());
         state.setPlayerList(playerManager.getPlayerList());
         return state;
     }
+
+
 }
