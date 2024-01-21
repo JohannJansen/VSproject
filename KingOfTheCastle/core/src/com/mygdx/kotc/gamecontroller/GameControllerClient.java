@@ -1,5 +1,6 @@
 package com.mygdx.kotc.gamecontroller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.kotc.applicationstub.ApplicationStubClient;
 import com.mygdx.kotc.gamemodel.entities.Player;
@@ -13,6 +14,7 @@ import com.mygdx.kotc.inputprocessors.inputevents.ButtonPressEvent;
 import com.mygdx.kotc.inputprocessors.inputevents.MouseClickEvent;
 import com.mygdx.kotc.inputprocessors.inputevents.Event;
 import com.mygdx.kotc.kotcrpc.Message;
+import com.mygdx.kotc.screens.BattleScreen;
 import com.mygdx.kotc.screens.CurrentScreen;
 import com.mygdx.kotc.viewproxy.ViewProxy;
 
@@ -68,7 +70,6 @@ public class GameControllerClient implements InputI{
 
             //TODO notify
             Message message = applicationStubClient.receiveMessage();
-            System.out.println("update-message received");
             if (message != null){
                 State state = (State) message.getParameters()[0];
                 if (state != null) {
