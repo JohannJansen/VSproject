@@ -16,6 +16,7 @@ import com.mygdx.kotc.kotcrpc.Message;
 import com.mygdx.kotc.screens.CurrentScreen;
 import com.mygdx.kotc.viewproxy.ViewProxy;
 
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -48,7 +49,8 @@ public class GameControllerClient implements InputI{
         this.gameStateOutput = new GameStateOutput(playerManager, combatManager, mapManager);
         this.viewProxy = new ViewProxy(gameStateOutput);
         isRunning = true;
-        playerID = "jem";
+        UUID uuid = UUID.randomUUID();
+        playerID = uuid.toString();
     }
 
     public void run(){
