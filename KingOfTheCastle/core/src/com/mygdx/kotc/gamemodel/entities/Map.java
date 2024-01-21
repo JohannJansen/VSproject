@@ -1,5 +1,7 @@
 package com.mygdx.kotc.gamemodel.entities;
 
+import java.io.Serializable;
+
 public class Map {
 
     private Tile[][] tiles;
@@ -9,6 +11,10 @@ public class Map {
 
     public final Vec2d SPAWNZONEBOTLEFT = new Vec2d(10,2);
     public final Vec2d SPAWNZONETOPRIGHT = new Vec2d(20,10);
+
+    public Map() {
+
+    }
 
     public Map(int height, int width) {
         this.height = height;

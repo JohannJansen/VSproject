@@ -73,34 +73,11 @@ public class MapScreen implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         mapRenderDataList = kingOfTheCastle.viewProxy.mapToMapRenderData();
-//        playerRenderDataList = kingOfTheCastle.viewProxy.mapToPlayerRenderData();
-
-//        handleInput(delta);
         update(delta);
         kingOfTheCastle.batch.begin();
         mapRenderDataList.forEach(this::displayTile);
-//        playerRenderDataList.forEach(this::displayPlayer);
         kingOfTheCastle.batch.end();
     }
-
-//    public void handleInput(float delta){
-//        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-//            Gdx.input.getInputProcessor().keyDown(29);
-////            kingOfTheCastle.gameControllerClient.sendInputEvent(new ButtonPressEvent(51));
-//        }
-//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-//            Gdx.input.getInputProcessor().keyDown(32);
-////            right();
-//        }
-//        if (Gdx.input.isKeyPressed(Input.Keys.UP)){
-//            Gdx.input.getInputProcessor().keyDown(51);
-////            up();
-//        }
-//        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-////            down();
-//            Gdx.input.getInputProcessor().keyDown(47);
-//        }
-//    }
 
 
     private void update(float delta) {
@@ -132,7 +109,7 @@ public class MapScreen implements Screen, InputProcessor {
                 case WIZARD_RIGHT -> new Texture(Gdx.files.internal("png/cats/mageCat_cobble_right.png"));
                 case KNIGHT_LEFT -> new Texture(Gdx.files.internal("png/cats/warriorCat_cobble_left.png"));
                 case KNIGHT_RIGHT -> new Texture(Gdx.files.internal("png/cats/warriorCat_cobble_right.png"));
-                case WIZARD -> null;
+                case WIZARD -> new Texture(Gdx.files.internal("png/cats/mageCat_cobble_right.png"));
                 case KNIGHT -> null;
                 case MONK -> null;
                 case ARCHER -> null;
@@ -168,44 +145,6 @@ public class MapScreen implements Screen, InputProcessor {
     public void dispose() {
 
 
-    }
-
-
-    // InputI methods
-
-    public void left(){
-        try {
-            mapManager.movePlayer(player, new Vec2d(-1, 0));
-        } catch (TileNotReachableException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void right() {
-        try {
-            mapManager.movePlayer(player, new Vec2d(1, 0));
-        } catch (TileNotReachableException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void up() {
-        try {
-            mapManager.movePlayer(player, new Vec2d(0, 1));
-        } catch (TileNotReachableException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void down() {
-        try {
-            mapManager.movePlayer(player, new Vec2d(0, -1));
-        } catch (TileNotReachableException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override

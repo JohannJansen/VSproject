@@ -2,6 +2,7 @@ package com.mygdx.kotc.gamemodel.factories;
 
 import com.mygdx.kotc.gamemodel.entities.Modifier;
 import com.mygdx.kotc.gamemodel.entities.Player;
+import com.mygdx.kotc.gamemodel.entities.PlayerTextureType;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 
 import java.util.ArrayList;
@@ -21,8 +22,10 @@ public class PlayerFactory {
         List<Modifier> attackList = new ArrayList<>();
         List<Modifier> defenseList = new ArrayList<>();
         Vec2d v2d = new Vec2d(7,9);
-        return new Player(null,null, false,15,200,80,200,
+        Player player = new Player(null,null, false,15,200,80,200,
                 10, EquipmentFactory.createStaff(), null,null,attackList,defenseList,false);
+        player.setPlayerTextureType(PlayerTextureType.WIZARD);
+        return player;
         //set texture type
     }
     public static Player createArcher(){

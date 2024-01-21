@@ -1,10 +1,16 @@
 package com.mygdx.kotc.gamemodel.entities;
 
+import java.io.Serializable;
+
 public class Tile {
     private Vec2d position;
     private boolean traversable;
     private Player occupiedBy;
     private TextureType textureType;
+
+    public Tile(){
+
+    }
 
     public Vec2d getPosition() {
         return position;

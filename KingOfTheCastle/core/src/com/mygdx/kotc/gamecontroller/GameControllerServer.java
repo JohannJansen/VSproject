@@ -129,7 +129,7 @@ public  class GameControllerServer implements ControllerOutputI{
 
         if (methodname.equals("movePlayer")){
             try {
-                mapManager.movePlayer((Player) parameters[0], (Vec2d) parameters[1]);
+                mapManager.movePlayer(playerMapping.get((String) parameters[0]), (Vec2d) parameters[1]);
             } catch (TileNotReachableException e) {
                 System.out.println("Tile not reachable player with ID:" + " " +
                         ((Player) parameters[0]).getPlayerId() + "skips turn");
@@ -165,7 +165,8 @@ public  class GameControllerServer implements ControllerOutputI{
         }
     }
 
-    public void movePlayer(Player player, Vec2d vec2d) throws TileNotReachableException {
+    public void movePlayer(String playerId, Vec2d vec2d) throws TileNotReachableException {
+        Player player = playerMapping.get(playerId);
         mapManager.movePlayer(player, vec2d);
     }
     
