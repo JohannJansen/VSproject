@@ -1,11 +1,9 @@
 package com.mygdx.kotc.gamecontroller;
 
 import com.mygdx.kotc.applicationstub.ApplicationStubServer;
-import com.mygdx.kotc.gamemodel.entities.Combat;
-import com.mygdx.kotc.gamemodel.entities.Player;
-import com.mygdx.kotc.gamemodel.entities.State;
-import com.mygdx.kotc.gamemodel.entities.Vec2d;
+import com.mygdx.kotc.gamemodel.entities.*;
 import com.mygdx.kotc.gamemodel.exceptions.MaxPlayersReachedException;
+import com.mygdx.kotc.gamemodel.exceptions.PlayerHasNoHealthExeception;
 import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
 import com.mygdx.kotc.gamemodel.factories.MapFactory;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
@@ -17,10 +15,8 @@ import com.mygdx.kotc.gamemodel.repositories.IdGenerator;
 import com.mygdx.kotc.kotcrpc.Message;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
-import java.util.Set;
 
 public  class GameControllerServer implements ControllerOutputI{
     public int MAXPLAYERS = 8;
@@ -72,6 +68,8 @@ public  class GameControllerServer implements ControllerOutputI{
                     applicationStubServer.getCurrentMoveForPlayers().put(key, null);
                 }
 
+                //combat updates
+
                 State state = getServerState();
                 applicationStubServer.updateClientGamestates("updateGameState", new Object[]{state});
 
@@ -94,7 +92,6 @@ public  class GameControllerServer implements ControllerOutputI{
                 return;
             }
         }
-
         String methodname = message.getMethodname();
         Object[] parameters =  message.getParameters();
 
@@ -102,9 +99,8 @@ public  class GameControllerServer implements ControllerOutputI{
             try {
                 mapManager.movePlayer((Player) parameters[0], (Vec2d) parameters[1]);
             } catch (TileNotReachableException e) {
-                System.out.println(new StringBuilder()
-                        .append("Tile not reachable player with ID:").append(" ")
-                        .append(((Player) parameters[0]).getPlayerId()).append("skips turn"));
+                System.out.println("Tile not reachable player with ID:" + " " +
+                        ((Player) parameters[0]).getPlayerId() + "skips turn");
             }
         } else if (methodname.equals("registerPlayer")) {
             try {
@@ -124,31 +120,25 @@ public  class GameControllerServer implements ControllerOutputI{
             }catch (Exception e){
                 System.err.println("Players are not in Combat");
             }
-        } else if (methodname.equals("block")) {
+        }  else if (methodname.equals("fleeFromCombat")) {
             try {
-                Player player1 = (Player) parameters[0];
-                if(player1.getPlayerInCombat()){
-                    combatManager.block(player1);
-                }
-            }catch (Exception e){
-                System.err.println("Player is not in Combat");
+                combatManager.fleeFromCombat((Player) parameters[0], (Combat) parameters[1]);
+            }catch (PlayerHasNoHealthExeception p){
+                System.err.println("player has no health left uwuu *_*");
             }
-        } else if (methodname.equals("charge")) {
-            Player player1 = (Player) parameters[0];
+        } else if (methodname.equals("initiateCombat")) {
             try {
-                if(player1.getPlayerInCombat()){
-                    combatManager.charge(player1);
-                }
-            }catch (Exception e){
-                System.err.println("siktir git amk");
+                mapManager.initiateCombat((Player) parameters[0],(Player) parameters[1],(int)parameters[2]);
+            } catch(Exception CombatNotInitiatableException) {
+                System.err.println("Players not found, maybe they're dead ;/");
             }
-        }
-
-
-
-
-
-        else {
+        }  else if (message.getMethodname().equals("actionInCombat")) {
+            try {
+                combatManager.actionInCombat((Action) parameters[0], (PriorityQueue<Action>) parameters[1]);
+            }catch (Exception e){
+                System.err.println("Alohomora");
+            }
+        } else {
             System.out.println("no method by that name");
         }
     }

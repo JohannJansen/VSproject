@@ -1,9 +1,6 @@
 package com.mygdx.kotc.gamemodel.manager;
 
-import com.mygdx.kotc.gamemodel.entities.Map;
-import com.mygdx.kotc.gamemodel.entities.Player;
-import com.mygdx.kotc.gamemodel.entities.Vec2d;
-import com.mygdx.kotc.gamemodel.entities.Tile;
+import com.mygdx.kotc.gamemodel.entities.*;
 import com.mygdx.kotc.gamemodel.exceptions.CombatNotInitiatableException;
 import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
 import com.mygdx.kotc.gamemodel.factories.MapFactory;
@@ -15,6 +12,7 @@ import java.util.Random;
 public class MapManager implements MapI{
     int DEFAULTMAPWIDTH = 32;
     int DEFAULTMAPHEIGHT = 32;
+    private CombatManager combatManager = new CombatManager();
 
     public Map map = MapFactory.createTestMap(DEFAULTMAPWIDTH, DEFAULTMAPHEIGHT);
 
@@ -85,6 +83,7 @@ public class MapManager implements MapI{
                 && Vec2d.calculateDistance(player1.getPosition(), player2.getPosition()) <= interactionDistance){
             player1.setPlayerInCombat(true);
             player2.setPlayerInCombat(true);
+            combatManager.createCombat(player1,player2);
         }else{
             throw new CombatNotInitiatableException();
         }
