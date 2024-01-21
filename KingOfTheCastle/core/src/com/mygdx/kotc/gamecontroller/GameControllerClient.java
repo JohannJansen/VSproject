@@ -59,25 +59,37 @@ public class GameControllerClient implements InputI{
         executorService.submit(() -> applicationStubClient.getClientStub().startListening());
 
         while (isRunning){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
             //TODO notify
             Message message = applicationStubClient.receiveMessage();
+            System.out.println("update-message received");
             if (message != null){
                 State state = (State) message.getParameters()[0];
                 if (state != null) {
                     updateGameState(state);
+                    System.out.println("gamestate updated");
+                    for (Player player: playerManager.getPlayerList()){
+                        System.out.println("player: " + player.getPlayerId() + " has position: "
+                                + player.getPosition().getPosX()+player.getPosition().getPosY());
+                    }
                 }
             }
         }
         executorService.shutdown();
     }
 
-    public void updateGameState(State state){ //method to call from ApplicationStub
+    public void updateGameState(State state){
+        //Reicht der State alleine aus?
+        //method to call from ApplicationStub
         mapManager.setMap(state.getMap());
         combatManager.setActiveCombats(state.getCombatList());
         playerManager.setPlayerList(state.getPlayerList());
     }
-
 
     @Override
     public void sendInputEvent(Event event) {

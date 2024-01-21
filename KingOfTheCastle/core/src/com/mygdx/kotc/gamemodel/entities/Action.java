@@ -5,6 +5,10 @@ public class Action {
     private Player player;
     private int priority;
 
+    public Action(){
+
+    }
+
     public Action(ActionIdentifier actionIdentifier, Player player, int priority) {
         this.actionIdentifier = actionIdentifier;
         this.player = player;

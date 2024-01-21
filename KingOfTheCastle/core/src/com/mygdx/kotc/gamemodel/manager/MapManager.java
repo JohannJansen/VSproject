@@ -60,11 +60,11 @@ public class MapManager implements MapI{
                 if(!tile.isTraversable()){
                     continue;
                 }
-                Random random = new Random();
-                int randomNum = random.nextInt(2)+1;
-                if (randomNum == 2){
+
+                if (!tile.isOccupied()){
                     Vec2d playerSpawnPos = new Vec2d(j, i);
                     setPlayerPosOnTile(playerSpawnPos, player);
+                    return;
                 }
             }
         }

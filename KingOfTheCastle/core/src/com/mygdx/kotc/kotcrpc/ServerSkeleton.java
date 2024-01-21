@@ -1,6 +1,8 @@
 package com.mygdx.kotc.kotcrpc;
 
 import com.badlogic.gdx.utils.Json;
+import com.mygdx.kotc.gamemodel.entities.Map;
+import com.mygdx.kotc.gamemodel.factories.MapFactory;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -26,10 +28,10 @@ public class ServerSkeleton implements RPCIServer{
         messageQueue = new CopyOnWriteArrayList<>();
 //        iddClients = new ConcurrentHashMap<>();
         try {
-            serverSocket = new ServerSocket(8888);
+            serverSocket = new ServerSocket(8898);
             executorService = Executors.newCachedThreadPool();
             connectedClients = new CopyOnWriteArrayList<>();
-            System.out.println("Server started on port 8888");
+            System.out.println("Server started on port 8898");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -51,23 +53,24 @@ public class ServerSkeleton implements RPCIServer{
     }
 
     private void handleClient(Socket clientSocket) {
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String receivedJson = reader.readLine();
-            System.out.println("Received JSON from client: " + receivedJson);
+        while (!Thread.interrupted()) {
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                String receivedJson = reader.readLine();
+                System.out.println("Received JSON from client: " + receivedJson);
 
-            System.out.println("test");
-            Message message = unmarshallFromJson(receivedJson);
+                System.out.println("test");
+                Message message = unmarshallFromJson(receivedJson);
 
-            assert message != null;
-            messageQueue.add(message);
+                messageQueue.add(message);
 
-            System.out.println(message.getMethodname());
-            System.out.println(Arrays.toString(message.getParameters()));
-            System.out.println("CLIENT SOCKET IS CONNECTED: " + clientSocket.isConnected());
-        } catch (IOException e) {
-            System.out.println("Error handling client");
-            e.printStackTrace();
+                System.out.println(message.getMethodname());
+                System.out.println(Arrays.toString(message.getParameters()));
+                System.out.println("CLIENT SOCKET IS CONNECTED: " + clientSocket.isConnected());
+            } catch (IOException e) {
+                System.out.println("Error handling client");
+                e.printStackTrace();
+            }
         }
     }
 
@@ -86,6 +89,8 @@ public class ServerSkeleton implements RPCIServer{
                 try {
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
                     String marshalledMessage = marshallToJson(message);
+                    marshalledMessage += '\n';
+                    System.out.println(marshalledMessage.endsWith("\n"));
 
                     int kilobyteSize = 1024;
 
@@ -95,39 +100,15 @@ public class ServerSkeleton implements RPCIServer{
 
                         // Write the packet to the buffer
                         writer.write(packet);
+                        writer.flush();
                     }
-                    writer.write("\n");
+                    //writer.write("\n");
                     writer.flush();
                     System.out.println("Game state sent to clients");
                 } catch (IOException e) {
                     System.out.println("Error sending game state to client");
                     e.printStackTrace();
                 }
-            }
-        }
-    }
-
-    public class MessageSplitter {
-        public static void main(String[] args) {
-            String message = "This is a long message that needs to be split into kilobyte-sized packets.";
-
-            // Specify the desired kilobyte size
-            int kilobyteSize = 1024;
-
-            // Create a BufferedWriter with a custom buffer size
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("example.txt"))) {
-                // Iterate over the message and split it into kilobyte-sized chunks
-                for (int i = 0; i < message.length(); i += kilobyteSize) {
-                    int end = Math.min(i + kilobyteSize, message.length());
-                    String chunk = message.substring(i, end);
-
-                    // Write the chunk to the buffer
-                    writer.write(chunk);
-                    // Optionally, write a newline or separator between chunks
-                    writer.newLine();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -151,5 +132,4 @@ public class ServerSkeleton implements RPCIServer{
     public CopyOnWriteArrayList<Message> getMessageQueue() {
         return messageQueue;
     }
-
 }
