@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class MapScreen implements Screen, InputProcessor {
+public class MapScreen implements Screen {
     private KingOfTheCastle kingOfTheCastle;
     private MapManager mapManager;
     private Player player;
@@ -52,13 +52,7 @@ public class MapScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
-//        tileRenderDataList = kingOfTheCastle.viewProxy.mapToTileRenderData();
-//        playerRenderDataList = kingOfTheCastle.viewProxy.mapToPlayerRenderData();
         Gdx.graphics.setWindowedMode(1024, 1024);
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, kingOfTheCastle.getScreenWidth(), kingOfTheCastle.getScreenHeight());
-        kingOfTheCastle.batch.setProjectionMatrix(camera.combined);
-        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -139,70 +133,5 @@ public class MapScreen implements Screen, InputProcessor {
     public void dispose() {
 
 
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.B) {
-            kingOfTheCastle.setScreen(new BattleScreen(kingOfTheCastle));
-            Gdx.app.log("b pressed","b pressed");
-
-            if (mapManager.findNearbyPlayers(player, combatManager)){
-                kingOfTheCastle.setScreen(new BattleScreen(kingOfTheCastle));
-                Gdx.app.log("b pressed","b pressed");
-            }
-            return true;
-        }
-        return false;
-    }
-
-    //public Player findNearestPlayer(Player player){
-    //   Tile playerTile = new Tile();
-    //   playerTile.setPosition(player.getPosition());
-    //   Tile tiles [][] = mapManager.getMap().getTiles();
-    //   Arrays.stream(tiles).filter()
-    //
-    //}
-
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
     }
 }
