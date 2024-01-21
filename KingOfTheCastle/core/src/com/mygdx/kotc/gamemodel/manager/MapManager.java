@@ -101,4 +101,35 @@ public class MapManager implements MapI{
     public void setMap(Map map) {
         this.map = map;
     }
+
+    public boolean findNearbyPlayers(Player player, CombatManager combatManager){
+
+        Tile tiles [][] = getMap().getTiles();
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dy = -2; dy <= 2; dy++) {
+                // Skip the center tile
+                if (dx == 0 && dy == 0) continue;
+
+                int x = player.getPosition().getPosX() + dx;
+                int y = player.getPosition().getPosY() + dy;
+
+                // Check bounds
+                if (x < 0 || x >= tiles.length || y < 0 || y >= tiles[0].length) continue;
+
+                // Check if tile is occupied by a player
+                Player occupyingPlayer = tiles[x][y].getOccupiedBy();
+                if (occupyingPlayer != null && !occupyingPlayer.getPlayerInCombat()) {
+                    combatManager.createCombat(player,occupyingPlayer);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+
 }
+
+
+

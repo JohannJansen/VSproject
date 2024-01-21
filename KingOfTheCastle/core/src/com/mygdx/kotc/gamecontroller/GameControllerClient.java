@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.mygdx.kotc.applicationstub.ApplicationStubClient;
 import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.State;
+import com.mygdx.kotc.gamemodel.entities.Tile;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.manager.CombatManager;
 import com.mygdx.kotc.gamemodel.manager.GameStateOutput;
@@ -115,6 +116,12 @@ public class GameControllerClient implements InputI{
         if (buttonPressEvent.keycode == Input.Keys.D) {
             applicationStubClient.callServerMethod(playerID, "movePlayer", new Object[]{playerID, new Vec2d(1,0)});
         }
+        if(buttonPressEvent.keycode == Input.Keys.B){
+            applicationStubClient.callServerMethod(playerID,"findNearbyPlayers", new Object[]{playerID,combatManager});
+            currentScreen = CurrentScreen.BATTLE;
+            System.out.println(currentScreen);
+        }
+
     }
 
     private void handleButtonBattle(ButtonPressEvent buttonPressEvent){

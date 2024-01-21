@@ -191,6 +191,7 @@ public class CharacterSelectScreen implements Screen {
 
 
                 kingOfTheCastle.setScreen(new MapScreen(kingOfTheCastle));
+
             }
         }else {
             kingOfTheCastle.batch.draw(startButtonUnactive,x,startButton_Y,CatWidth, CatHeight);

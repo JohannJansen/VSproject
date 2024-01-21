@@ -11,16 +11,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.kotc.KingOfTheCastle;
+import com.mygdx.kotc.gamemodel.entities.Map;
 import com.mygdx.kotc.gamemodel.entities.Player;
+import com.mygdx.kotc.gamemodel.entities.Tile;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
+import com.mygdx.kotc.gamemodel.manager.CombatManager;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
 import com.mygdx.kotc.inputprocessors.BattleScreenInputProcessor;
 import com.mygdx.kotc.inputprocessors.inputevents.ButtonPressEvent;
 import com.mygdx.kotc.inputprocessors.inputevents.Event;
 import com.mygdx.kotc.viewproxy.PlayerRenderData;
 import com.mygdx.kotc.viewproxy.MapRenderData;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -28,6 +34,7 @@ public class MapScreen implements Screen, InputProcessor {
     private KingOfTheCastle kingOfTheCastle;
     private MapManager mapManager;
     private Player player;
+    private Player player2;
     private List<Player> playerList;
     private List<MapRenderData> mapRenderDataList;
     private List<PlayerRenderData> playerRenderDataList;
@@ -40,7 +47,9 @@ public class MapScreen implements Screen, InputProcessor {
     public MapScreen(KingOfTheCastle kingOfTheCastle) {
         this.kingOfTheCastle = kingOfTheCastle;
         player = PlayerFactory.createTestPlayer();
+        player2 = PlayerFactory.createTestPlayer();
         player = kingOfTheCastle.viewProxy.map.getTiles()[7][6].getOccupiedBy();
+        player2 = kingOfTheCastle.viewProxy.map.getTiles()[7][5].getOccupiedBy();
         mapManager = new MapManager();
         mapManager.setMap(kingOfTheCastle.viewProxy.map);
         kingOfTheCastle.gameControllerClient.setCurrentScreen(CurrentScreen.MAP);

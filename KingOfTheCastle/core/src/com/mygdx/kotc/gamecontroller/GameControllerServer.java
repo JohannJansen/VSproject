@@ -113,7 +113,14 @@ public  class GameControllerServer implements ControllerOutputI{
             if (!player.getPlayerInCombat()) {
                 return;
             } else {
-                //TODO add default for attack
+                for (Combat c:combatManager.getActiveCombats()) {
+                    if(c.getPlayer1() == player){
+                        combatManager.attack(player, c.getPlayer2());
+                    }
+                    if(c.getPlayer2() == player) {
+                        combatManager.attack(player, c.getPlayer1());
+                    }
+                }
                 return;
             }
         }
@@ -135,17 +142,7 @@ public  class GameControllerServer implements ControllerOutputI{
             } catch (MaxPlayersReachedException e) {
                 System.out.println("Max players reached");
             }
-        } else if (methodname.equals("attack")) {
-            Player player1 = (Player) parameters[0];
-            Player player2 = (Player) parameters[1];
-            try {
-                if (player1.getPlayerInCombat()&& player2.getPlayerInCombat()) {
-                    combatManager.attack(player1, player2);
-                }
-            }catch (Exception e){
-                System.err.println("Players are not in Combat");
-            }
-        }  else if (methodname.equals("fleeFromCombat")) {
+        }   else if (methodname.equals("fleeFromCombat")) {
             try {
                 combatManager.fleeFromCombat((Player) parameters[0], (Combat) parameters[1]);
             }catch (PlayerHasNoHealthExeception p){
