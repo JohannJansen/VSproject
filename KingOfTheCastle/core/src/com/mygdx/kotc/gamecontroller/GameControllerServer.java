@@ -1,6 +1,7 @@
 package com.mygdx.kotc.gamecontroller;
 
 import com.mygdx.kotc.applicationstub.ApplicationStubServer;
+import com.mygdx.kotc.gamemodel.entities.Combat;
 import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.State;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
@@ -113,7 +114,41 @@ public  class GameControllerServer implements ControllerOutputI{
             } catch (MaxPlayersReachedException e) {
                 System.out.println("Max players reached");
             }
-        } else {
+        } else if (methodname.equals("attack")) {
+            Player player1 = (Player) parameters[0];
+            Player player2 = (Player) parameters[1];
+            try {
+                if (player1.getPlayerInCombat()&& player2.getPlayerInCombat()) {
+                    combatManager.attack(player1, player2);
+                }
+            }catch (Exception e){
+                System.err.println("Players are not in Combat");
+            }
+        } else if (methodname.equals("block")) {
+            try {
+                Player player1 = (Player) parameters[0];
+                if(player1.getPlayerInCombat()){
+                    combatManager.block(player1);
+                }
+            }catch (Exception e){
+                System.err.println("Player is not in Combat");
+            }
+        } else if (methodname.equals("charge")) {
+            Player player1 = (Player) parameters[0];
+            try {
+                if(player1.getPlayerInCombat()){
+                    combatManager.charge(player1);
+                }
+            }catch (Exception e){
+                System.err.println("siktir git amk");
+            }
+        }
+
+
+
+
+
+        else {
             System.out.println("no method by that name");
         }
     }
@@ -121,6 +156,7 @@ public  class GameControllerServer implements ControllerOutputI{
     public void movePlayer(Player player, Vec2d vec2d) throws TileNotReachableException {
         mapManager.movePlayer(player, vec2d);
     }
+    
 
     public String registerPlayer(String playerId) throws MaxPlayersReachedException {
         if(playerMapping.size() >= MAXPLAYERS){
