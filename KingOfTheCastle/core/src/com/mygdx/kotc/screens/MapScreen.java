@@ -46,12 +46,6 @@ public class MapScreen implements Screen, InputProcessor {
 
     public MapScreen(KingOfTheCastle kingOfTheCastle) {
         this.kingOfTheCastle = kingOfTheCastle;
-        player = PlayerFactory.createTestPlayer();
-        player2 = PlayerFactory.createTestPlayer();
-        player = kingOfTheCastle.viewProxy.map.getTiles()[7][6].getOccupiedBy();
-        player2 = kingOfTheCastle.viewProxy.map.getTiles()[7][5].getOccupiedBy();
-        mapManager = new MapManager();
-        mapManager.setMap(kingOfTheCastle.viewProxy.map);
         kingOfTheCastle.gameControllerClient.setCurrentScreen(CurrentScreen.MAP);
         Gdx.input.setInputProcessor(new BattleScreenInputProcessor(kingOfTheCastle.gameControllerClient));
     }
