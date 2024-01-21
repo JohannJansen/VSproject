@@ -155,24 +155,4 @@ public  class GameControllerServer implements ControllerOutputI{
     public Map<String, Player> getPlayerMapping() {
         return playerMapping;
     }
-
-    //    @Override
-//    public void run() {
-//        applicationStub.hostLobby();
-//        while (!Thread.interrupted()){
-//            try {
-//                Thread.sleep(TICKDURATIONMILLIS/2);
-//                long starttimeModelUpdate = System.currentTimeMillis();
-//                //launch and join thread for model update
-//
-//                long remainingtimeInTick = TICKDURATIONMILLIS/2 - (System.currentTimeMillis() - starttimeModelUpdate);
-//                Thread.sleep(TICKDURATIONMILLIS);
-//            } catch (InterruptedException e) {
-//                System.out.println("Interrupt in Controller Thread");
-//                throw new RuntimeException(e);
-//            }
-//
-//        }
-//
-//    }
 }
