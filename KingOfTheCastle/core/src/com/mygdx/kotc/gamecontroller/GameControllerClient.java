@@ -68,6 +68,7 @@ public class GameControllerClient implements InputI{
 
             //TODO notify
             Message message = applicationStubClient.receiveMessage();
+            System.out.println("update-message received");
             if (message != null){
                 State state = (State) message.getParameters()[0];
                 if (state != null) {

@@ -20,18 +20,7 @@ import java.util.List;
 
 public class MapScreen implements Screen {
     private KingOfTheCastle kingOfTheCastle;
-    private MapManager mapManager;
-    private Player player;
-    private Player player2;
-    private List<Player> playerList;
-    private PlayerManager playerManager = new PlayerManager();
     private List<MapRenderData> mapRenderDataList;
-    private List<PlayerRenderData> playerRenderDataList;
-    private OrthographicCamera camera;
-    private GlyphLayout glyphLayout = new GlyphLayout();
-    private CombatManager combatManager = new CombatManager();
-
-
 
     public MapScreen(KingOfTheCastle kingOfTheCastle) {
         this.kingOfTheCastle = kingOfTheCastle;

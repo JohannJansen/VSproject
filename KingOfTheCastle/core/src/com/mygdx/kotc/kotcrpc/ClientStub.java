@@ -1,5 +1,4 @@
 package com.mygdx.kotc.kotcrpc;
-
 import com.badlogic.gdx.utils.Json;
 
 import java.io.*;

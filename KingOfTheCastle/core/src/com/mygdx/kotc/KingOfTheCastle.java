@@ -68,10 +68,10 @@ public class KingOfTheCastle extends Game {
         return screenHeight;
     }
 
-    public void startClient() {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        gameControllerClient = new GameControllerClient();
-        executorService.submit(gameControllerClient::run);
-        executorService.shutdown();
-    }
+	public void startClient(){
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		gameControllerClient = new GameControllerClient();
+		executorService.submit(gameControllerClient::run);
+		executorService.shutdown();
+	}
 }

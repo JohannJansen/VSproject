@@ -176,10 +176,7 @@ public  class GameControllerServer implements ControllerOutputI{
             throw new MaxPlayersReachedException();
         }
         Player player = PlayerFactory.createWizard();
-        Player player2 = PlayerFactory.createWizard();
         playerMapping.put(playerId, player);
-        playerMapping.put(playerId,player2);
-        
         player.setPlayerId(playerId);
         playerManager.getPlayerList().add(player);
         return playerId;
