@@ -1,6 +1,6 @@
 package com.mygdx.kotc.kotcrpc;
+
 import com.badlogic.gdx.utils.Json;
-import com.mygdx.kotc.applicationstub.ApplicationStubClient;
 
 import java.io.*;
 import java.net.InetAddress;

@@ -1,16 +1,8 @@
 package com.mygdx.kotc.applicationstub;
 
 import com.mygdx.kotc.gamecontroller.GameControllerClient;
-import com.mygdx.kotc.gamecontroller.GameControllerServer;
-import com.mygdx.kotc.gamemodel.entities.Player;
-import com.mygdx.kotc.gamemodel.entities.State;
-import com.mygdx.kotc.kotcrpc.*;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import com.mygdx.kotc.kotcrpc.ClientStub;
+import com.mygdx.kotc.kotcrpc.Message;
 
 public class ApplicationStubClient{
 
@@ -34,7 +26,7 @@ public class ApplicationStubClient{
 
 
     public void joinServer(String playerId){
-        clientStub.connectToServer("DESKTOP-3UNJBSN", 8898);
+        clientStub.connectToServer("KINDA-PC", 8898);
         clientStub.call(playerId, "registerPlayer", new Object[]{playerId});
     }
 

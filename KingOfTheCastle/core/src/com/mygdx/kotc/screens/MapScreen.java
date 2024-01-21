@@ -1,33 +1,20 @@
 package com.mygdx.kotc.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.math.Vector3;
 import com.mygdx.kotc.KingOfTheCastle;
-import com.mygdx.kotc.gamemodel.entities.Map;
 import com.mygdx.kotc.gamemodel.entities.Player;
-import com.mygdx.kotc.gamemodel.entities.Tile;
-import com.mygdx.kotc.gamemodel.entities.Vec2d;
-import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
-import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 import com.mygdx.kotc.gamemodel.manager.CombatManager;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
 import com.mygdx.kotc.gamemodel.manager.PlayerManager;
 import com.mygdx.kotc.inputprocessors.BattleScreenInputProcessor;
-import com.mygdx.kotc.inputprocessors.inputevents.ButtonPressEvent;
-import com.mygdx.kotc.inputprocessors.inputevents.Event;
-import com.mygdx.kotc.viewproxy.PlayerRenderData;
 import com.mygdx.kotc.viewproxy.MapRenderData;
+import com.mygdx.kotc.viewproxy.PlayerRenderData;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 

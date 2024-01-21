@@ -1,6 +1,5 @@
 package com.mygdx.kotc.gamecontroller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.kotc.applicationstub.ApplicationStubClient;
 import com.mygdx.kotc.gamemodel.entities.Player;
@@ -11,10 +10,9 @@ import com.mygdx.kotc.gamemodel.manager.GameStateOutput;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
 import com.mygdx.kotc.gamemodel.manager.PlayerManager;
 import com.mygdx.kotc.inputprocessors.inputevents.ButtonPressEvent;
-import com.mygdx.kotc.inputprocessors.inputevents.MouseClickEvent;
 import com.mygdx.kotc.inputprocessors.inputevents.Event;
+import com.mygdx.kotc.inputprocessors.inputevents.MouseClickEvent;
 import com.mygdx.kotc.kotcrpc.Message;
-import com.mygdx.kotc.screens.BattleScreen;
 import com.mygdx.kotc.screens.CurrentScreen;
 import com.mygdx.kotc.viewproxy.ViewProxy;
 
