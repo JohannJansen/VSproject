@@ -31,7 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class MapScreen implements Screen, InputProcessor {
+public class MapScreen implements Screen {
     private KingOfTheCastle kingOfTheCastle;
     private MapManager mapManager;
     private Player player;
@@ -48,25 +48,13 @@ public class MapScreen implements Screen, InputProcessor {
 
     public MapScreen(KingOfTheCastle kingOfTheCastle) {
         this.kingOfTheCastle = kingOfTheCastle;
-        player = PlayerFactory.createTestPlayer();
-        player2 = PlayerFactory.createTestPlayer();
-        player = kingOfTheCastle.viewProxy.map.getTiles()[7][6].getOccupiedBy();
-        player2 = kingOfTheCastle.viewProxy.map.getTiles()[7][5].getOccupiedBy();
-        mapManager = new MapManager();
-        mapManager.setMap(kingOfTheCastle.viewProxy.map);
         kingOfTheCastle.gameControllerClient.setCurrentScreen(CurrentScreen.MAP);
         Gdx.input.setInputProcessor(new BattleScreenInputProcessor(kingOfTheCastle.gameControllerClient));
     }
 
     @Override
     public void show() {
-//        tileRenderDataList = kingOfTheCastle.viewProxy.mapToTileRenderData();
-//        playerRenderDataList = kingOfTheCastle.viewProxy.mapToPlayerRenderData();
         Gdx.graphics.setWindowedMode(1024, 1024);
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, kingOfTheCastle.getScreenWidth(), kingOfTheCastle.getScreenHeight());
-        kingOfTheCastle.batch.setProjectionMatrix(camera.combined);
-        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -75,34 +63,11 @@ public class MapScreen implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         mapRenderDataList = kingOfTheCastle.viewProxy.mapToMapRenderData();
-//        playerRenderDataList = kingOfTheCastle.viewProxy.mapToPlayerRenderData();
-
-//        handleInput(delta);
         update(delta);
         kingOfTheCastle.batch.begin();
         mapRenderDataList.forEach(this::displayTile);
-//        playerRenderDataList.forEach(this::displayPlayer);
         kingOfTheCastle.batch.end();
     }
-
-//    public void handleInput(float delta){
-//        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-//            Gdx.input.getInputProcessor().keyDown(29);
-////            kingOfTheCastle.gameControllerClient.sendInputEvent(new ButtonPressEvent(51));
-//        }
-//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-//            Gdx.input.getInputProcessor().keyDown(32);
-////            right();
-//        }
-//        if (Gdx.input.isKeyPressed(Input.Keys.UP)){
-//            Gdx.input.getInputProcessor().keyDown(51);
-////            up();
-//        }
-//        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-////            down();
-//            Gdx.input.getInputProcessor().keyDown(47);
-//        }
-//    }
 
 
     private void update(float delta) {
@@ -134,7 +99,7 @@ public class MapScreen implements Screen, InputProcessor {
                 case WIZARD_RIGHT -> new Texture(Gdx.files.internal("png/cats/mageCat_cobble_right.png"));
                 case KNIGHT_LEFT -> new Texture(Gdx.files.internal("png/cats/warriorCat_cobble_left.png"));
                 case KNIGHT_RIGHT -> new Texture(Gdx.files.internal("png/cats/warriorCat_cobble_right.png"));
-                case WIZARD -> null;
+                case WIZARD -> new Texture(Gdx.files.internal("png/cats/mageCat_cobble_right.png"));
                 case KNIGHT -> null;
                 case MONK -> null;
                 case ARCHER -> null;
@@ -170,108 +135,5 @@ public class MapScreen implements Screen, InputProcessor {
     public void dispose() {
 
 
-    }
-
-
-    // InputI methods
-
-    public void left(){
-        try {
-            mapManager.movePlayer(player, new Vec2d(-1, 0));
-        } catch (TileNotReachableException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void right() {
-        try {
-            mapManager.movePlayer(player, new Vec2d(1, 0));
-        } catch (TileNotReachableException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void up() {
-        try {
-            mapManager.movePlayer(player, new Vec2d(0, 1));
-        } catch (TileNotReachableException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void down() {
-        try {
-            mapManager.movePlayer(player, new Vec2d(0, -1));
-        } catch (TileNotReachableException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.B) {
-            kingOfTheCastle.setScreen(new BattleScreen(kingOfTheCastle));
-            Gdx.app.log("b pressed","b pressed");
-
-            if (mapManager.findNearbyPlayers(player, combatManager)){
-                kingOfTheCastle.setScreen(new BattleScreen(kingOfTheCastle));
-                Gdx.app.log("b pressed","b pressed");
-            }
-            return true;
-        }
-        return false;
-    }
-
-    //public Player findNearestPlayer(Player player){
-    //   Tile playerTile = new Tile();
-    //   playerTile.setPosition(player.getPosition());
-    //   Tile tiles [][] = mapManager.getMap().getTiles();
-    //   Arrays.stream(tiles).filter()
-    //
-    //}
-
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
     }
 }

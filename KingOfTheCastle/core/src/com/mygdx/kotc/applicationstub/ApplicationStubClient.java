@@ -34,7 +34,7 @@ public class ApplicationStubClient{
 
 
     public void joinServer(String playerId){
-        clientStub.connectToServer("KindA-PC", 8888);
+        clientStub.connectToServer("DESKTOP-3UNJBSN", 8898);
         clientStub.call(playerId, "registerPlayer", new Object[]{playerId});
     }
 
@@ -45,6 +45,4 @@ public class ApplicationStubClient{
     public ClientStub getClientStub() {
         return clientStub;
     }
-
-
 }

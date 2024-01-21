@@ -43,7 +43,6 @@ public class ApplicationStubServer {
     }
 
 
-
     public void hostLobby() {
         serverSkeleton.listenForIncomingCalls();
     }

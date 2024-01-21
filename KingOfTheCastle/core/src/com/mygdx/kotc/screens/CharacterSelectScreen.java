@@ -94,7 +94,7 @@ public class CharacterSelectScreen implements Screen {
                 //DEMO player spawn (in final version through GameStates)
                 selectedPlayer.setPlayerTextureType(PlayerTextureType.WIZARD_RIGHT);
                 selectedPlayer.setPosition(new Vec2d(7,6));
-                kingOfTheCastle.viewProxy.map.getTiles()[7][6].setOccupiedBy(selectedPlayer);
+//                kingOfTheCastle.viewProxy.map.getTiles()[7][6].setOccupiedBy(selectedPlayer);
 
                 isWizardCatActive = true;
                 isMonkCatActive= false;
@@ -187,7 +187,7 @@ public class CharacterSelectScreen implements Screen {
             kingOfTheCastle.batch.draw(startButton,x ,startButton_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()) {
 
-                kingOfTheCastle.gameControllerClient.setPlayer(selectedPlayer);
+                //kingOfTheCastle.gameControllerClient.setPlayer(selectedPlayer);
 
 
                 kingOfTheCastle.setScreen(new MapScreen(kingOfTheCastle));

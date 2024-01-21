@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewProxy implements OutputI{
-    GameStateOutput gameStateOutput;
+    private GameStateOutput gameStateOutput;
 
     public ViewProxy(GameStateOutput gameStateOutput) {
         this.gameStateOutput = gameStateOutput;
@@ -40,12 +40,10 @@ public class ViewProxy implements OutputI{
         }
         return list;
     }
-    public Map map = MapFactory.createDefaultMap();
 
     public List<MapRenderData> mapToMapRenderData() {
+        Map map = gameStateOutput.getMap();
         List<MapRenderData> mapRenderDataList = new ArrayList<>();
-        //Map map = gameStateOutput.getMap();
-//        Map map = MapFactory.createDefaultMap();
         for (int y = 0; y < map.getHeight(); y++){
             for (int x = 0; x < map.getWidth(); x++){
                 Tile tile = map.getTiles()[y][x];
