@@ -92,7 +92,7 @@ public class CharacterSelectScreen implements Screen {
             if(Gdx.input.isTouched()){
                 selectedPlayer = PlayerFactory.createWizard();
                 //DEMO player spawn (in final version through GameStates)
-                selectedPlayer.setPlayerTextureType(PlayerTextureType.WIZARD_RIGHT);
+                selectedPlayer.setPlayerTextureType(PlayerTextureType.WIZARD);
                 selectedPlayer.setPosition(new Vec2d(7,6));
 //                kingOfTheCastle.viewProxy.map.getTiles()[7][6].setOccupiedBy(selectedPlayer);
 

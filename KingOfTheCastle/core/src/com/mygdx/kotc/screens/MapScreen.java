@@ -66,6 +66,9 @@ public class MapScreen implements Screen {
             case COBBLE3 -> new Texture(Gdx.files.internal("png/cobble/cobble_4_new.png"));
             default -> new Texture(Gdx.files.internal("png/cobble/cobble_1.png"));
         };
+        kingOfTheCastle.batch.draw(texture
+                , mapRenderData.getX()*KingOfTheCastle.TEXTUREWIDTH
+                , mapRenderData.getY()*KingOfTheCastle.TEXTUREHEIGHT);
         if(mapRenderData.getPlayerTextureType() != null){
             Texture playerTexture = switch (mapRenderData.getPlayerTextureType()) {
                 case WIZARD -> new Texture(Gdx.files.internal("png/cats/mageCat.png"));
