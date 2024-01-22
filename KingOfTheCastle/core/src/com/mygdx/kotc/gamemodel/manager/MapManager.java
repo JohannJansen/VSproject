@@ -66,7 +66,7 @@ public class MapManager implements MapI{
             combatManager.createCombat(player1,player2);
             //test
             System.out.println("Combat between " + player1 +
-                    "and" +player2 + " initiated!!!");
+                    "and " + player2 + " initiated!!!");
         }else{
             throw new CombatNotInitiatableException();
         }

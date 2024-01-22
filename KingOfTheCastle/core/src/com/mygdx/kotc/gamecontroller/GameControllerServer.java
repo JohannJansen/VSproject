@@ -22,7 +22,7 @@ public  class GameControllerServer {
 
     private boolean isRunning = true;
 
-    private final long TICKDURATIONMILLIS = 1000;
+    private final long TICKDURATIONMILLIS = 100;
 
     private final Map<String, Player> playerMapping = new HashMap<>();
 
@@ -62,7 +62,7 @@ public  class GameControllerServer {
 
                 //combat updates
                 for (Combat combat: combatManager.getActiveCombats()) {
-                   Action action =  combat.getActionQueue().poll();
+                   Action action = combat.getActionQueue().poll();
                     switch (action.getActionIdentifier()) {
                         case ATTACK -> {
                             combatManager.attack(action.getPlayer(), combat.getPlayer2());

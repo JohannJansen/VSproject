@@ -80,6 +80,7 @@ public class GameControllerClient implements InputI{
                 State state = (State) message.getParameters()[0];
                 if (state != null) {
                     updateGameState(state);
+                    System.out.println("Gamestate updated");
                 }
             }
         }
@@ -137,7 +138,9 @@ public class GameControllerClient implements InputI{
                     mapManager.findNearbyPlayers(player), 1});
             //test
             System.out.println("Initiate combat sent for: " + player + "and " + mapManager.findNearbyPlayers(player));
-            currentScreen = CurrentScreen.BATTLE;
+            if(mapManager.findNearbyPlayers(player) != null){
+                currentScreen = CurrentScreen.BATTLE;
+            }
             System.out.println(currentScreen);
         }
 
