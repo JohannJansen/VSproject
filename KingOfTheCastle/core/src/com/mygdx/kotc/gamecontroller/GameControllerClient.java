@@ -21,6 +21,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class GameControllerClient implements InputI{
+
+    private final String hostname;
+
     private String playerID;
 
     private boolean isRunning;
@@ -41,8 +44,9 @@ public class GameControllerClient implements InputI{
 
     private Player player;
 
-    public GameControllerClient() {
-        this.applicationStubClient = new ApplicationStubClient();
+    public GameControllerClient(String hostname) {
+        this.hostname = hostname;
+        this.applicationStubClient = new ApplicationStubClient(hostname);
         this.combatManager = new CombatManager();
         this.mapManager = new MapManager(combatManager);
         this.playerManager = new PlayerManager();

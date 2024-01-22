@@ -9,8 +9,12 @@ import com.mygdx.kotc.gamecontroller.GameControllerClient;
 import com.mygdx.kotc.screens.MapScreen;
 import com.mygdx.kotc.screens.StartScreen;
 import com.mygdx.kotc.viewproxy.ViewProxy;
+
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static com.mygdx.kotc.utils.ConfigReader.readConfig;
 
 public class KingOfTheCastle extends Game {
     public SpriteBatch batch;
@@ -19,7 +23,6 @@ public class KingOfTheCastle extends Game {
     public static final int TEXTUREHEIGHT = 32;
     public static final int TEXTUREWIDTH = 32;
     public ViewProxy viewProxy;
-    public MapScreen mapScreen;
     private int screenWidth = 1024;
     private int screenHeight = 1024;
 
@@ -62,8 +65,12 @@ public class KingOfTheCastle extends Game {
     }
 
 	public void startClient(){
+        String filePath = "KingOfTheCastle/Configs/config.cfg";
+        Properties config = readConfig(filePath);
+        String serverHostname = config.getProperty("serverHostname");
+
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
-		gameControllerClient = new GameControllerClient();
+		gameControllerClient = new GameControllerClient(serverHostname);
 		executorService.submit(gameControllerClient::run);
 		executorService.shutdown();
 	}

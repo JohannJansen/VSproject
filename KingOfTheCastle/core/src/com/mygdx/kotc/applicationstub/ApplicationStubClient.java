@@ -4,10 +4,13 @@ import com.mygdx.kotc.kotcrpc.ClientStub;
 import com.mygdx.kotc.kotcrpc.Message;
 
 public class ApplicationStubClient implements ApplicationStubIClient{
+
+    private final String hostname;
     private final ClientStub clientStub;
 
-    public ApplicationStubClient() {
+    public ApplicationStubClient(String hostname) {
         clientStub = new ClientStub();
+        this.hostname = hostname;
     }
 
 
@@ -21,7 +24,7 @@ public class ApplicationStubClient implements ApplicationStubIClient{
 
 
     public void joinServer(String playerId){
-        clientStub.connectToServer("DESKTOP-NCFTCH6", 8898);
+        clientStub.connectToServer(hostname, 8898);
         clientStub.call(playerId, "registerPlayer", new Object[]{playerId});
     }
 
