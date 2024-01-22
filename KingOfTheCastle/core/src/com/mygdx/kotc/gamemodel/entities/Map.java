@@ -1,7 +1,5 @@
 package com.mygdx.kotc.gamemodel.entities;
 
-import java.io.Serializable;
-
 public class Map {
 
     private Tile[][] tiles;

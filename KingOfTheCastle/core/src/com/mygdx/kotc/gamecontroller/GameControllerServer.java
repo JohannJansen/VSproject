@@ -5,60 +5,52 @@ import com.mygdx.kotc.gamemodel.entities.*;
 import com.mygdx.kotc.gamemodel.exceptions.MaxPlayersReachedException;
 import com.mygdx.kotc.gamemodel.exceptions.PlayerHasNoHealthExeception;
 import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
-import com.mygdx.kotc.gamemodel.factories.MapFactory;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 import com.mygdx.kotc.gamemodel.manager.CombatManager;
 import com.mygdx.kotc.gamemodel.manager.GameStateOutput;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
 import com.mygdx.kotc.gamemodel.manager.PlayerManager;
-import com.mygdx.kotc.gamemodel.repositories.IdGenerator;
 import com.mygdx.kotc.kotcrpc.Message;
 
-import java.sql.Timestamp;
-import java.util.*;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Set;
 
-public  class GameControllerServer implements ControllerOutputI{
+public  class GameControllerServer {
     public int MAXPLAYERS = 8;
 
     private boolean isRunning = true;
 
     private final long TICKDURATIONMILLIS = 1000;
 
-    private IdGenerator idGenerator = new IdGenerator();
+    private final Map<String, Player> playerMapping = new HashMap<>();
 
-    private Map<String, Player> playerMapping = new HashMap<>(); //Ids of players
+    private final MapManager mapManager;
 
-    private MapManager mapManager;
+    private final CombatManager combatManager;
 
-    private CombatManager combatManager;
+    private final PlayerManager playerManager;
 
-    private PlayerManager playerManager;
+    private final GameStateOutput gameStateOutput;
 
-    private GameStateOutput gameStateOutput;
-
-    private ApplicationStubServer applicationStubServer;
+    private final ApplicationStubServer applicationStubServer;
 
     public GameControllerServer() {
         this.applicationStubServer = new ApplicationStubServer();
-        this.mapManager = new MapManager();
         this.combatManager = new CombatManager();
+        this.mapManager = new MapManager(combatManager);
         this.playerManager = new PlayerManager();
         this.gameStateOutput = new GameStateOutput(playerManager, combatManager, mapManager);
     }
 
-    //private final ApplicationStub applicationStub = new ApplicationStub();
-
     public void run(){
-        //Setup start map
-        mapManager.setMap(MapFactory.createDefaultMap());
-
         while (isRunning){
             try {
                 Thread.sleep(TICKDURATIONMILLIS/2);
                 long starttimeModelUpdate = System.currentTimeMillis();
 
-                //launch and join thread for model update
+                //execute player moves
                 applicationStubServer.updateCurrentMove();
                 Set<String> keys = applicationStubServer.getCurrentMoveForPlayers().keySet();
                 for (String key: keys){
@@ -71,30 +63,30 @@ public  class GameControllerServer implements ControllerOutputI{
                 //combat updates
                 for (Combat combat: combatManager.getActiveCombats()) {
                    Action action =  combat.getActionQueue().poll();
-                   switch (action.getActionIdentifier()){
-                          case ATTACK:
+                    switch (action.getActionIdentifier()) {
+                        case ATTACK -> {
                             combatManager.attack(action.getPlayer(), combat.getPlayer2());
-                            if(action.getPlayer().getCurrentHealth()<=0 || combat.getPlayer2().getCurrentHealth()<=0){
+                            if (action.getPlayer().getCurrentHealth() <= 0 || combat.getPlayer2().getCurrentHealth() <= 0) {
                                 combatManager.endCombat(combat);
                             }
-                            break;
-                          case CHARGE:
+                        }
+                        case CHARGE -> {
                             combatManager.charge(action.getPlayer());
-                              if(action.getPlayer().getCurrentHealth()<=0 || combat.getPlayer2().getCurrentHealth()<=0){
-                                  combatManager.endCombat(combat);
-                              }
-                            break;
-                       case DEFENSE:
+                            if (action.getPlayer().getCurrentHealth() <= 0 || combat.getPlayer2().getCurrentHealth() <= 0) {
+                                combatManager.endCombat(combat);
+                            }
+                        }
+                        case DEFENSE -> {
                             combatManager.block(action.getPlayer());
-                           if(action.getPlayer().getCurrentHealth()<=0 || combat.getPlayer2().getCurrentHealth()<=0){
-                               combatManager.endCombat(combat);
-                           }
-                            break;
-                          default:
-                            System.out.println("No action by that name");
-                   }
+                            if (action.getPlayer().getCurrentHealth() <= 0 || combat.getPlayer2().getCurrentHealth() <= 0) {
+                                combatManager.endCombat(combat);
+                            }
+                        }
+                        default -> System.out.println("No action by that name");
+                    }
                 }
 
+                //update clients with new gamestate
                 State state = getServerState();
                 applicationStubServer.updateClientGamestates("updateGameState", new Object[]{state});
 
@@ -110,19 +102,17 @@ public  class GameControllerServer implements ControllerOutputI{
 
     public void invokeMethodFromMessage(Message message, Player player) {
         if (message == null) {
-            if (!player.getPlayerInCombat()) {
-                return;
-            } else {
-                for (Combat c:combatManager.getActiveCombats()) {
-                    if(c.getPlayer1() == player){
+            if (player.getPlayerInCombat()) {
+                for (Combat c : combatManager.getActiveCombats()) {
+                    if (c.getPlayer1() == player) {
                         combatManager.attack(player, c.getPlayer2());
                     }
-                    if(c.getPlayer2() == player) {
+                    if (c.getPlayer2() == player) {
                         combatManager.attack(player, c.getPlayer1());
                     }
                 }
-                return;
             }
+            return;
         }
         String methodname = message.getMethodname();
         Object[] parameters =  message.getParameters();
@@ -165,13 +155,7 @@ public  class GameControllerServer implements ControllerOutputI{
         }
     }
 
-    public void movePlayer(String playerId, Vec2d vec2d) throws TileNotReachableException {
-        Player player = playerMapping.get(playerId);
-        mapManager.movePlayer(player, vec2d);
-    }
-    
-
-    public String registerPlayer(String playerId) throws MaxPlayersReachedException {
+    public void registerPlayer(String playerId) throws MaxPlayersReachedException {
         if(playerMapping.size() >= MAXPLAYERS){
             throw new MaxPlayersReachedException();
         }
@@ -179,29 +163,9 @@ public  class GameControllerServer implements ControllerOutputI{
         playerMapping.put(playerId, player);
         player.setPlayerId(playerId);
         playerManager.getPlayerList().add(player);
-        return playerId;
-    }
-
-    @Override
-    public Timestamp getTime() {
-        return null;
-    }
-
-    @Override
-    public Timestamp getRemainingTime() {
-        return null;
-    }
-
-    @Override
-    public List<Player> getLobbyPlayerList() {
-        return null;
     }
 
     public State getServerState(){
         return gameStateOutput.getState();
-    }
-
-    public Map<String, Player> getPlayerMapping() {
-        return playerMapping;
     }
 }

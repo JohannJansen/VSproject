@@ -35,9 +35,9 @@ public class GameStateOutput implements GameStateOutputI {
     }
 
     @Override
-    public State getState() { //use on server after a new move has been made from client and approved by server
+    public State getState() {
         State state = new State();
-        state.setCombatList(combatManager.getActiveCombats()); //use overridden methods
+        state.setCombatList(combatManager.getActiveCombats());
         state.setMap(mapManager.getMap());
         state.setPlayerList(playerManager.getPlayerList());
         return state;

@@ -3,7 +3,6 @@ package com.mygdx.kotc.gamemodel.manager;
 import com.mygdx.kotc.gamemodel.entities.*;
 import com.mygdx.kotc.gamemodel.exceptions.PlayerHasNoHealthExeception;
 import com.mygdx.kotc.gamemodel.interfaces.CombatI;
-import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +12,6 @@ public class CombatManager implements CombatI{
 
     private List<Combat> activeCombats = new ArrayList<>();
 
-    /**
-     * a method to calculate the damage with the given modifiers
-     * @param baseDamage
-     * @param attackmodifier
-     * @param defensivemodifier
-     * @return the total damage that is calculated
-     */
     @Override
     public int calculateDamage(int baseDamage, List<Modifier> attackmodifier, List<Modifier> defensivemodifier){
         int percentageIncrease = 0;
@@ -44,11 +36,6 @@ public class CombatManager implements CombatI{
         return totalDamage;
     }
 
-    /**
-     * A method to
-     * @param action 
-     * @param actionQueue
-     */
     @Override
     public void actionInCombat(Action action, PriorityQueue<Action> actionQueue) {
         actionQueue.add(action);

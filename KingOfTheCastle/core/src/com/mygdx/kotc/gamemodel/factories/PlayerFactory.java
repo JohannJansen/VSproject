@@ -23,7 +23,6 @@ public class PlayerFactory {
         Player player = new Player(null, false,15,200,80,200,
                 10, EquipmentFactory.createStaff(), null,null, attackList, defenseList,false,PlayerTextureType.WIZARD);
         return player;
-        //set texture type
     }
 
     public static Player createArcher(){

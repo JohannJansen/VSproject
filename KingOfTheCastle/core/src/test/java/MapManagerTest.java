@@ -16,13 +16,15 @@ import java.util.List;
 public class MapManagerTest {
     private Player player;
     private Player player2;
-    private final MapManager mapManager = new MapManager();
     private final CombatManager combatManager = new CombatManager();
+    private final MapManager mapManager = new MapManager(combatManager);
+
     @BeforeEach
     public void setUp(){
         player = PlayerFactory.createTestPlayer();
         player2 = PlayerFactory.createTestPlayer();
-        mapManager.setPlayerPosOnTile(new Vec2d(8,9),player);
+        mapManager.setPlayerPosOnTile(new Vec2d(8,9), player);
+        mapManager.setMap(MapFactory.createTestMap(32,32));
     }
 
     @Test

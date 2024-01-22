@@ -1,6 +1,5 @@
 package com.mygdx.kotc.gamemodel.entities;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 public class Vec2d {

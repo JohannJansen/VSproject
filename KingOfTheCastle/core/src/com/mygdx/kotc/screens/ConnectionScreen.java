@@ -11,9 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.kotc.KingOfTheCastle;
-import java.awt.*;
 
 public class ConnectionScreen implements Screen, InputProcessor, Input.TextInputListener {
     private BitmapFont font;

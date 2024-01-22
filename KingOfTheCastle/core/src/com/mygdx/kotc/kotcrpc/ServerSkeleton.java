@@ -1,8 +1,6 @@
 package com.mygdx.kotc.kotcrpc;
 
 import com.badlogic.gdx.utils.Json;
-import com.mygdx.kotc.gamemodel.entities.Map;
-import com.mygdx.kotc.gamemodel.factories.MapFactory;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -17,16 +15,14 @@ import java.util.concurrent.Executors;
 
 public class ServerSkeleton implements RPCIServer{
 
-    private ServerSocket serverSocket;
-    private ExecutorService executorService;
-    private CopyOnWriteArrayList<Socket> connectedClients;
-//    private ConcurrentHashMap<Long, Socket> iddClients;
-    private CopyOnWriteArrayList<Message> messageQueue;
+    private final ServerSocket serverSocket;
+    private final ExecutorService executorService;
+    private final CopyOnWriteArrayList<Socket> connectedClients;
+    private final CopyOnWriteArrayList<Message> messageQueue;
 
 
     public ServerSkeleton() {
         messageQueue = new CopyOnWriteArrayList<>();
-//        iddClients = new ConcurrentHashMap<>();
         try {
             serverSocket = new ServerSocket(8898);
             executorService = Executors.newCachedThreadPool();
@@ -74,6 +70,7 @@ public class ServerSkeleton implements RPCIServer{
         }
     }
 
+    @Override
     public void sendToAllClients(Message message) {
         while (connectedClients.isEmpty()) {
             try {
@@ -84,7 +81,6 @@ public class ServerSkeleton implements RPCIServer{
             }
         }
         for (Socket clientSocket : connectedClients) {
-            //System.out.println("CLIENT SOCKET IS CONNECTED: " + clientSocket.isClosed());
             if(!clientSocket.isClosed()) {
                 try {
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
@@ -103,7 +99,6 @@ public class ServerSkeleton implements RPCIServer{
                         writer.flush();
                     }
                     writer.flush();
-                    System.out.println("Game state sent to clients");
                 } catch (IOException e) {
                     System.out.println("Error sending game state to client");
                     e.printStackTrace();

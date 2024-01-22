@@ -3,17 +3,10 @@ package com.mygdx.kotc.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.mygdx.kotc.KingOfTheCastle;
-import com.mygdx.kotc.gamemodel.entities.Player;
-import com.mygdx.kotc.gamemodel.manager.CombatManager;
-import com.mygdx.kotc.gamemodel.manager.MapManager;
-import com.mygdx.kotc.gamemodel.manager.PlayerManager;
-import com.mygdx.kotc.inputprocessors.BattleScreenInputProcessor;
+import com.mygdx.kotc.inputprocessors.InputProcessorImplementation;
 import com.mygdx.kotc.viewproxy.MapRenderData;
-import com.mygdx.kotc.viewproxy.PlayerRenderData;
 
 import java.util.List;
 
@@ -25,7 +18,7 @@ public class MapScreen implements Screen {
     public MapScreen(KingOfTheCastle kingOfTheCastle) {
         this.kingOfTheCastle = kingOfTheCastle;
         kingOfTheCastle.gameControllerClient.setCurrentScreen(CurrentScreen.MAP);
-        Gdx.input.setInputProcessor(new BattleScreenInputProcessor(kingOfTheCastle.gameControllerClient));
+        Gdx.input.setInputProcessor(new InputProcessorImplementation(kingOfTheCastle.gameControllerClient));
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.mygdx.kotc.applicationstub;
 
-import com.mygdx.kotc.gamecontroller.GameControllerServer;
 import com.mygdx.kotc.kotcrpc.Message;
-import com.mygdx.kotc.kotcrpc.MethodUtils;
 import com.mygdx.kotc.kotcrpc.ServerSkeleton;
 
 import java.util.HashMap;
@@ -10,11 +8,10 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ApplicationStubServer {
+public class ApplicationStubServer implements ApplicationStubIServer{
 
-    private ServerSkeleton serverSkeleton;
-    private Map<String, Message> currentMoveForPlayers;
-    private GameControllerServer gameControllerServer;
+    private final ServerSkeleton serverSkeleton;
+    private final Map<String, Message> currentMoveForPlayers;
 
     public ApplicationStubServer() {
         currentMoveForPlayers = new HashMap<>();
@@ -33,18 +30,9 @@ public class ApplicationStubServer {
         }
     }
 
-    public void callServerControllerMethod(String method, Object[] parameters) { //server
-        MethodUtils.invokeMethod(gameControllerServer, method, parameters);
-    }
-
     public void updateClientGamestates(String method, Object[] parameters){ //sendUpdatedState from server
         Message message = new Message(method, parameters);
         serverSkeleton.sendToAllClients(message);
-    }
-
-
-    public void hostLobby() {
-        serverSkeleton.listenForIncomingCalls();
     }
 
     public Map<String, Message> getCurrentMoveForPlayers() {

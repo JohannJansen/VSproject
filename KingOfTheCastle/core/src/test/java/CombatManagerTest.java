@@ -15,8 +15,8 @@ public class CombatManagerTest {
     private Map map;
     private Player player;
     private Player player2;
-    private final MapManager mapManager = new MapManager();
     private final CombatManager combatManager = new CombatManager();
+    private final MapManager mapManager = new MapManager(combatManager);
 
     @BeforeEach
     public void setUp(){

@@ -9,8 +9,6 @@ import com.mygdx.kotc.gamecontroller.GameControllerClient;
 import com.mygdx.kotc.screens.MapScreen;
 import com.mygdx.kotc.screens.StartScreen;
 import com.mygdx.kotc.viewproxy.ViewProxy;
-
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,11 +16,10 @@ public class KingOfTheCastle extends Game {
     public SpriteBatch batch;
     public BitmapFont font;
     public BitmapFont thiccFont;
-    private Random random;
     public static final int TEXTUREHEIGHT = 32;
     public static final int TEXTUREWIDTH = 32;
     public ViewProxy viewProxy;
-    MapScreen mapScreen;
+    public MapScreen mapScreen;
     private int screenWidth = 1024;
     private int screenHeight = 1024;
 
@@ -33,18 +30,14 @@ public class KingOfTheCastle extends Game {
         startClient();
 
         viewProxy = gameControllerClient.getViewProxy();
-        //tileRenderDataList  = viewProxy.mapToTileRenderData();
         Gdx.graphics.setWindowedMode(getScreenWidth(), getScreenHeight());
         batch = new SpriteBatch();
-        random = new Random();
         font = new BitmapFont();
         thiccFont = new BitmapFont();
         font.setColor(Color.BLACK);
         thiccFont.setColor(Color.BLACK);
         thiccFont.getData().scale(1.0f);
         this.setScreen(new StartScreen(this));
-        //this.setScreen(new CharacterSelectScreen(this));
-        //this.setScreen(new MapScreen(this));
     }
 
     @Override

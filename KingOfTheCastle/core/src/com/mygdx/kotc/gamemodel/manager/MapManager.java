@@ -6,33 +6,18 @@ import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
 import com.mygdx.kotc.gamemodel.factories.MapFactory;
 import com.mygdx.kotc.gamemodel.interfaces.MapI;
 
-import java.util.Random;
-
 
 public class MapManager implements MapI{
-    int DEFAULTMAPWIDTH = 32;
-    int DEFAULTMAPHEIGHT = 32;
-    private CombatManager combatManager = new CombatManager();
 
-    public Map map = MapFactory.createTestMap(DEFAULTMAPWIDTH, DEFAULTMAPHEIGHT);
+    private final CombatManager combatManager;
 
-    /**
-     * creates a new Map with the given height and widht
-     * @param width
-     * @param height
-     */
-    public void createMap(int width, int height){
-        Map map = MapFactory.createTestMap(width,height);
-        this.map = map;
+    public Map map;
+
+    public MapManager(CombatManager combatManager) {
+        this.combatManager = combatManager;
+        this.map = MapFactory.createDefaultMap();
     }
 
-    /**
-     * pre: destination is reachable, player !inCombat
-     * post: the position of the Player is changed to the new direction
-     * and
-     * @param player the player that wants to move
-     * @param direction the player is heading to.
-     */
     @Override
     public void movePlayer(Player player, Vec2d direction) throws TileNotReachableException{
         Vec2d newPos = new Vec2d(player.getPosition().getPosX() + direction.getPosX(), player.getPosition().getPosY() + direction.getPosY());
@@ -43,15 +28,10 @@ public class MapManager implements MapI{
             setPlayerPosOnTile(newPos, player);
         }else {
             System.out.println("This Tile is an obstacle and isn't reachable!");
-            //throw new TileNotReachableException();
+            throw new TileNotReachableException();
         }
     }
-    /**
-     * Randomly spawns the player in a Spawn area
-     * @param player the player to s
-     * @param spawnZoneStart Start of the spawnzone
-     * @param spawnZoneEnd End of the spawnzone
-     */
+
     @Override
     public void spawnPlayer(Player player, Vec2d spawnZoneStart, Vec2d spawnZoneEnd) {
         for(int i = spawnZoneStart.getPosY(); i <= spawnZoneEnd.getPosY(); i++){
@@ -102,6 +82,7 @@ public class MapManager implements MapI{
         this.map = map;
     }
 
+    @Override
     public boolean findNearbyPlayers(Player player, CombatManager combatManager){
 
         Tile tiles [][] = getMap().getTiles();

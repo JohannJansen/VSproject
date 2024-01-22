@@ -25,26 +25,26 @@ public class GameControllerClient implements InputI{
 
     private boolean isRunning;
 
-    private ApplicationStubClient applicationStubClient;
+    private final ApplicationStubClient applicationStubClient;
 
     private CurrentScreen currentScreen;
 
-    private CombatManager combatManager;
+    private final CombatManager combatManager;
 
-    private MapManager mapManager;
+    private final MapManager mapManager;
 
-    private PlayerManager playerManager;
+    private final PlayerManager playerManager;
 
-    private GameStateOutput gameStateOutput;
+    private final GameStateOutput gameStateOutput;
 
-    private ViewProxy viewProxy;
+    private final ViewProxy viewProxy;
 
     private Player player;
 
     public GameControllerClient() {
         this.applicationStubClient = new ApplicationStubClient();
-        this.mapManager = new MapManager();
         this.combatManager = new CombatManager();
+        this.mapManager = new MapManager(combatManager);
         this.playerManager = new PlayerManager();
         this.gameStateOutput = new GameStateOutput(playerManager, combatManager, mapManager);
         this.viewProxy = new ViewProxy(gameStateOutput);
@@ -54,7 +54,6 @@ public class GameControllerClient implements InputI{
     }
 
     public void run(){
-        //applicationStub.invokeServerMethod("registerPlayer", new Object[]{});
         applicationStubClient.joinServer(playerID);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.submit(() -> applicationStubClient.getClientStub().startListening());
@@ -66,33 +65,25 @@ public class GameControllerClient implements InputI{
                 throw new RuntimeException(e);
             }
 
-            //TODO notify
             Message message = applicationStubClient.receiveMessage();
-            System.out.println("update-message received");
             if (message != null){
                 State state = (State) message.getParameters()[0];
                 if (state != null) {
                     updateGameState(state);
-                    System.out.println("gamestate updated");
-                    for (Player player: playerManager.getPlayerList()){
-                        System.out.println("player: " + player.getPlayerId() + " has position: "
-                                + player.getPosition().getPosX()+player.getPosition().getPosY());
-                    }
                 }
             }
         }
         executorService.shutdown();
     }
 
-    public void updateGameState(State state){ //method to call from ApplicationStub
+    public void updateGameState(State state){
         mapManager.setMap(state.getMap());
         combatManager.setActiveCombats(state.getCombatList());
         playerManager.setPlayerList(state.getPlayerList());
     }
 
-
     @Override
-    public void sendInputEvent(Event event) {
+    public boolean sendInputEvent(Event event) {
         if(event instanceof MouseClickEvent){
             handleMouseInput((MouseClickEvent) event);
             return true;
@@ -104,11 +95,11 @@ public class GameControllerClient implements InputI{
         }
     }
 
-    public void handleMouseInput(MouseClickEvent mouseClickEvent){
+    private void handleMouseInput(MouseClickEvent mouseClickEvent){
 
     }
 
-    public void handleButtonEvent(ButtonPressEvent buttonPressEvent){
+    private void handleButtonEvent(ButtonPressEvent buttonPressEvent){
         if (currentScreen == CurrentScreen.MAP){
             handleButtonMap(buttonPressEvent);
         } else if (currentScreen == CurrentScreen.BATTLE){

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.mygdx.kotc.KingOfTheCastle;
-import com.mygdx.kotc.gamecontroller.GameControllerClient;
 import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.PlayerTextureType;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
@@ -91,10 +90,8 @@ public class CharacterSelectScreen implements Screen {
             kingOfTheCastle.batch.draw(wizardCat,x ,wizCat_Y, CatWidth, CatHeight);
             if(Gdx.input.isTouched()){
                 selectedPlayer = PlayerFactory.createWizard();
-                //DEMO player spawn (in final version through GameStates)
                 selectedPlayer.setPlayerTextureType(PlayerTextureType.WIZARD);
                 selectedPlayer.setPosition(new Vec2d(7,6));
-//                kingOfTheCastle.viewProxy.map.getTiles()[7][6].setOccupiedBy(selectedPlayer);
 
                 isWizardCatActive = true;
                 isMonkCatActive= false;
@@ -186,9 +183,6 @@ public class CharacterSelectScreen implements Screen {
                 && kingOfTheCastle.getScreenHeight() - Gdx.input.getY() > startButton_Y){
             kingOfTheCastle.batch.draw(startButton,x ,startButton_Y,CatWidth, CatHeight);
             if(Gdx.input.isTouched()) {
-
-                //kingOfTheCastle.gameControllerClient.setPlayer(selectedPlayer);
-
 
                 kingOfTheCastle.setScreen(new MapScreen(kingOfTheCastle));
 

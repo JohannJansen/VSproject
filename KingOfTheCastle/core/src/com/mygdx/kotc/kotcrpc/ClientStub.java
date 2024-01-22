@@ -2,7 +2,6 @@ package com.mygdx.kotc.kotcrpc;
 import com.badlogic.gdx.utils.Json;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 
 public class ClientStub implements RPCIClient {
@@ -22,7 +21,6 @@ public class ClientStub implements RPCIClient {
 
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            assert messageJson != null;
             writer.write(messageJson);
             writer.flush();
             System.out.println(messageJson + " written to server");
@@ -31,20 +29,13 @@ public class ClientStub implements RPCIClient {
         }
     }
 
+    @Override
     public void connectToServer(String host, int port){
         try {
             socket = new Socket(host, port);
         } catch (IOException e) {
             System.out.println("Error when trying to connect Client to server");
             e.printStackTrace();
-        }
-    }
-
-    public void connectToServer(InetAddress address, int port){
-        try {
-            socket = new Socket(address, port);
-        } catch (IOException e) {
-            System.out.println("Error when trying to connect Client to server");
         }
     }
 
@@ -88,6 +79,7 @@ public class ClientStub implements RPCIClient {
             System.out.println("Error listening for messages from server: " + e.getMessage());
         }
     }
+
     public Message getMessage() {
         return message;
     }

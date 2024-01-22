@@ -22,9 +22,8 @@ public class Player {
     public Player() {
     }
 
-    public Player(String playerId, Vec2d position, boolean isBlocking, int speed, int totalHp, int defense, int currentHealth, int strength, Equipment weapon, Equipment shield, Equipment armor, List<Modifier> attackModifiers, List<Modifier> defenseModifiers, boolean playerInCombat) {
+    public Player(String playerId, boolean isBlocking, int speed, int totalHp, int defense, int currentHealth, int strength, Equipment weapon, Equipment shield, Equipment armor, List<Modifier> attackModifiers, List<Modifier> defenseModifiers, boolean playerInCombat, PlayerTextureType playerTextureType) {
         this.playerId = playerId;
-        this.position = position;
         this.isBlocking = isBlocking;
         this.speed = speed;
         this.totalHp = totalHp;
@@ -37,8 +36,7 @@ public class Player {
         this.attackModifiers = attackModifiers;
         this.defenseModifiers = defenseModifiers;
         this.playerInCombat = playerInCombat;
-
-        this.playerTextureType = PlayerTextureType.WIZARD;
+        this.playerTextureType = playerTextureType;
     }
 
     // -------------------------------- Getter Setter -------------------------------//

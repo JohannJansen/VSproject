@@ -10,4 +10,9 @@ public interface RPCIClient {
      * @param port
      */
     void connectToServer(String host, int port);
+
+    /**
+     * Client listens for incoming messages from the server
+     */
+    void listen();
 }
