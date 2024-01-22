@@ -2,9 +2,8 @@ package com.mygdx.kotc.gamecontroller;
 
 import com.badlogic.gdx.Input;
 import com.mygdx.kotc.applicationstub.ApplicationStubClient;
-import com.mygdx.kotc.gamemodel.entities.Player;
-import com.mygdx.kotc.gamemodel.entities.State;
-import com.mygdx.kotc.gamemodel.entities.Vec2d;
+import com.mygdx.kotc.gamemodel.entities.*;
+import com.mygdx.kotc.gamemodel.factories.ActionFactory;
 import com.mygdx.kotc.gamemodel.manager.CombatManager;
 import com.mygdx.kotc.gamemodel.manager.GameStateOutput;
 import com.mygdx.kotc.gamemodel.manager.MapManager;
@@ -16,6 +15,8 @@ import com.mygdx.kotc.kotcrpc.Message;
 import com.mygdx.kotc.screens.CurrentScreen;
 import com.mygdx.kotc.viewproxy.ViewProxy;
 
+import java.util.Optional;
+import java.util.PriorityQueue;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -74,11 +75,9 @@ public class GameControllerClient implements InputI{
                     player = playerManager.getPlayerById(playerID);
                 }
             }
-            if (playerManager.getPlayerById(playerID) != null && playerManager.getPlayerById(playerID).getPlayerInCombat()) {
-                currentScreen = CurrentScreen.BATTLE;
+            if (playerManager.getPlayerById(playerID) != null) {
+                currentScreen = playerManager.getPlayerById(playerID).getPlayerInCombat() ? CurrentScreen.BATTLE : CurrentScreen.MAP;
             }
-
-
             Message message = applicationStubClient.receiveMessage();
             if (message != null){
                 State state = (State) message.getParameters()[0];
@@ -151,7 +150,26 @@ public class GameControllerClient implements InputI{
     }
 
     private void handleButtonBattle(ButtonPressEvent buttonPressEvent){
-
+        Optional<Combat> combat = combatManager.getActiveCombats()
+                .stream().filter(c -> (c.getPlayer1().getPlayerId().equals(playerID) || c.getPlayer2().getPlayerId().equals(playerID))).findFirst();
+        if (buttonPressEvent.keycode == Input.Keys.Z) {
+            combat.ifPresent(value -> applicationStubClient.callServerMethod(playerID, "actionInCombat",
+                    new Object[]{playerID, ActionFactory.createAttackAction(player), value.getActionQueue()}));
+        }
+        if (buttonPressEvent.keycode == Input.Keys.X) {
+            combat.ifPresent(value -> applicationStubClient.callServerMethod(playerID, "actionInCombat",
+                    new Object[]{playerID, ActionFactory.createDefenceAction(player), value.getActionQueue()}));
+        }
+        if (buttonPressEvent.keycode == Input.Keys.C) {
+            combat.ifPresent(value -> applicationStubClient.callServerMethod(playerID, "actionInCombat",
+                    new Object[]{playerID, ActionFactory.createChargeAction(player), value.getActionQueue()}));
+        }
+        if (buttonPressEvent.keycode == Input.Keys.F) {
+            if(combat.isPresent()) {
+                applicationStubClient.callServerMethod(playerID, "fleeFromCombat", new Object[]{playerID, player, combat.get()});
+                currentScreen = CurrentScreen.MAP;
+            }
+        }
     }
 
     public void setCurrentScreen(CurrentScreen currentScreen) {

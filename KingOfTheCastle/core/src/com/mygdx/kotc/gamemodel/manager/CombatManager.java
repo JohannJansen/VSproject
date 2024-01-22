@@ -39,6 +39,8 @@ public class CombatManager implements CombatI{
     @Override
     public void actionInCombat(Action action, PriorityQueue<Action> actionQueue) {
         actionQueue.add(action);
+        //test
+        System.out.println("Action " + action + "added!");
     }
 
     @Override

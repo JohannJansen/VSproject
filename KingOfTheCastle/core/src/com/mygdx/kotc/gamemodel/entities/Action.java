@@ -19,10 +19,6 @@ public class Action {
         return actionIdentifier;
     }
 
-    public void setActionIdentifier(ActionIdentifier actionIdentifier) {
-        this.actionIdentifier = actionIdentifier;
-    }
-
     public Player getPlayer() {
         return player;
     }

@@ -135,14 +135,19 @@ public  class GameControllerServer {
         } else if (methodname.equals("fleeFromCombat")) {
             try {
                 combatManager.fleeFromCombat((Player) parameters[0], (Combat) parameters[1]);
+                //test
+                System.out.println("player: " + parameters[0] + "fleed from combat!");
             }catch (PlayerHasNoHealthExeception p){
                 System.err.println("player has no health left uwuu *_*");
             }
+        }  else if (methodname.equals("actionInCombat")) {
+            combatManager.actionInCombat((Action) parameters[1], (PriorityQueue<Action>) parameters[2]);
+            //test
+            System.out.println("player: " + parameters[0] + "made an " + ((Action) parameters[1]).getActionIdentifier() + " action!!!");
         } else if (methodname.equals("initiateCombat")) {
             try {
                 if(parameters[1] != null) {
                     mapManager.initiateCombat((Player) parameters[0], (Player) parameters[1], (int) parameters[2]);
-
                 }
                 else {
                     System.out.println("No player in the vicinity, try again!");
