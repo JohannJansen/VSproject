@@ -122,7 +122,7 @@ public  class GameControllerServer {
                 mapManager.movePlayer(playerMapping.get((String) parameters[0]), (Vec2d) parameters[1]);
             } catch (TileNotReachableException e) {
                 System.out.println("Tile not reachable player with ID:" + " " +
-                        ((Player) parameters[0]).getPlayerId() + "skips turn");
+                        parameters[0] + "skips turn");
             }
         } else if (methodname.equals("registerPlayer")) {
             try {
