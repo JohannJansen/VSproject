@@ -63,27 +63,29 @@ public  class GameControllerServer {
                 //combat updates
                 for (Combat combat: combatManager.getActiveCombats()) {
                    Action action = combat.getActionQueue().poll();
-                    switch (action.getActionIdentifier()) {
-                        case ATTACK -> {
-                            combatManager.attack(action.getPlayer(), combat.getPlayer2());
-                            if (action.getPlayer().getCurrentHealth() <= 0 || combat.getPlayer2().getCurrentHealth() <= 0) {
-                                combatManager.endCombat(combat);
-                            }
-                        }
-                        case CHARGE -> {
-                            combatManager.charge(action.getPlayer());
-                            if (action.getPlayer().getCurrentHealth() <= 0 || combat.getPlayer2().getCurrentHealth() <= 0) {
-                                combatManager.endCombat(combat);
-                            }
-                        }
-                        case DEFENSE -> {
-                            combatManager.block(action.getPlayer());
-                            if (action.getPlayer().getCurrentHealth() <= 0 || combat.getPlayer2().getCurrentHealth() <= 0) {
-                                combatManager.endCombat(combat);
-                            }
-                        }
-                        default -> System.out.println("No action by that name");
-                    }
+                   if (action != null) {
+                       switch (action.getActionIdentifier()) {
+                           case ATTACK -> {
+                               combatManager.attack(action.getPlayer(), combat.getPlayer2());
+                               if (action.getPlayer().getCurrentHealth() <= 0 || combat.getPlayer2().getCurrentHealth() <= 0) {
+                                   combatManager.endCombat(combat);
+                               }
+                           }
+                           case CHARGE -> {
+                               combatManager.charge(action.getPlayer());
+                               if (action.getPlayer().getCurrentHealth() <= 0 || combat.getPlayer2().getCurrentHealth() <= 0) {
+                                   combatManager.endCombat(combat);
+                               }
+                           }
+                           case DEFENSE -> {
+                               combatManager.block(action.getPlayer());
+                               if (action.getPlayer().getCurrentHealth() <= 0 || combat.getPlayer2().getCurrentHealth() <= 0) {
+                                   combatManager.endCombat(combat);
+                               }
+                           }
+                           default -> System.out.println("No action by that name");
+                       }
+                   }
                 }
 
                 //update clients with new gamestate

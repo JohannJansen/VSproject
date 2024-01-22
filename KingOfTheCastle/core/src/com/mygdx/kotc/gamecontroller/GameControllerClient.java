@@ -76,7 +76,14 @@ public class GameControllerClient implements InputI{
                 }
             }
             if (playerManager.getPlayerById(playerID) != null) {
-                currentScreen = playerManager.getPlayerById(playerID).getPlayerInCombat() ? CurrentScreen.BATTLE : CurrentScreen.MAP;
+//                currentScreen = playerManager.getPlayerById(playerID).getPlayerInCombat() ? CurrentScreen.BATTLE : CurrentScreen.MAP;
+                if(playerManager.getPlayerById(playerID).getPlayerInCombat()){
+                    currentScreen = CurrentScreen.BATTLE;
+                }
+                if(!playerManager.getPlayerById(playerID).getPlayerInCombat()){
+                    currentScreen = CurrentScreen.MAP;
+                }
+                System.out.println(currentScreen);
             }
             Message message = applicationStubClient.receiveMessage();
             if (message != null){
@@ -137,7 +144,7 @@ public class GameControllerClient implements InputI{
             applicationStubClient.callServerMethod(playerID, "movePlayer", new Object[]{playerID, new Vec2d(1,0)});
         }
         if(buttonPressEvent.keycode == Input.Keys.B){
-            applicationStubClient.callServerMethod(playerID,"initiateCombat", new Object[]{player,
+            applicationStubClient.callServerMethod(playerID,"initiateCombat", new Object[]{playerManager.getPlayerById(playerID),
                     mapManager.findNearbyPlayers(player), 1});
             //test
             System.out.println("Initiate combat sent for: " + player + "and " + mapManager.findNearbyPlayers(player));
@@ -154,15 +161,15 @@ public class GameControllerClient implements InputI{
                 .stream().filter(c -> (c.getPlayer1().getPlayerId().equals(playerID) || c.getPlayer2().getPlayerId().equals(playerID))).findFirst();
         if (buttonPressEvent.keycode == Input.Keys.Z) {
             combat.ifPresent(value -> applicationStubClient.callServerMethod(playerID, "actionInCombat",
-                    new Object[]{playerID, ActionFactory.createAttackAction(player), value.getActionQueue()}));
+                    new Object[]{playerID, ActionFactory.createAttackAction(playerManager.getPlayerById(playerID)), value.getActionQueue()}));
         }
         if (buttonPressEvent.keycode == Input.Keys.X) {
             combat.ifPresent(value -> applicationStubClient.callServerMethod(playerID, "actionInCombat",
-                    new Object[]{playerID, ActionFactory.createDefenceAction(player), value.getActionQueue()}));
+                    new Object[]{playerID, ActionFactory.createDefenceAction(playerManager.getPlayerById(playerID)), value.getActionQueue()}));
         }
         if (buttonPressEvent.keycode == Input.Keys.C) {
             combat.ifPresent(value -> applicationStubClient.callServerMethod(playerID, "actionInCombat",
-                    new Object[]{playerID, ActionFactory.createChargeAction(player), value.getActionQueue()}));
+                    new Object[]{playerID, ActionFactory.createChargeAction(playerManager.getPlayerById(playerID)), value.getActionQueue()}));
         }
         if (buttonPressEvent.keycode == Input.Keys.F) {
             if(combat.isPresent()) {
