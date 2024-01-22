@@ -142,7 +142,7 @@ public  class GameControllerServer implements ControllerOutputI{
             } catch (MaxPlayersReachedException e) {
                 System.out.println("Max players reached");
             }
-        }   else if (methodname.equals("fleeFromCombat")) {
+        } else if (methodname.equals("fleeFromCombat")) {
             try {
                 combatManager.fleeFromCombat((Player) parameters[0], (Combat) parameters[1]);
             }catch (PlayerHasNoHealthExeception p){
@@ -154,7 +154,7 @@ public  class GameControllerServer implements ControllerOutputI{
             } catch(Exception CombatNotInitiatableException) {
                 System.err.println("Players not found, maybe they're dead ;/");
             }
-        }  else if (message.getMethodname().equals("actionInCombat")) {
+        } else if (message.getMethodname().equals("actionInCombat")) {
             try {
                 combatManager.actionInCombat((Action) parameters[0], (PriorityQueue<Action>) parameters[1]);
             }catch (Exception e){

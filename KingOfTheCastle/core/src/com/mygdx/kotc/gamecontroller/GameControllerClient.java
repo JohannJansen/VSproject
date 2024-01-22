@@ -95,8 +95,10 @@ public class GameControllerClient implements InputI{
     public void sendInputEvent(Event event) {
         if(event instanceof MouseClickEvent){
             handleMouseInput((MouseClickEvent) event);
+            return true;
         } else if (event instanceof ButtonPressEvent){
             handleButtonEvent((ButtonPressEvent) event);
+            return true;
         } else {
             throw new IllegalArgumentException("Event did not have a valid type");
         }
@@ -130,7 +132,7 @@ public class GameControllerClient implements InputI{
             applicationStubClient.callServerMethod(playerID, "movePlayer", new Object[]{playerID, new Vec2d(1,0)});
         }
         if(buttonPressEvent.keycode == Input.Keys.B){
-            applicationStubClient.callServerMethod(playerID,"findNearbyPlayers", new Object[]{playerID,combatManager});
+            applicationStubClient.callServerMethod(playerID,"findNearbyPlayers", new Object[]{playerID, combatManager});
             currentScreen = CurrentScreen.BATTLE;
             System.out.println(currentScreen);
         }

@@ -144,9 +144,9 @@ public class CharacterSelectScreen implements Screen {
             if(Gdx.input.isTouched()){
                 selectedPlayer = PlayerFactory.createArcher();
                 isWizardCatActive = false;
-                isMonkCatActive= false;
-                isArcherCatActive=true;
-                isKnightCatActive=false;
+                isMonkCatActive = false;
+                isArcherCatActive = true;
+                isKnightCatActive = false;
             }
         }else {
             if(!isArcherCatActive){

@@ -102,7 +102,6 @@ public class ServerSkeleton implements RPCIServer{
                         writer.write(packet);
                         writer.flush();
                     }
-                    //writer.write("\n");
                     writer.flush();
                     System.out.println("Game state sent to clients");
                 } catch (IOException e) {

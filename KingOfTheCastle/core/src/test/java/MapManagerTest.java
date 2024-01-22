@@ -3,6 +3,7 @@ import com.mygdx.kotc.gamemodel.entities.Player;
 import com.mygdx.kotc.gamemodel.entities.Tile;
 import com.mygdx.kotc.gamemodel.entities.Vec2d;
 import com.mygdx.kotc.gamemodel.exceptions.TileNotReachableException;
+import com.mygdx.kotc.gamemodel.factories.MapFactory;
 import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
 import com.mygdx.kotc.gamemodel.manager.CombatManager;
 import com.mygdx.kotc.gamemodel.manager.MapManager;

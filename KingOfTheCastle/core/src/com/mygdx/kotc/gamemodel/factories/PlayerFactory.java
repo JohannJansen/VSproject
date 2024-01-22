@@ -25,20 +25,21 @@ public class PlayerFactory {
         return player;
         //set texture type
     }
+
     public static Player createArcher(){
         List<Modifier> attackList = new ArrayList<>();
         List<Modifier> defenseList = new ArrayList<>();
-        Vec2d v2d = new Vec2d(2,9);
-        return new Player(null,null, false,25,220,85,220,
-                20, EquipmentFactory.createBow(), null,null,attackList,defenseList,false);
-        //set texture type
+        return new Player(null, false,25,220,85,220,
+                20, EquipmentFactory.createBow(), null,null, attackList, defenseList,false,PlayerTextureType.ARCHER);
     }
+
     public static Player createMonk(){
         List<Modifier> attackList = new ArrayList<>();
         List<Modifier> defenseList = new ArrayList<>();
         return new Player(null, false,11,400,40,400,
                 18, EquipmentFactory.createStaff(), null,null, attackList, defenseList,false,PlayerTextureType.MONK);
     }
+
     public static Player createknight(){
         List<Modifier> attackList = new ArrayList<>();
         List<Modifier> defenseList = new ArrayList<>();
