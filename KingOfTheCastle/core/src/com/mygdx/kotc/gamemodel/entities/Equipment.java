@@ -1,9 +1,7 @@
 package com.mygdx.kotc.gamemodel.entities;
 
 public class Equipment {
-    /**
-     *
-     */
+
     private EquipmentType equipmentType;
     private int equipmentValue;
 

@@ -1,6 +1,9 @@
 package com.mygdx.kotc.kotcrpc;
 
 public interface RPCIServer {
+    /**
+     * Adds a Client
+     */
     void listenForIncomingCalls();
 
     /**

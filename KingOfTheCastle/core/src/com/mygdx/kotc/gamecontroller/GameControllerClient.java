@@ -56,7 +56,7 @@ public class GameControllerClient implements InputI{
     public void run(){
         applicationStubClient.joinServer(playerID);
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.submit(() -> applicationStubClient.getClientStub().startListening());
+        executorService.submit(() -> applicationStubClient.getClientStub().listen());
 
         while (isRunning){
             try {

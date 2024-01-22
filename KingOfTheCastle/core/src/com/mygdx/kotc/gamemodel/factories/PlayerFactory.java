@@ -42,10 +42,8 @@ public class PlayerFactory {
     public static Player createknight(){
         List<Modifier> attackList = new ArrayList<>();
         List<Modifier> defenseList = new ArrayList<>();
-        Vec2d v2d = new Vec2d(7,9);
-        return new Player(null,null, false,7,350,180,350,
-                20, EquipmentFactory.createSword(), null,null,attackList,defenseList,false);
-        //set texture type
+        return new Player(null, false,7,350,180,350,
+                20, EquipmentFactory.createSword(), null,null, attackList, defenseList,false,PlayerTextureType.KNIGHT);
     }
 
 }
