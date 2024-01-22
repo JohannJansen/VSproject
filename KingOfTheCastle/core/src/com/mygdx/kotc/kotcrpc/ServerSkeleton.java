@@ -54,8 +54,6 @@ public class ServerSkeleton implements RPCIServer{
                 BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 String receivedJson = reader.readLine();
                 System.out.println("Received JSON from client: " + receivedJson);
-
-                System.out.println("test");
                 Message message = unmarshallFromJson(receivedJson);
 
                 messageQueue.add(message);
@@ -86,7 +84,6 @@ public class ServerSkeleton implements RPCIServer{
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
                     String marshalledMessage = marshallToJson(message);
                     marshalledMessage += '\n';
-                    System.out.println(marshalledMessage.endsWith("\n"));
 
                     int kilobyteSize = 1024;
 
