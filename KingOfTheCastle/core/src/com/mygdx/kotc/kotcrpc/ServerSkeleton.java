@@ -27,7 +27,7 @@ public class ServerSkeleton implements RPCIServer{
             serverSocket = new ServerSocket(8898);
             executorService = Executors.newCachedThreadPool();
             connectedClients = new CopyOnWriteArrayList<>();
-            System.out.println("Server started on port 8898");
+            System.out.println("Server started on port 8898 with hostname: " + getOwnHostName());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -117,10 +117,9 @@ public class ServerSkeleton implements RPCIServer{
         return json.toJson(message);
     }
 
-    public void getOwnHostName() throws UnknownHostException {
+    public String getOwnHostName() throws UnknownHostException {
         InetAddress localHost = InetAddress.getLocalHost();
-        String hostname = localHost.getHostName();
-        System.out.println("Hostname: " + hostname);
+        return localHost.getHostName();
     }
 
     public CopyOnWriteArrayList<Message> getMessageQueue() {
