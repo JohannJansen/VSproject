@@ -73,6 +73,10 @@ public class GameControllerClient implements InputI{
                 if(playerManager.getPlayerById(playerID)!=null){
                     player = playerManager.getPlayerById(playerID);
                 }
+            }else {
+                if (player.getPlayerInCombat()) {
+                    currentScreen = CurrentScreen.BATTLE;
+                }
             }
 
             Message message = applicationStubClient.receiveMessage();

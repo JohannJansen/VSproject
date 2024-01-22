@@ -22,7 +22,7 @@ public  class GameControllerServer {
 
     private boolean isRunning = true;
 
-    private final long TICKDURATIONMILLIS = 100;
+    private final long TICKDURATIONMILLIS = 1000;
 
     private final Map<String, Player> playerMapping = new HashMap<>();
 
@@ -142,6 +142,7 @@ public  class GameControllerServer {
             try {
                 if(parameters[1] != null) {
                     mapManager.initiateCombat((Player) parameters[0], (Player) parameters[1], (int) parameters[2]);
+
                 }
                 else {
                     System.out.println("No player in the vicinity, try again!");
