@@ -7,5 +7,16 @@ import com.mygdx.kotc.gamemodel.entities.Tile;
 import java.util.List;
 
 public interface OutputI {
-    public List<Rectangle> stateToRenderableObject();
+    /**
+     * converts the map to a list of renderable objects
+     * @return the renderable objects
+     */
+    List<MapRenderData> mapToMapRenderData();
+
+    /**
+     * converts the combats into a list of renderable objects
+     * @return the renderable objects
+     */
+    List<CombatRenderData> combatToCombatRenderData();
+
 }

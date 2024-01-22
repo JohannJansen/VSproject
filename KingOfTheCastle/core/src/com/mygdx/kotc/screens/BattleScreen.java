@@ -9,17 +9,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Align;
 import com.mygdx.kotc.KingOfTheCastle;
-import com.mygdx.kotc.gamemodel.entities.Player;
-import com.mygdx.kotc.gamemodel.factories.PlayerFactory;
-import com.mygdx.kotc.inputprocessors.BattleScreenInputProcessor;
-
-import java.awt.*;
+import com.mygdx.kotc.inputprocessors.InputProcessorImplementation;
 
 
 public class BattleScreen implements Screen, InputProcessor {

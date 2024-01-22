@@ -26,7 +26,7 @@ public class ApplicationStubClient{
 
 
     public void joinServer(String playerId){
-        clientStub.connectToServer("KINDA-PC", 8898);
+        clientStub.connectToServer("DESKTOP-NCFTCH6", 8898);
         clientStub.call(playerId, "registerPlayer", new Object[]{playerId});
     }
 

@@ -58,4 +58,9 @@ public class ViewProxy implements OutputI{
         }
         return mapRenderDataList;
     }
+
+    @Override
+    public List<CombatRenderData> combatToCombatRenderData() {
+        return null;
+    }
 }

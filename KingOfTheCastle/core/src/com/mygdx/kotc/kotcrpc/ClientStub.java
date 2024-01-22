@@ -58,7 +58,8 @@ public class ClientStub implements RPCIClient {
         return json.fromJson(Message.class, jsonString);
     }
 
-    public void startListening() {
+    @Override
+    public void listen() {
         while (socket.isClosed()) {
             try {
                 Thread.sleep(1000);

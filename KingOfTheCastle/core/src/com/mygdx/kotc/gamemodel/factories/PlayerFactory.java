@@ -13,18 +13,15 @@ public class PlayerFactory {
     public static Player createTestPlayer(){
         List<Modifier> attackList = new ArrayList<>();
         List<Modifier> defenseList = new ArrayList<>();
-        Vec2d v2d = new Vec2d(8,9);
-        return new Player("test",null, false,19,300,50,300,
-                0, EquipmentFactory.createSword(), null,null,attackList,defenseList,false);
+        return new Player("test", false,19,300,50,300,
+                0, EquipmentFactory.createSword(), null,null, attackList, defenseList,false,PlayerTextureType.WIZARD);
     }
 
     public static Player createWizard(){
         List<Modifier> attackList = new ArrayList<>();
         List<Modifier> defenseList = new ArrayList<>();
-        Vec2d v2d = new Vec2d(7,9);
-        Player player = new Player(null,null, false,15,200,80,200,
-                10, EquipmentFactory.createStaff(), null,null,attackList,defenseList,false);
-        player.setPlayerTextureType(PlayerTextureType.WIZARD);
+        Player player = new Player(null, false,15,200,80,200,
+                10, EquipmentFactory.createStaff(), null,null, attackList, defenseList,false,PlayerTextureType.WIZARD);
         return player;
         //set texture type
     }
@@ -39,10 +36,8 @@ public class PlayerFactory {
     public static Player createMonk(){
         List<Modifier> attackList = new ArrayList<>();
         List<Modifier> defenseList = new ArrayList<>();
-        Vec2d v2d = new Vec2d(3,9);
-        return new Player(null,null, false,11,400,40,400,
-                18, EquipmentFactory.createStaff(), null,null,attackList,defenseList,false);
-        //set texture type
+        return new Player(null, false,11,400,40,400,
+                18, EquipmentFactory.createStaff(), null,null, attackList, defenseList,false,PlayerTextureType.MONK);
     }
     public static Player createknight(){
         List<Modifier> attackList = new ArrayList<>();
