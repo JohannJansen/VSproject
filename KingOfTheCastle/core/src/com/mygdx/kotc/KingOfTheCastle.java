@@ -65,7 +65,7 @@ public class KingOfTheCastle extends Game {
     }
 
 	public void startClient(){
-        String filePath = "KingOfTheCastle/Configs/config.cfg";
+        String filePath = "Configs/config.cfg";
         Properties config = readConfig(filePath);
         String serverHostname = config.getProperty("serverHostname");
 
