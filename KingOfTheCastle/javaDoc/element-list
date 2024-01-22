@@ -1,0 +1,16 @@
+unnamed package
+com.mygdx.kotc
+com.mygdx.kotc.applicationstub
+com.mygdx.kotc.client
+com.mygdx.kotc.gamecontroller
+com.mygdx.kotc.gamemodel.entities
+com.mygdx.kotc.gamemodel.exceptions
+com.mygdx.kotc.gamemodel.factories
+com.mygdx.kotc.gamemodel.interfaces
+com.mygdx.kotc.gamemodel.manager
+com.mygdx.kotc.inputprocessors
+com.mygdx.kotc.inputprocessors.inputevents
+com.mygdx.kotc.kotcrpc
+com.mygdx.kotc.screens
+com.mygdx.kotc.server
+com.mygdx.kotc.viewproxy
