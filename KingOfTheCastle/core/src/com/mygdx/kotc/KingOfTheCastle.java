@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.kotc.gamecontroller.GameControllerClient;
+import com.mygdx.kotc.screens.BattleScreen;
 import com.mygdx.kotc.screens.MapScreen;
 import com.mygdx.kotc.screens.StartScreen;
 import com.mygdx.kotc.viewproxy.ViewProxy;
@@ -41,6 +42,8 @@ public class KingOfTheCastle extends Game {
         thiccFont.setColor(Color.BLACK);
         thiccFont.getData().scale(1.0f);
         this.setScreen(new StartScreen(this));
+        //test
+//        this.setScreen(new BattleScreen(this));
     }
 
     @Override

@@ -140,7 +140,12 @@ public  class GameControllerServer {
             }
         } else if (methodname.equals("initiateCombat")) {
             try {
-                mapManager.initiateCombat((Player) parameters[0],(Player) parameters[1],(int)parameters[2]);
+                if(parameters[1] != null) {
+                    mapManager.initiateCombat((Player) parameters[0], (Player) parameters[1], (int) parameters[2]);
+                }
+                else {
+                    System.out.println("No player in the vicinity, try again!");
+                }
             } catch(Exception CombatNotInitiatableException) {
                 System.err.println("Players not found, maybe they're dead ;/");
             }
@@ -150,9 +155,17 @@ public  class GameControllerServer {
             }catch (Exception e){
                 System.err.println("Alohomora");
             }
-        } else {
+        } else if (message.getMethodname().equals("findNearbyPlayers")) {
+            try {
+                combatManager.actionInCombat((Action) parameters[0], (PriorityQueue<Action>) parameters[1]);
+            } catch (Exception e) {
+                System.err.println("Alohomora");
+            }
+        }else {
             System.out.println("no method by that name");
         }
+
+
     }
 
     public void registerPlayer(String playerId) throws MaxPlayersReachedException {

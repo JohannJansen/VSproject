@@ -64,6 +64,9 @@ public class MapManager implements MapI{
             player1.setPlayerInCombat(true);
             player2.setPlayerInCombat(true);
             combatManager.createCombat(player1,player2);
+            //test
+            System.out.println("Combat between " + player1 +
+                    "and" +player2 + " initiated!!!");
         }else{
             throw new CombatNotInitiatableException();
         }
@@ -83,7 +86,7 @@ public class MapManager implements MapI{
     }
 
     @Override
-    public boolean findNearbyPlayers(Player player, CombatManager combatManager){
+    public Player findNearbyPlayers(Player player){
 
         Tile tiles [][] = getMap().getTiles();
         for (int dx = -2; dx <= 2; dx++) {
@@ -100,12 +103,11 @@ public class MapManager implements MapI{
                 // Check if tile is occupied by a player
                 Player occupyingPlayer = tiles[x][y].getOccupiedBy();
                 if (occupyingPlayer != null && !occupyingPlayer.getPlayerInCombat()) {
-                    combatManager.createCombat(player,occupyingPlayer);
-                    return true;
+                    return occupyingPlayer;
                 }
             }
         }
-        return false;
+        return null;
     }
 
 

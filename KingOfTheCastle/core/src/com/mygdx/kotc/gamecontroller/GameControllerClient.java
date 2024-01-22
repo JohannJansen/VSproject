@@ -68,6 +68,12 @@ public class GameControllerClient implements InputI{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            //Set the player object for the client only if the server has created it
+            if (player == null){
+                if(playerManager.getPlayerById(playerID)!=null){
+                    player = playerManager.getPlayerById(playerID);
+                }
+            }
 
             Message message = applicationStubClient.receiveMessage();
             if (message != null){
@@ -127,7 +133,10 @@ public class GameControllerClient implements InputI{
             applicationStubClient.callServerMethod(playerID, "movePlayer", new Object[]{playerID, new Vec2d(1,0)});
         }
         if(buttonPressEvent.keycode == Input.Keys.B){
-            applicationStubClient.callServerMethod(playerID,"findNearbyPlayers", new Object[]{playerID, combatManager});
+            applicationStubClient.callServerMethod(playerID,"initiateCombat", new Object[]{player,
+                    mapManager.findNearbyPlayers(player), 1});
+            //test
+            System.out.println("Initiate combat sent for: " + player + "and " + mapManager.findNearbyPlayers(player));
             currentScreen = CurrentScreen.BATTLE;
             System.out.println(currentScreen);
         }

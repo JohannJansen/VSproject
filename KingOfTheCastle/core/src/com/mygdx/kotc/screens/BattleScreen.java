@@ -19,7 +19,7 @@ public class BattleScreen implements Screen, InputProcessor {
 
     private KingOfTheCastle kingOfTheCastle;
     Texture startButton;
-    Texture startButtonUnactive;
+    Texture startButtonInactive;
     private BitmapFont font;
     private ShapeRenderer shapeRenderer;
     private GlyphLayout glyphLayout = new GlyphLayout();
@@ -27,14 +27,16 @@ public class BattleScreen implements Screen, InputProcessor {
 
     public BattleScreen(KingOfTheCastle kingOfTheCastle) {
         this.kingOfTheCastle = kingOfTheCastle;
+        kingOfTheCastle.gameControllerClient.setCurrentScreen(CurrentScreen.BATTLE);
         this.startButton = new Texture("startButton.png");
-        this.startButtonUnactive = new Texture("startButtonUnactive.png");
+        this.startButtonInactive = new Texture("startButtonUnactive.png");
         kingOfTheCastle.gameControllerClient.setCurrentScreen(CurrentScreen.BATTLE);
         Gdx.input.setInputProcessor(new InputProcessorImplementation(kingOfTheCastle.gameControllerClient));
     }
 
     @Override
     public void show() {
+        Gdx.graphics.setWindowedMode(1024, 1024);
         font = new BitmapFont();
         font.setColor(Color.BLACK);
         shapeRenderer = new ShapeRenderer();

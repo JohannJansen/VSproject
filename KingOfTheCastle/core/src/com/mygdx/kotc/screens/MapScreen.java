@@ -36,6 +36,8 @@ public class MapScreen implements Screen {
         kingOfTheCastle.batch.begin();
         mapRenderDataList.forEach(this::displayTile);
         kingOfTheCastle.batch.end();
+
+        //TODO jump to battle screen
     }
 
 
@@ -75,7 +77,6 @@ public class MapScreen implements Screen {
                     , mapRenderData.getY()*KingOfTheCastle.TEXTUREHEIGHT);
         }
     }
-
 
 
     @Override

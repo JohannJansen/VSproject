@@ -40,9 +40,9 @@ public interface MapI {
 
     /**
      * Checks if there's another player in the immediate vicinity of the player
+     *
      * @param player
-     * @param combatManager
      * @return
      */
-    boolean findNearbyPlayers(Player player, CombatManager combatManager);
+    Player findNearbyPlayers(Player player);
 }

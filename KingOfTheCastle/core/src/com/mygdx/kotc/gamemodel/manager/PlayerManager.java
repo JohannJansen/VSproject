@@ -8,6 +8,8 @@ import com.mygdx.kotc.gamemodel.interfaces.PlayerI;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class PlayerManager implements PlayerI {
     private List<Player> playerList = new ArrayList<>();
@@ -31,5 +33,14 @@ public class PlayerManager implements PlayerI {
 
     public void setPlayerList(List<Player> playerList) {
         this.playerList = playerList;
+    }
+
+    public Player getPlayerById(String playerId){
+        Optional<Player> playerOptional = playerList.stream().filter(p -> Objects.equals(p.getPlayerId(), playerId)).findFirst();
+        if (playerOptional.isPresent()){
+            return playerOptional.get();
+        } else {
+            return null;
+        }
     }
 }
